@@ -3,30 +3,28 @@ import random
 from . import guiUtils as gui
 
 root = tk.Tk()
-w = 800
-h = 600 # make these intelligent to screen size with other package?
-o = 100
+root.wm_title("SedEdu")
+w = 1000 #
+h = 800 # make these intelligent to screen size with other package?
+o = 100 #
 root.geometry(str(w) + "x" + str(h) + "+" + str(o) + "+" + str(o)) # width x height + x_offset + y_offset:
 
-#a = gui.gridPlace(6, [100, 300])
-a = gui.testing.testing()
-print a
+categories = ["Rivers", "Deltas", "Deserts", "Coasts", "Stratigraphy", "Behind the \nModules"] # read these from file?
+buttons = range(len(categories))
+gridMargs = gui.placement.margins([w, h]) # workable area margins
+gridWork = gui.placement.divideWindow(gridMargs)
+gridPlace = gui.placement.gridButton(len(categories), gridWork)
 
-b = gui.placement.gridButton(10, [100, 100])
-print b
-
-categories = ['Rivers','Deltas','Deserts','Coasts','Stratigraphy','Behind the Module'] # read these from file?
-labels = range(len(categories))
-for i in labels:
+for i in buttons:
     ct = [random.randrange(256) for x in range(3)]
     brightness = int(round(0.299*ct[0] + 0.587*ct[1] + 0.114*ct[2]))
     ct_hex = "%02x%02x%02x" % tuple(ct)
     bg_colour = '#' + "".join(ct_hex)
-    l = tk.Label(root, 
-        text=categories[i], 
+    l = tk.Button(root, 
+            text=categories[i], font=("Courier", int(gridPlace.h*0.1)),
             fg='White' if brightness < 120 else 'Black', 
             bg=bg_colour)
-    l.place(x = 20, y = 30 + i*30, width=120, height=25)
+    l.place(x = gridPlace.x[i], y = gridPlace.y[i], width=gridPlace.w, height=gridPlace.h)
 
 
 def createWidgets(self):
