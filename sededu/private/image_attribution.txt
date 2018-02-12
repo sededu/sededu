@@ -1,0 +1,15 @@
+# image attribution data
+# use format:
+# <filename>; <author/source>; 
+#	<url>
+
+rivers.jpg; Science-all; 
+	http://canacopegdl.com/images/meandering/meandering-10.jpg
+
+stratigraphy.jpg; Tian Dong; 
+	https://earthscience.rice.edu/wp-content/uploads/2016/05/DSC1029-1030x578.jpg
+
+deltas.jpg; NASA Earth Observatory; 
+	https://eoimages.gsfc.nasa.gov/images/featureteasers/85000/85267/waxlake_oli_2014298_feature_thumb.jpg
+
+

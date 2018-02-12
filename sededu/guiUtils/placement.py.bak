@@ -1,0 +1,45 @@
+# functions to place objects in GUI
+import numpy as np
+import collections as coll
+
+class geomObj:
+    # geometric object for defining and passing GUI setup
+    def __init__(self, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+
+def gridButton(n, work0):
+    # determine the geometry of the grid based on window size
+    # n objects in 2x(n/2) grid in workable area work0, from margins margs0
+    nRows = n / 2
+    bHeight = (work0.h / nRows) * 1
+    bWidth = (work0.w / 2) * 0.9
+    xOff = 0
+    yOff = 0
+    x = np.repeat([xOff, xOff+bWidth+(bWidth*0.1)], [nRows, nRows])
+    ySep = (work0.h - (nRows * bHeight))/(nRows+1)
+    y1 = yOff + ( ySep * np.linspace(1, nRows, nRows) ) + ( bHeight * np.linspace(0, nRows-1, nRows))
+    y = np.tile(y1, 2)
+    geom = geomObj(x, y, bWidth, bHeight)
+    return geom
+
+def margins(geom0):
+    # reduce overall window dims to workable dims
+    workWidth = geom0.w * 0.9
+    # print "WorkWidth = " + str(workWidth)
+    xOff = geom0.w * 0.05
+    workHeight = geom0.h * 0.95
+    yOff = geom0.h * 0.025
+    margs = geomObj(xOff, yOff, workWidth, workHeight)
+    return margs
+
+
+def divideWindow(geom0):
+    # divide workable dims into button array and support array
+    lowerRatio = 0.2
+    upperHeight = geom0.h * (1-lowerRatio)
+    div = geomObj(geom0.x, upperHeight, geom0.w, geom0.h)
+    return div
+

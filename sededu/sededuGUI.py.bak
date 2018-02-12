@@ -1,0 +1,54 @@
+# [Create a root window]
+
+import sys, os
+from PyQt5.QtWidgets import *
+from PyQt5 import QtGui, QtCore
+from . import guiUtils as gui
+
+# determine path to private
+thisDir = os.path.dirname(__file__)
+thisPath = os.path.join(thisDir,'')
+
+# initialize the app window
+app = QApplication(sys.argv) #ignore()
+root = QWidget()
+root.setWindowTitle("SedEdu")
+root.show()
+
+# make the layout components
+# mainLayout = gui.makeMain(app, root)
+mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
+    "Stratigraphy", "Behind the \nModules"] # read these from file?
+mainN = range(len(mainList))
+mainGrp = QGroupBox() # group title here
+mainLayout = gui.stdButtons.mainLayout(mainList, thisPath)
+mainGrp.setLayout(mainLayout)
+
+# setup etc menu
+etcGrp = QGroupBox("SedEdu information")
+etcLayout = QGridLayout()
+etcQuit = gui.stdButtons.etcButton("Quit")
+etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
+etcAbout = gui.stdButtons.etcButton("About")
+
+etcLayout.addWidget(etcQuit, 0, 0)
+etcLayout.addWidget(etcAbout, 0, 1)
+etcGrp.setLayout(etcLayout)
+
+# main layout
+layout = QGridLayout(root)
+layout.addWidget(mainGrp, 0, 0)
+layout.addWidget(etcGrp, 1, 0)
+layout.addWidget(etcGrp, 2, 0)
+# layout.setRowStretch(2, 4)
+
+
+
+
+# [Resizing the root window]
+root.resize(480, 160)
+
+# [Run the application]
+
+# Start the event loop...
+sys.exit(app.exec_())

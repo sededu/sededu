@@ -1,3 +1,3 @@
-__all__ = ["testing", "placement"]
+__all__ = ["callback", "stdObjs", "makeMain", "makeCategory"]
 
 from . import *

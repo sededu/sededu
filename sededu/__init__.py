@@ -1,3 +1,3 @@
 __all__ = ["sededuGUI"]
 
-import sededuGUI
+# import sededuGUI

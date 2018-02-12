@@ -1,36 +1,132 @@
-import Tkinter as tk
-import random
-from . import guiUtils as gui
+# [Create a root window]
 
-root = tk.Tk()
-root.wm_title("SedEdu")
-w = 1000 #
-h = 800 # make these intelligent to screen size with other package?
-o = 100 #
-root.geometry(str(w) + "x" + str(h) + "+" + str(o) + "+" + str(o)) # width x height + x_offset + y_offset:
+import sys, os
+from PyQt5.QtWidgets import *
+from PyQt5 import QtGui, QtCore
+from sededu import guiUtils as gui
+# from sededu import src
 
-categories = ["Rivers", "Deltas", "Deserts", "Coasts", "Stratigraphy", "Behind the \nModules"] # read these from file?
-buttons = range(len(categories))
-gridMargs = gui.placement.margins([w, h]) # workable area margins
-gridWork = gui.placement.divideWindow(gridMargs)
-gridPlace = gui.placement.gridButton(len(categories), gridWork)
+class rootInit(QWidget):
+    # determine path to private
+    thisDir = os.path.dirname(__file__)
+    thisPath = os.path.join(thisDir,'')
 
-for i in buttons:
-    ct = [random.randrange(256) for x in range(3)]
-    brightness = int(round(0.299*ct[0] + 0.587*ct[1] + 0.114*ct[2]))
-    ct_hex = "%02x%02x%02x" % tuple(ct)
-    bg_colour = '#' + "".join(ct_hex)
-    l = tk.Button(root, 
-            text=categories[i], font=("Courier", int(gridPlace.h*0.1)),
-            fg='White' if brightness < 120 else 'Black', 
-            bg=bg_colour)
-    l.place(x = gridPlace.x[i], y = gridPlace.y[i], width=gridPlace.w, height=gridPlace.h)
+    def __init__(self, parent=None):
+        QWidget.__init__(self, parent)
+        self.initializeGUI()
+
+    def initializeGUI(self):
+        self.main = mainMenu(self) # build mainMenu
+        self.drawMain(self.main.layout) # set to mainMenu
+        self.setGeometry(400, 400, 100, 300)
+        # navTest = categoryMenu()
+    
+    def drawMain(self, mainLayout):
+        self.setLayout(mainLayout)
+
+    def drawNav(self, navLayout):
+        sender = self.sender()
+        print(navLayout)
+        print(sender.text)
+        self.setLayout(navLayout)
 
 
-def createWidgets(self):
-        self.quitButton = tk.Button(self, text='Quit',
-            command=self.quit)
-        self.quitButton.grid()
+    def genNav(self, navFolder):
+        # generate nav menu from folder information
+        a = 1
 
-#app.master.title('Sample application')
-root.mainloop()
+
+
+def mainMenu(self):
+    # class for main menu
+    # def __init__(self, parent=None):
+        # QWidget.__init__(self, parent)
+        # super().__init__()
+    mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
+        "Stratigraphy", "Behind the \nModules"] # read these from file?
+    mainN = range(len(mainList))
+    mainLayout = QGridLayout() # layout for entire main menu
+    
+    navBox = QGroupBox() # category navigation box, group title here
+    navLayout = gui.stdObjs.mainLayout(mainList, thisPath)
+    navBox.setLayout(navLayout)
+
+    etcBox = QGroupBox() # etc box, group title here
+    etcLayout = QGridLayout()
+    etcQuit = gui.stdObjs.etcButton("Quit")
+    etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
+    etcAbout = gui.stdObjs.etcButton("About")
+    # navTest = categoryMenu(self)
+    etcAbout.clicked.connect(self.drawNav)
+
+    etcLayout.addWidget(etcQuit, 0, 0)
+    etcLayout.addWidget(etcAbout, 0, 1)
+    etcBox.setLayout(etcLayout)
+
+    self.layout = QGridLayout() #
+    self.layout.addWidget(navBox, 0, 0, 1, 2)
+    self.layout.addWidget(etcBox, 2, 0)
+    return self
+
+
+
+# class mainMenu(QWidget):
+#     # class for main menu
+#     def __init__(self, parent=None):
+#         QWidget.__init__(self, parent)
+#         # super().__init__()
+#         mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
+#             "Stratigraphy", "Behind the \nModules"] # read these from file?
+#         mainN = range(len(mainList))
+#         mainLayout = QGridLayout() # layout for entire main menu
+        
+#         navBox = QGroupBox() # category navigation box, group title here
+#         navLayout = gui.stdObjs.mainLayout(mainList, thisPath)
+#         navBox.setLayout(navLayout)
+
+#         etcBox = QGroupBox() # etc box, group title here
+#         etcLayout = QGridLayout()
+#         etcQuit = gui.stdObjs.etcButton("Quit")
+#         etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
+#         etcAbout = gui.stdObjs.etcButton("About")
+#         etcAbout.clicked.connect(self.drawNav(navTest.layout))
+
+#         etcLayout.addWidget(etcQuit, 0, 0)
+#         etcLayout.addWidget(etcAbout, 0, 1)
+#         etcBox.setLayout(etcLayout)
+
+#         self.layout = QGridLayout() #
+#         self.layout.addWidget(navBox, 0, 0, 1, 2)
+#         self.layout.addWidget(etcBox, 2, 0)
+
+def categoryMenu(self):
+    # class for navigation menu
+    # def __init__(self, parent=None):
+        # QWidget.__init__(self, parent)
+    label = QLabel("test label")
+    self.layout = QGridLayout() #
+    self.layout.addWidget(label, 0, 0)
+    return self
+
+
+
+# class categoryMenu(QWidget):
+#     # class for navigation menu
+#     def __init__(self, parent=None):
+#         QWidget.__init__(self, parent)
+#         label = QLabel("test label")
+#         self.layout = QGridLayout() #
+#         self.layout.addWidget(label, 0, 0)
+
+
+
+
+
+
+if __name__ == '__main__':
+    # print("ismain")
+    app = QApplication(sys.argv)
+    root = rootInit()
+    root.setWindowTitle("SedEdu")
+    root.show()
+    sys.exit(app.exec_())
