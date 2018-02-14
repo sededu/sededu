@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
 
-class rootInit(QMainWindow):
+class RootInit(QMainWindow):
     # determine path to private
     thisDir = os.path.dirname(__file__)
     thisPath = os.path.join(thisDir,'')
@@ -24,12 +24,12 @@ class rootInit(QMainWindow):
 
 
     def initializeGUI(self):
-        self.main = mainMenu(self) # build mainMenu
-        self.about = aboutPage(self) # build aboutPage
+        self.main = MainMenu(self) # build MainMenu
+        self.about = AboutPage(self) # build AboutPage
         # build all categoryMenus here
         # # #
         # # #
-        self.riversMenu = categoryMenu(self)
+        self.riversMenu = CategoryMenu(self)
         self.stack.addWidget(self.main)
         self.stack.addWidget(self.about)
         self.stack.addWidget(self.riversMenu)
@@ -49,7 +49,7 @@ class rootInit(QMainWindow):
         self.stack.setCurrentIndex(1)
 
 
-class mainMenu(QWidget):
+class MainMenu(QWidget):
     # class for main menu
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -78,7 +78,7 @@ class mainMenu(QWidget):
         self.setLayout(layout)
 
 
-class categoryMenu(QWidget):
+class CategoryMenu(QWidget):
     # class for navigation menu
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -105,7 +105,7 @@ class categoryMenu(QWidget):
         self.setLayout(layout)
 
 
-class aboutPage(QWidget):
+class AboutPage(QWidget):
     # class for about page
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -134,7 +134,7 @@ class aboutPage(QWidget):
 if __name__ == '__main__':
     # print("ismain")
     app = QApplication(sys.argv)
-    root = rootInit()
+    root = RootInit()
     root.setWindowTitle("SedEdu")
     root.show()
     sys.exit(app.exec_())
