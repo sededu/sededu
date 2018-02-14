@@ -6,8 +6,12 @@ from PyQt5 import QtGui, QtCore
 def mainLayout(inList, thisPath):
 	buttonLayout = QGridLayout()
 	nList = len(inList)
-	xPos = np.tile([0, 1], int(np.ceil(nList/2)))
-	yPos = np.tile(range(int(np.ceil(nList/2))), 2)
+	# xPos = np.tile([0, 1], int(np.ceil(nList/2)))
+	# yPos = np.tile(range(int(np.ceil(nList/2))), 2)
+	gridSize = [3, 2]
+	# xPos = np.tile( range(gridSize[1]), (1, int(np.ceil(nList/gridSize[1]))) )
+	cPos = [0, 1, 0, 1, 0, 1]
+	rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
 	for i in range(nList):
 		iLabel = inList[i]
 		iButton = QPushButton(iLabel)
@@ -17,23 +21,20 @@ def mainLayout(inList, thisPath):
 		iIcon = QtGui.QIcon()
 		iIcon.addPixmap(QtGui.QPixmap(iPath))
 		iButton.setIcon(iIcon)
-		iButton.setIconSize(QtCore.QSize(300,200))
-		buttonLayout.addWidget(iButton, xPos[i], yPos[i])
+		iButton.setIconSize(QtCore.QSize(250,200))
+		# print("x = " + str(xPos[i]) + "   y = " + str(yPos[i]))
+		# iButton.clicked.connect(self.parent().drawNav(2)) # need to figure out how to set these buttons...
+		buttonLayout.addWidget(iButton, rPos[i], cPos[i])
 	return buttonLayout
-
-
-def quitButton(self):
-	# this is old tk code
-    self.quitButton = tk.Button(self, text='Quit',
-        command=self.quit)
-    self.quitButton.grid()
-    return self
-
 
 def etcButton(btnStr):
 	etcBtn = QPushButton(btnStr)
 	etcBtn.resize(1,10)
 	return etcBtn
+
+def categoryListItem():
+	a=1
+
 
 def HLine(self):
     toto = QFrame()
