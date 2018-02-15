@@ -25,12 +25,20 @@ class RootInit(QMainWindow):
         main = MainMenu(self) # build MainMenu
         about = AboutPage(self) # build AboutPage
         # build all categoryMenus here
-        riversMenu = CategoryMenu(self)
-        # # #
-        # # #
+        riversMenu = CategoryMenu("Rivers", self)
+        deltasMenu = CategoryMenu("Deltas", self)
+        desertsMenu = CategoryMenu("Deserts", self)
+        coastsMenu = CategoryMenu("Coasts", self)
+        stratMenu = CategoryMenu("Stratigraphy", self)
+        btmodsMenu = CategoryMenu("Behind the", self)
         self.stack.addWidget(main)
         self.stack.addWidget(about)
         self.stack.addWidget(riversMenu)
+        self.stack.addWidget(deltasMenu)
+        self.stack.addWidget(desertsMenu)
+        self.stack.addWidget(coastsMenu)
+        self.stack.addWidget(stratMenu)
+        self.stack.addWidget(btmodsMenu)
     
     def drawMain(self):
         # self.setLayout(mainLayout)
@@ -38,7 +46,7 @@ class RootInit(QMainWindow):
 
     def drawNav(self, idx):
         print("idx = " + str(idx))
-        # self.stack.setCurrentIndex(idx)
+        self.stack.setCurrentIndex(idx)
 
     def drawAbout(self):
         self.stack.setCurrentIndex(1)
@@ -60,18 +68,14 @@ class MainMenu(QWidget):
         navLayout = QGridLayout()
         for i in range(nList):
             iButton = gui.NavButton(mainList[i], self.parent().thisPath)
-            iCapture = lambda x, i=i: i+1
+            iCapture = lambda x, i=i: i+2
             iI = iCapture(i)
             print(str(iI))
-            # iButton.clicked.connect(lambda: print(self.__class__.__name__ + str(iI)))
-            iButton.clicked.connect(lambda: self.drawNav)
+            # both below seem to be on the right track..? need to capture i?
+            # iButton.clicked.connect(lambda: self.parent().parent().parent().drawNav(iI))
+            iButton.clicked.connect(lambda: self.parent().setCurrentIndex(iI))
             navLayout.addWidget(iButton, rPos[i], cPos[i])
-            # backBtn.clicked.connect(self.parent().drawNav)
-            # print(type(self).__name__)
 
-            # lambda: self.AddControl('fooData')
-
-        # navLayout = gui.mainLayout(mainList, thisPath)
         navBox.setLayout(navLayout)
 
         etcBox = QGroupBox() # etc box, group title here
@@ -94,13 +98,13 @@ class MainMenu(QWidget):
 
 class CategoryMenu(QWidget):
     # class for navigation menu
-    def __init__(self, parent):
+    def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
         headBox = QGroupBox()
         headLayout = QVBoxLayout()
         # categoryLabelText = QLabel(category + " modules:")
-        categoryLabelText = QLabel("brokenPipe" + " modules:")
+        categoryLabelText = QLabel(category + " modules:")
         headLayout.addWidget(categoryLabelText)
         backBtn = gui.etcButton("Back")
         backBtn.clicked.connect(self.parent().drawMain)
