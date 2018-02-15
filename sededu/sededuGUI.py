@@ -58,6 +58,7 @@ class MainMenu(QWidget):
         super().__init__(parent)
         mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
             "Stratigraphy", "Behind the \nModules"] # read these from file?
+        privatePath = os.path.join(self.parent().thisPath, "sededu", "private")
          
         navBox = QGroupBox() # category navigation box, group title here
         nList = len(mainList)
@@ -72,16 +73,24 @@ class MainMenu(QWidget):
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
+        ## need to stick this into a subclass and make it on the CategoryMenu too?
         etcBox = QGroupBox() # etc box, group title here
-        etcLayout = QGridLayout()
+        etcLayout = QVBoxLayout()
+        etcLogo = QLabel() 
+        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(privatePath, "sededu.png")))
+        etcButtons = QGroupBox()
+        etcButtonsLayout = QHBoxLayout()
         etcQuit = gui.etcButton("Quit")
         etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
         etcAbout = gui.etcButton("About")
         etcAbout.clicked.connect(self.parent().drawAbout)
-
-        etcLayout.addWidget(etcQuit, 0, 0)
-        etcLayout.addWidget(etcAbout, 0, 1)
+        etcButtonsLayout.addWidget(etcQuit)
+        etcButtonsLayout.addWidget(etcAbout)
+        etcButtons.setLayout(etcButtonsLayout)
+        etcLayout.addWidget(etcLogo)
+        etcLayout.addWidget(etcButtons)
         etcBox.setLayout(etcLayout)
+        etcBox.setFlat(False)
 
         layout = QGridLayout() #
         layout.addWidget(navBox, 0, 2, 0, 4)
