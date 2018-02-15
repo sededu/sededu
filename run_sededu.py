@@ -13,3 +13,5 @@ import os
 thisDir = os.path.dirname(__file__)
 thisPath = os.path.join(thisDir,'')
 exec(open(thisPath + "sededu/sededuGUI.py").read())
+
+# this is boring
