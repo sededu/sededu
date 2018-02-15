@@ -68,14 +68,8 @@ class MainMenu(QWidget):
         navLayout = QGridLayout()
         for i in range(nList):
             iButton = gui.NavButton(mainList[i], self.parent().thisPath)
-            iCapture = lambda x, i=i: i+2
-            iI = iCapture(i)
-            print(str(iI))
-            # both below seem to be on the right track..? need to capture i?
-            # iButton.clicked.connect(lambda: self.parent().parent().parent().drawNav(iI))
-            iButton.clicked.connect(lambda: self.parent().setCurrentIndex(iI))
+            iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
             navLayout.addWidget(iButton, rPos[i], cPos[i])
-
         navBox.setLayout(navLayout)
 
         etcBox = QGroupBox() # etc box, group title here
@@ -143,7 +137,15 @@ class AboutPage(QWidget):
         
         bodyBox = QGroupBox()
         bodyLayout = QGridLayout()
-        bodyLayout.addWidget(QLabel("fill this with text"))
+        descText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod \
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, \
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo \
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse \
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non \
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+        descLabel = QLabel(descText)
+        descLabel.setWordWrap(True);
+        bodyLayout.addWidget(descLabel)
         bodyBox.setLayout(bodyLayout)
         
         layout = QVBoxLayout()

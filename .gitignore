@@ -106,3 +106,6 @@ venv.bak/
 
 # backup/old code storage
 *.bak
+
+# svg files in private
+/sededu/private/*.svg
