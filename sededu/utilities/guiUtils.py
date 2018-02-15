@@ -27,6 +27,20 @@ def mainLayout(inList, thisPath):
 		buttonLayout.addWidget(iButton, rPos[i], cPos[i])
 	return buttonLayout
 
+
+class NavButton(QPushButton):
+	def __init__(self, iLabel, thisPath, parent=None):
+		QPushButton.__init__(self, parent)
+		# iButton = QPushButton(iLabel)
+		self.setText(iLabel)
+		iPath = os.path.join(thisPath, "sededu", "private", \
+			iLabel.lower().replace(" ","").replace("\n","") + ".jpg")
+		# print(iLabel + "path:" + iPath)
+		iIcon = QtGui.QIcon()
+		iIcon.addPixmap(QtGui.QPixmap(iPath))
+		self.setIcon(iIcon)
+		self.setIconSize(QtCore.QSize(300,200))
+
 def etcButton(btnStr):
 	etcBtn = QPushButton(btnStr)
 	etcBtn.resize(1,10)

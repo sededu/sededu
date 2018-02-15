@@ -1,6 +1,5 @@
-# [Create a root window]
-
 import sys, os
+import numpy as np
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
@@ -22,28 +21,24 @@ class RootInit(QMainWindow):
 
         self.initializeGUI()
 
-
     def initializeGUI(self):
-        self.main = MainMenu(self) # build MainMenu
-        self.about = AboutPage(self) # build AboutPage
+        main = MainMenu(self) # build MainMenu
+        about = AboutPage(self) # build AboutPage
         # build all categoryMenus here
+        riversMenu = CategoryMenu(self)
         # # #
         # # #
-        self.riversMenu = CategoryMenu(self)
-        self.stack.addWidget(self.main)
-        self.stack.addWidget(self.about)
-        self.stack.addWidget(self.riversMenu)
+        self.stack.addWidget(main)
+        self.stack.addWidget(about)
+        self.stack.addWidget(riversMenu)
     
     def drawMain(self):
         # self.setLayout(mainLayout)
         self.stack.setCurrentIndex(0)
 
     def drawNav(self, idx):
-        self.stack.setCurrentIndex(idx)
-
-    def genNav(self, navFolder):
-        # generate nav menu from folder information
-        a = 1
+        print("idx = " + str(idx))
+        # self.stack.setCurrentIndex(idx)
 
     def drawAbout(self):
         self.stack.setCurrentIndex(1)
@@ -51,13 +46,32 @@ class RootInit(QMainWindow):
 
 class MainMenu(QWidget):
     # class for main menu
-    def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
+    def __init__(self, parent):
+        super().__init__(parent)
         mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
             "Stratigraphy", "Behind the \nModules"] # read these from file?
          
         navBox = QGroupBox() # category navigation box, group title here
-        navLayout = gui.mainLayout(mainList, thisPath)
+        nList = len(mainList)
+        gridSize = [3, 2]
+        # xPos = np.tile( range(gridSize[1]), (1, int(np.ceil(nList/gridSize[1]))) )
+        cPos = [0, 1, 0, 1, 0, 1]
+        rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
+        navLayout = QGridLayout()
+        for i in range(nList):
+            iButton = gui.NavButton(mainList[i], self.parent().thisPath)
+            iCapture = lambda x, i=i: i+1
+            iI = iCapture(i)
+            print(str(iI))
+            # iButton.clicked.connect(lambda: print(self.__class__.__name__ + str(iI)))
+            iButton.clicked.connect(lambda: self.drawNav)
+            navLayout.addWidget(iButton, rPos[i], cPos[i])
+            # backBtn.clicked.connect(self.parent().drawNav)
+            # print(type(self).__name__)
+
+            # lambda: self.AddControl('fooData')
+
+        # navLayout = gui.mainLayout(mainList, thisPath)
         navBox.setLayout(navLayout)
 
         etcBox = QGroupBox() # etc box, group title here
@@ -80,7 +94,7 @@ class MainMenu(QWidget):
 
 class CategoryMenu(QWidget):
     # class for navigation menu
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         QWidget.__init__(self, parent)
         
         headBox = QGroupBox()
@@ -104,6 +118,9 @@ class CategoryMenu(QWidget):
         layout.addWidget(bodyBox)
         self.setLayout(layout)
 
+    def genNav(self, navFolder):
+        # generate nav menu from folder information
+        a = 1
 
 class AboutPage(QWidget):
     # class for about page
@@ -132,7 +149,6 @@ class AboutPage(QWidget):
 
 
 if __name__ == '__main__':
-    # print("ismain")
     app = QApplication(sys.argv)
     root = RootInit()
     root.setWindowTitle("SedEdu")
