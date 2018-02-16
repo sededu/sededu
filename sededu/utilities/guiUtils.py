@@ -4,13 +4,11 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
 class NavButton(QPushButton):
-	def __init__(self, iLabel, thisPath, parent=None):
+	def __init__(self, category, thisPath, parent=None):
 		QPushButton.__init__(self, parent)
-		# iButton = QPushButton(iLabel)
-		# self.setText(iLabel)
 		iPath = os.path.join(thisPath, "sededu", "private", \
-			iLabel.lower().replace(" ","").replace("\n","") + ".png")
-		# print(iLabel + "path:" + iPath)
+			category.lower().replace(" ","").replace("\n","") + ".png")
+		# print(category + " path: " + iPath)
 		iIcon = QtGui.QIcon()
 		iIcon.addPixmap(QtGui.QPixmap(iPath))
 		self.setIcon(iIcon)
@@ -35,3 +33,11 @@ def VLine(self):
     toto.setFrameShape(QFrame.VLine)
     toto.setFrameShadow(QFrame.Sunken)
     return toto
+
+def subDirPath(d):
+    return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
+
+def category2path(c):
+	path = c.lower().replace(" ","").replace("\n","")
+	print(path)
+	return path

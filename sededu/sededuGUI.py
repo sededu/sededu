@@ -30,7 +30,7 @@ class RootInit(QMainWindow):
         desertsMenu = CategoryMenu("Deserts", self)
         coastsMenu = CategoryMenu("Coasts", self)
         stratMenu = CategoryMenu("Stratigraphy", self)
-        btmodsMenu = CategoryMenu("Behind the", self)
+        btmodsMenu = CategoryMenu("Behind the Modules", self)
         self.stack.addWidget(main)
         self.stack.addWidget(about)
         self.stack.addWidget(riversMenu)
@@ -87,10 +87,10 @@ class MainMenu(QWidget):
         etcButtonsLayout.addWidget(etcQuit)
         etcButtonsLayout.addWidget(etcAbout)
         etcButtons.setLayout(etcButtonsLayout)
-        etcLayout.addWidget(etcLogo)
+        etcLayout.addWidget(etcLogo, QtCore.Qt.AlignTop)
         etcLayout.addWidget(etcButtons)
         etcBox.setLayout(etcLayout)
-        etcBox.setFlat(False)
+        # etcBox.setFlat(False)
 
         layout = QGridLayout() #
         layout.addWidget(navBox, 0, 2, 0, 4)
@@ -104,6 +104,12 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
+        categoryPath = os.path.join(self.parent().thisPath, "sededu", "modules", gui.category2path(category))
+        print(categoryPath)
+        # subDirs = gui.subDirPath(categoryPath)
+        # print(subDirs)
+        # self.genNav()
+
         headBox = QGroupBox()
         headLayout = QVBoxLayout()
         # categoryLabelText = QLabel(category + " modules:")
@@ -117,7 +123,9 @@ class CategoryMenu(QWidget):
         bodyBox = QGroupBox()
         bodyLayout = QGridLayout()
         bodyLayout.addWidget(QListWidget(), 0, 0, 2, 0)
-        bodyLayout.addWidget(QStackedWidget(), 0, 1, 2, 2)
+        bodyInfo = QStackedWidget()
+        bodyInfo.addWidget(QGroupBox())
+        bodyLayout.addWidget(bodyInfo, 0, 1, 2, 2)
         bodyBox.setLayout(bodyLayout)
         
         layout = QVBoxLayout()
@@ -126,8 +134,7 @@ class CategoryMenu(QWidget):
         self.setLayout(layout)
 
     def genNav(self, navFolder):
-        # generate nav menu from folder information
-        a = 1
+        a=1
 
 class AboutPage(QWidget):
     # class for about page

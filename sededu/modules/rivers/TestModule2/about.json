@@ -1,0 +1,7 @@
+{
+	"title": "Test Module 1",
+	"author": "Kensuke Naito",
+	"shortdesc": "A brief test module 2",
+	"preview": "./private/commandprompt.jpeg",
+	"exec": "./module/module_discharge_sediment.py"
+}
