@@ -1,0 +1,8 @@
+{
+    "title": "Flow discharge and sediment load relation in a river",
+    "author": "Kensuke Naito",
+    "shortdesc": "Estimate sediment discharge for specified channel geometry",
+    "version": "1.0",
+    "preview": ["private", "demo.jpeg"],
+    "exec": ["module", "module_discharge_sediment.py"]
+}

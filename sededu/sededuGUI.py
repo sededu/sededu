@@ -1,5 +1,6 @@
 import sys, os
 import numpy as np
+import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
@@ -10,7 +11,6 @@ class RootInit(QMainWindow):
     thisPath = os.path.join(thisDir,'')
 
     def __init__(self, parent=None):
-        # QWidget.__init__(self, parent)
         QMainWindow.__init__(self)
         self.root = QWidget()
         self.stack = QStackedWidget()
@@ -24,7 +24,6 @@ class RootInit(QMainWindow):
     def initializeGUI(self):
         main = MainMenu(self) # build MainMenu
         about = AboutPage(self) # build AboutPage
-        # build all categoryMenus here
         riversMenu = CategoryMenu("Rivers", self)
         deltasMenu = CategoryMenu("Deltas", self)
         desertsMenu = CategoryMenu("Deserts", self)
@@ -73,7 +72,7 @@ class MainMenu(QWidget):
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
-        ## need to stick this into a subclass and make it on the CategoryMenu too?
+        ## need to stick this into a subclass and make it on the Category/AboutMenu too?
         etcBox = QGroupBox() # etc box, group title here
         etcLayout = QVBoxLayout()
         etcLogo = QLabel() 
@@ -88,9 +87,9 @@ class MainMenu(QWidget):
         etcButtonsLayout.addWidget(etcAbout)
         etcButtons.setLayout(etcButtonsLayout)
         etcLayout.addWidget(etcLogo, QtCore.Qt.AlignTop)
+        etcLayout.addStretch(100)
         etcLayout.addWidget(etcButtons)
         etcBox.setLayout(etcLayout)
-        # etcBox.setFlat(False)
 
         layout = QGridLayout() #
         layout.addWidget(navBox, 0, 2, 0, 4)
@@ -104,15 +103,11 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
-        categoryPath = os.path.join(self.parent().thisPath, "sededu", "modules", gui.category2path(category))
-        print(categoryPath)
-        # subDirs = gui.subDirPath(categoryPath)
-        # print(subDirs)
-        # self.genNav()
+        bodyList = gui.CategoryList(category, self)
+        bodyInfo = bodyList.bodyInfo
 
         headBox = QGroupBox()
         headLayout = QVBoxLayout()
-        # categoryLabelText = QLabel(category + " modules:")
         categoryLabelText = QLabel(category + " modules:")
         headLayout.addWidget(categoryLabelText)
         backBtn = gui.etcButton("Back")
@@ -122,19 +117,17 @@ class CategoryMenu(QWidget):
         
         bodyBox = QGroupBox()
         bodyLayout = QGridLayout()
-        bodyLayout.addWidget(QListWidget(), 0, 0, 2, 0)
-        bodyInfo = QStackedWidget()
-        bodyInfo.addWidget(QGroupBox())
-        bodyLayout.addWidget(bodyInfo, 0, 1, 2, 2)
+        bodyLayout.addWidget(categoryLabelText)
+        bodyLayout.addWidget(bodyList, 1, 0)
+        bodyLayout.addWidget(bodyInfo, 0, 1, 2, 1)
+        bodyLayout.addWidget(backBtn, 2, 0)
         bodyBox.setLayout(bodyLayout)
         
         layout = QVBoxLayout()
-        layout.addWidget(headBox)
+        # layout.addWidget(headBox)
         layout.addWidget(bodyBox)
         self.setLayout(layout)
 
-    def genNav(self, navFolder):
-        a=1
 
 class AboutPage(QWidget):
     # class for about page
