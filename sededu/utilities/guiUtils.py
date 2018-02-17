@@ -1,8 +1,9 @@
-import os
+import os, subprocess
 import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
+
 
 class NavButton(QPushButton):
     def __init__(self, category, thisPath, parent=None):
@@ -15,6 +16,7 @@ class NavButton(QPushButton):
         self.setIcon(iIcon)
         # self.setIconSize(QtCore.QSize(300,200))
         self.setIconSize(QtCore.QSize(225,150))
+
 
 class CategoryList(QListWidget):
     def __init__(self, category, parent):
@@ -37,6 +39,7 @@ class CategoryList(QListWidget):
     def setCategoryItemInfo(self, item):
         self.bodyInfo.setCurrentIndex(item.i)
 
+
 class ModuleInfo(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
@@ -47,25 +50,25 @@ class ModuleInfo(QWidget):
         versionLabel.setFont(versionFont())
         previewLabel = QLabel()
         previewPath = os.path.join(modDirPath, *data["preview"])
-        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled(300, 350, QtCore.Qt.KeepAspectRatio))
+        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
+        	300, 350, QtCore.Qt.KeepAspectRatio))
         authorLabel = ModuleInfoLabel("Author(s): " + data["author"])
         descLabel = ModuleInfoLabel("Description: " + data["shortdesc"])
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
-        execButton.clicked.connect(lambda: self.execScript(execPath))
+        execButton.clicked.connect(lambda: self.execModule(execPath))
         infoLayout.addWidget(titleLabel)
         infoLayout.addWidget(versionLabel)
         infoLayout.addWidget(previewLabel)
         infoLayout.addWidget(authorLabel)
         infoLayout.addWidget(descLabel)
-        infoLayout.addStretch(100)
+        infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
         self.setLayout(infoLayout)
 
-    def execScript(self, path):
-        newWin = QMainWindow()
-        # exec(open(path).read())
-        exec(open(path).read())
+    def execModule(self, path):
+        subprocess.Popen(["python3", path])
+
 
 class ModuleInfoLabel(QLabel):
     def __init__(self, parent=None):
@@ -77,14 +80,12 @@ class ModuleInfoLabel(QLabel):
 
 def etcButton(btnStr):
     etcBtn = QPushButton(btnStr)
-    # etcBtn.resize(1,10)
     return etcBtn
 
 def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
-    # item.setStackIdx = lambda x, i=idx: self.parent().setCurrentIndex(i)
     item.i = idx
-    item.stackIdx = lambda x, i=idx: print(i)
+    # item.stackIdx = lambda x, i=idx: print(i)
     return item
 
 def categoryItemSelected(self, item):

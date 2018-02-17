@@ -103,30 +103,23 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
-        bodyList = gui.CategoryList(category, self)
-        bodyInfo = bodyList.bodyInfo
+        bodyModuleList = gui.CategoryList(category, self)
+        bodyInfo = bodyModuleList.bodyInfo
+        # bodyDocList = bodyModuleList.bodyDocList
+        bodyDocList = QListWidget()
+        bodyDocList.addItem(QListWidgetItem("doc1"))
 
-        headBox = QGroupBox()
-        headLayout = QVBoxLayout()
         categoryLabelText = QLabel(category + " modules:")
-        headLayout.addWidget(categoryLabelText)
         backBtn = gui.etcButton("Back")
         backBtn.clicked.connect(self.parent().drawMain)
-        headLayout.addWidget(backBtn)
-        headBox.setLayout(headLayout)
         
-        bodyBox = QGroupBox()
         bodyLayout = QGridLayout()
-        bodyLayout.addWidget(categoryLabelText)
-        bodyLayout.addWidget(bodyList, 1, 0)
-        bodyLayout.addWidget(bodyInfo, 0, 1, 2, 1)
-        bodyLayout.addWidget(backBtn, 2, 0)
-        bodyBox.setLayout(bodyLayout)
-        
-        layout = QVBoxLayout()
-        # layout.addWidget(headBox)
-        layout.addWidget(bodyBox)
-        self.setLayout(layout)
+        bodyLayout.addWidget(categoryLabelText, 0, 0)
+        bodyLayout.addWidget(bodyModuleList, 1, 0)
+        bodyLayout.addWidget(bodyDocList, 2, 0)
+        bodyLayout.addWidget(bodyInfo, 0, 1, 3, 1)
+        bodyLayout.addWidget(backBtn, 3, 0)
+        self.setLayout(bodyLayout)
 
 
 class AboutPage(QWidget):
