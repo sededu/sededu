@@ -78,7 +78,7 @@ l, = plt.plot(Qw, Qto, lw=2, color='blue')
 # setup title and axises
 plt.title('Discharge - Sediment load Relation')
 
-ax.set_xlabel('Water discharege [m^3/s]')
+ax.set_xlabel('Water discharge [m^3/s]')
 ax.set_ylabel('Sediment load [ton/day]')
 
 plt.ylim(ymin, ymax)
@@ -93,7 +93,7 @@ ax_Cf = plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=ax_color)
 
 slid_S = Slider(ax_S, 'Channel slope [%]', Smin, Smax, valinit=So*100)
 slid_B = Slider(ax_B, 'Channel width [m]', Bmin, Bmax, valinit=Bo) 
-slid_D = Slider(ax_D, 'Gran size [mm]', Dmin, Dmax, valinit=Do*1000.) 
+slid_D = Slider(ax_D, 'Grain size [mm]', Dmin, Dmax, valinit=Do*1000.) 
 slid_Cf = Slider(ax_Cf, 'Channel resitance [-]', Cfmin, Cfmax, valinit=Cfo) 
 
 # setup function to update results

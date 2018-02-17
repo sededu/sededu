@@ -63,6 +63,8 @@ class ModuleInfo(QWidget):
         self.setLayout(infoLayout)
 
     def execScript(self, path):
+        newWin = QMainWindow()
+        # exec(open(path).read())
         exec(open(path).read())
 
 class ModuleInfoLabel(QLabel):
