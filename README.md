@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+SedEdu runs in Python (v3) and utilizes PyQt5 for rendering the interface. Modules rely on scipy, matplotlib, Tkinter, and Pygames.
 
 ```
 Give examples
