@@ -44,7 +44,7 @@ class ModuleInfo(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
-        titleLabel = ModuleInfoLabel(data["title"])
+        titleLabel = infoLabel(data["title"])
         titleLabel.setFont(titleFont())
         versionLabel = QLabel("version " + data["version"])
         versionLabel.setFont(versionFont())
@@ -52,8 +52,8 @@ class ModuleInfo(QWidget):
         previewPath = os.path.join(modDirPath, *data["preview"])
         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
         	300, 350, QtCore.Qt.KeepAspectRatio))
-        authorLabel = ModuleInfoLabel("Author(s): " + data["author"])
-        descLabel = ModuleInfoLabel("Description: " + data["shortdesc"])
+        authorLabel = infoLabel("Author(s): " + data["author"])
+        descLabel = infoLabel("Description: " + data["shortdesc"])
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
@@ -70,7 +70,7 @@ class ModuleInfo(QWidget):
         subprocess.Popen(["python3", path])
 
 
-class ModuleInfoLabel(QLabel):
+class infoLabel(QLabel):
     def __init__(self, parent=None):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)

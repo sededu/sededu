@@ -20,6 +20,9 @@
 
 import os
 
+## setup script
+# setup()
+
 ## check dependencies
 
 
@@ -32,3 +35,6 @@ import os
 thisDir = os.path.dirname(__file__)
 thisPath = os.path.join(thisDir,'')
 exec(open(thisPath + "sededu/sededuGUI.py").read())
+
+# from sededu import sededuGUI
+# sededuGUI()

@@ -77,6 +77,7 @@ class MainMenu(QWidget):
         etcLayout = QVBoxLayout()
         etcLogo = QLabel() 
         etcLogo.setPixmap(QtGui.QPixmap(os.path.join(privatePath, "sededu.png")))
+        etcDesc = gui.infoLabel("sediment-related educational activity suite")
         etcButtons = QGroupBox()
         etcButtonsLayout = QHBoxLayout()
         etcQuit = gui.etcButton("Quit")
@@ -86,7 +87,8 @@ class MainMenu(QWidget):
         etcButtonsLayout.addWidget(etcQuit)
         etcButtonsLayout.addWidget(etcAbout)
         etcButtons.setLayout(etcButtonsLayout)
-        etcLayout.addWidget(etcLogo, QtCore.Qt.AlignTop)
+        etcLayout.addWidget(etcLogo)
+        etcLayout.addWidget(etcDesc)
         etcLayout.addStretch(100)
         etcLayout.addWidget(etcButtons)
         etcBox.setLayout(etcLayout)
@@ -109,7 +111,8 @@ class CategoryMenu(QWidget):
         bodyDocList = QListWidget()
         bodyDocList.addItem(QListWidgetItem("doc1"))
 
-        categoryLabelText = QLabel(category + " modules:")
+        categoryLabelText = gui.infoLabel(category + " modules:")
+        categoryLabelText.setFont(gui.titleFont())
         backBtn = gui.etcButton("Back")
         backBtn.clicked.connect(self.parent().drawMain)
         
