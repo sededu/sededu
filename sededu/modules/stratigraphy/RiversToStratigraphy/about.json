@@ -1,0 +1,8 @@
+{
+    "title": "Rivers to Stratigraphy",
+    "author": "Andrew J. Moodie",
+    "shortdesc": "Explore how rivers make up different stratigraphic patters",
+    "version": "1.0",
+    "preview": ["private", "preview.png"],
+    "exec": ["module", "rivers_to_stratigraphy.py"]
+}

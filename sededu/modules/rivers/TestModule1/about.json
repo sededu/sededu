@@ -1,8 +1,0 @@
-{
-	"title": "Test Module 1",
-	"author": "Andrew J. Moodie",
-	"shortdesc": "A brief test module 1",
-    "version": "1.0",
-    "preview": ["private", "demo.jpeg"],
-    "exec": ["module", "module_discharge_sediment.py"]
-}

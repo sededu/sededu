@@ -3,6 +3,13 @@
     "author": "Kensuke Naito",
     "shortdesc": "Estimate sediment discharge for specified channel geometry",
     "version": "1.0",
+    "projurl": "https://github.com/kensukename2/SEES_module",
+    "projreadme": ["README.md"],
     "preview": ["private", "demo.jpeg"],
-    "exec": ["module", "module_discharge_sediment.py"]
+    "exec": ["module", "module_discharge_sediment.py"],
+    "docloc": ["documents"],
+    "doclist": {
+    	"theory.pdf": "Theory supporting the module framework", 
+    	"worksheet.pdf": "Worksheet (Grades 10-12)"
+    }
 }

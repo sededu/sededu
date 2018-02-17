@@ -1,8 +1,0 @@
-{
-	"title": "Test Module 2",
-	"author": "Kensuke Naitoooooo",
-	"shortdesc": "A brief test module 2",
-    "version": "1.0",
-    "preview": ["private", "commandprompt.jpeg"],
-    "exec": ["module", "module_discharge_sediment.py"]
-}
