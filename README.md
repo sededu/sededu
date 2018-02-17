@@ -1,6 +1,6 @@
 # SedEdu
 
-SedEdu is a suite of educational activities related to geomorphology and sedimentology. The suite is targeted at grade school educators who want to bring enagaging, interactive, and scientifically relevant activities into their classroom. SedEdu is built entirely in Python and is *free and open source* software. Modules included in SedEdu are built by reseachers at the cutting edge of their fields and are m
+SedEdu is a suite of educational activities related to geomorphology and sedimentology. The suite is targeted at grade school educators who want to bring enagaging, interactive, and scientifically relevant activities into their classroom. SedEdu is built entirely in Python and is *free and open source* software. Modules included in SedEdu are built by reseachers at the cutting edge of their fields and are designed to showcase their research in a digestable manner.
 
 
 ## Getting Started
@@ -49,12 +49,12 @@ See also the list of [contributors](https://github.com/amoodie/sededu/graphs/con
 
 ## License
 
-This project is licensed under the GNU LGPL MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details.
 
 
 ## Acknowledgments
 
-The SedEdu framework was created by Andrew J. Moodie and has received support from 
+The SedEdu framework was created by Andrew J. Moodie and has been supported by: 
 * National Science Foundation under Grant No. 1427262 
 * NSF Graduate Research Fellowship to A.J.M. under Grant No. 1450681. 
 
