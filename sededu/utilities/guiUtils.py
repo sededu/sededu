@@ -37,7 +37,41 @@ class CategoryList(QListWidget):
             idx += 1
 
     def setCategoryItemInfo(self, item):
-        self.bodyInfo.setCurrentIndex(item.i)
+        self.bodyInfo.setCurrentIndex(item.idx)
+
+
+### DEVELOPING BELOW, AS REPLACEMENT FOR CATEGORY LIST CLASS,
+### THIS CLASS SHOULD BUILD ALL COMPONENETS FOR PAGE (WORKING ON DOCLIST NOW)
+### THEN THE CATEGORYMENU CLASS CAN INDEX THEM BACK TO SELF.
+class CategoryInfo(QWidget):
+    def __init__(self, category, parent):
+        QWidget.__init__(self, parent)
+        categoryPath = os.path.join(self.parent().parent().thisPath, \
+            "sededu", "modules", category2path(category))
+        self.moduleList = QListWidget()
+        self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
+        self.infoPage = QStackedWidget()
+        self.docsPage = QStackedWidget()
+        subDirs = subDirPath(categoryPath)
+        idx = 0
+        # make the pages
+        for iDir in subDirs:
+            iData = json.load(open(os.path.join(iDir, "about.json")))
+
+            iInfoPage = ModuleInfo(iDir, iData)
+            iListItem = categoryListItem(idx, iData)
+            self.addItem(iListItem)
+
+            self.infoPage.addWidget(iInfoPage)
+
+            for iDoc in docList:
+                self.docsPage.addWidget(iDocList)
+
+            idx += 1
+
+    def setCategoryItemInfo(self, item):
+        self.bodyInfo.setCurrentIndex(item.idx)
+
 
 
 class ModuleInfo(QWidget):
@@ -84,8 +118,7 @@ def etcButton(btnStr):
 
 def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
-    item.i = idx
-    # item.stackIdx = lambda x, i=idx: print(i)
+    item.idx = idx
     return item
 
 def categoryItemSelected(self, item):
