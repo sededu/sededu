@@ -1,4 +1,4 @@
-import os, subprocess
+import os, subprocess, platform
 import numpy as np
 import json
 from PyQt5.QtWidgets import *
@@ -15,7 +15,7 @@ class NavButton(QPushButton):
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
         # self.setIconSize(QtCore.QSize(300,200))
-        self.setIconSize(QtCore.QSize(225,150))
+        self.setIconSize(QtCore.QSize(225, 150))
 
 
 class CategoryList(QListWidget):
@@ -54,7 +54,6 @@ class CategoryInfo(QWidget):
         self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
         modIdx = 0
-        # make the pages
         for iDir in subDirs:
             iData = json.load(open(os.path.join(iDir, "about.json")))
             iInfoPage = ModuleInfo(iDir, iData)
@@ -62,22 +61,28 @@ class CategoryInfo(QWidget):
             self.moduleList.addItem(iListItem)
             self.infoPageStack.addWidget(iInfoPage)
 
-            docList = filesList(os.path.join(iDir, *iData["docloc"]))
+            docPath = os.path.join(iDir, *iData["docloc"])
+            docList = iData["doclist"]
+            launchList = [os.path.join(docPath, f) for f in list(docList.keys())]
             docIdx = 0
             iDocPage = QWidget()
-            iDocList = QListWidget()
+            self.iDocList = QListWidget()
             iDocPageLayout = QVBoxLayout()
-            iDocPageLayout.addWidget(iDocList)
+            iDocPageLayout.setContentsMargins(0, 0, 0,0)
+            iDocPageLayout.addWidget(QLabel("Activities/worksheets available:"))
+            iDocPageLayout.addWidget(self.iDocList)
+            docLaunch = QPushButton("Open activity")
+            docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
+            iInfoPage.infoLayout.insertWidget(6, docLaunch)
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
                 iDocFile = list(iDocInfo.keys())[docIdx]
-                # print(iDocTitle)
-                iDocList.addItem(iDocTitle)
-                # NEED TO HADNLE WHAT TO DO ON CLICK!!
-                # LAUNCH PDF BUTTON?!
+                self.iDocList.addItem(iDocTitle)
                 docIdx += 1
 
+            self.moduleList.setCurrentRow(0)
+            self.iDocList.setCurrentRow(0)
             iDocPage.setLayout(iDocPageLayout)
             self.docPageStack.addWidget(iDocPage)
             modIdx += 1
@@ -86,12 +91,23 @@ class CategoryInfo(QWidget):
         self.infoPageStack.setCurrentIndex(item.idx)
         self.docPageStack.setCurrentIndex(item.idx)
 
+    def docLaunch(self, launchList):
+        launchIdx = self.iDocList.currentRow()
+        filename = launchList[launchIdx]
+        platType = platform.system()
+        if platType in {"Darwin", "Linux"}:
+            subprocess.Popen(["xdg-open", filename])
+        elif platType in {"Windows"}:
+            subprocess.Popen(["open", filename])
+        else:
+            print("unknown platform type")
 
 
 class ModuleInfo(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
+        infoLayout.setContentsMargins(10, 0, 0, 0)
         titleLabel = infoLabel(data["title"])
         titleLabel.setFont(titleFont())
         versionLabel = QLabel("version " + data["version"])
@@ -99,7 +115,8 @@ class ModuleInfo(QWidget):
         previewLabel = QLabel()
         previewPath = os.path.join(modDirPath, *data["preview"])
         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-        	300, 350, QtCore.Qt.KeepAspectRatio))
+        	350, 350, QtCore.Qt.KeepAspectRatio))
+        previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         authorLabel = infoLabel("Author(s): " + data["author"])
         descLabel = infoLabel("Description: " + data["shortdesc"])
         execButton = QPushButton("Run module")
@@ -112,7 +129,8 @@ class ModuleInfo(QWidget):
         infoLayout.addWidget(descLabel)
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
-        self.setLayout(infoLayout)
+        self.infoLayout = infoLayout
+        self.setLayout(self.infoLayout)
 
     def execModule(self, path):
         subprocess.Popen(["python3", path])

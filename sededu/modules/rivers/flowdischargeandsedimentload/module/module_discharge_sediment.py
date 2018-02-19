@@ -51,6 +51,7 @@ Qto = 0.05 * Czo**2. * tauso**2.5 * (g * Rr * Do**3.)**(1./2.)\
 
 
 # setup the figure
+plt.rcParams['toolbar'] = 'None'
 fig, ax = plt.subplots()
 plt.subplots_adjust(left=0.15, bottom=0.4)
 l, = plt.plot(Qw, Qto, lw=2, color='blue') # plot initial condition

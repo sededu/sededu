@@ -9,6 +9,7 @@ class RootInit(QMainWindow):
     # determine path to private
     thisDir = os.path.dirname(__file__)
     thisPath = os.path.join(thisDir,'')
+    privatePath = os.path.join(thisPath, "sededu", "private")
 
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
@@ -20,6 +21,9 @@ class RootInit(QMainWindow):
         self.setCentralWidget(self.root)
 
         self.initializeGUI()
+        self.setWindowTitle("SedEdu")
+        self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, "sededuicon.png")))
+
 
     def initializeGUI(self):
         main = MainMenu(self) # build MainMenu
@@ -57,7 +61,6 @@ class MainMenu(QWidget):
         super().__init__(parent)
         mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
             "Stratigraphy", "Behind the \nModules"] # read these from file?
-        privatePath = os.path.join(self.parent().thisPath, "sededu", "private")
          
         navBox = QGroupBox() # category navigation box, group title here
         nList = len(mainList)
@@ -72,11 +75,11 @@ class MainMenu(QWidget):
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
-        ## need to stick this into a subclass and make it on the Category/AboutMenu too?
+        ## need to stick this into a subclass
         etcBox = QGroupBox() # etc box, group title here
         etcLayout = QVBoxLayout()
         etcLogo = QLabel() 
-        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(privatePath, "sededu.png")))
+        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(self.parent().privatePath, "sededu.png")))
         etcDesc = gui.infoLabel("sediment-related educational activity suite")
         etcButtons = QGroupBox()
         etcButtonsLayout = QHBoxLayout()
@@ -115,14 +118,15 @@ class CategoryMenu(QWidget):
 
         categoryLabelText = gui.infoLabel(category + " modules:")
         categoryLabelText.setFont(gui.titleFont())
-        backBtn = gui.etcButton("Back")
+        backBtn = gui.etcButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         
         bodyLayout = QGridLayout()
+        # bodyLayout.setContentsMargins(0, 0, 0, 0)
         bodyLayout.addWidget(categoryLabelText, 0, 0)
         bodyLayout.addWidget(moduleList, 1, 0)
         bodyLayout.addWidget(docPageStack, 2, 0)
-        bodyLayout.addWidget(infoPageStack, 0, 1, 3, 1)
+        bodyLayout.addWidget(infoPageStack, 0, 1, 4, 1)
         bodyLayout.addWidget(backBtn, 3, 0)
         self.setLayout(bodyLayout)
 
@@ -164,6 +168,5 @@ class AboutPage(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     root = RootInit()
-    root.setWindowTitle("SedEdu")
     root.show()
     sys.exit(app.exec_())
