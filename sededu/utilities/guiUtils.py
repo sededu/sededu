@@ -50,27 +50,41 @@ class CategoryInfo(QWidget):
             "sededu", "modules", category2path(category))
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
-        self.infoPage = QStackedWidget()
-        self.docsPage = QStackedWidget()
+        self.infoPageStack = QStackedWidget()
+        self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
-        idx = 0
+        modIdx = 0
         # make the pages
         for iDir in subDirs:
             iData = json.load(open(os.path.join(iDir, "about.json")))
-
             iInfoPage = ModuleInfo(iDir, iData)
-            iListItem = categoryListItem(idx, iData)
-            self.addItem(iListItem)
+            iListItem = categoryListItem(modIdx, iData)
+            self.moduleList.addItem(iListItem)
+            self.infoPageStack.addWidget(iInfoPage)
 
-            self.infoPage.addWidget(iInfoPage)
-
+            docList = filesList(os.path.join(iDir, *iData["docloc"]))
+            docIdx = 0
+            iDocPage = QWidget()
+            iDocList = QListWidget()
+            iDocPageLayout = QVBoxLayout()
+            iDocPageLayout.addWidget(iDocList)
             for iDoc in docList:
-                self.docsPage.addWidget(iDocList)
+                iDocInfo = iData["doclist"]
+                iDocTitle = list(iDocInfo.values())[docIdx]
+                iDocFile = list(iDocInfo.keys())[docIdx]
+                # print(iDocTitle)
+                iDocList.addItem(iDocTitle)
+                # NEED TO HADNLE WHAT TO DO ON CLICK!!
+                # LAUNCH PDF BUTTON?!
+                docIdx += 1
 
-            idx += 1
+            iDocPage.setLayout(iDocPageLayout)
+            self.docPageStack.addWidget(iDocPage)
+            modIdx += 1
 
     def setCategoryItemInfo(self, item):
-        self.bodyInfo.setCurrentIndex(item.idx)
+        self.infoPageStack.setCurrentIndex(item.idx)
+        self.docPageStack.setCurrentIndex(item.idx)
 
 
 
@@ -138,10 +152,18 @@ def VLine(self):
 
 ## path definitions 
 def subDirPath(d):
+    # list of direct subdirectories
     return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
 
 def category2path(c):
+    # convert category name to folder name
+    # this is very specific now -- any way to generalize the folders to
+    # case insensitive?
     return c.lower().replace(" ","").replace("\n","")
+
+def filesList(d):
+    # list files in directory
+    return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
 
 ## font definitions
 def versionFont():

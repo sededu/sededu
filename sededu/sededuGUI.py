@@ -105,11 +105,13 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
-        bodyModuleList = gui.CategoryList(category, self)
-        bodyInfo = bodyModuleList.bodyInfo
-        # bodyDocList = bodyModuleList.bodyDocList
-        bodyDocList = QListWidget()
-        bodyDocList.addItem(QListWidgetItem("doc1"))
+        # categInfo = gui.CategoryList(category, self)
+        categInfo = gui.CategoryInfo(category, self)
+        moduleList = categInfo.moduleList
+        infoPageStack = categInfo.infoPageStack
+        docPageStack = categInfo.docPageStack
+        # docPageStack = QListWidget()
+        # docPageStack.addItem(QListWidgetItem("doc1"))
 
         categoryLabelText = gui.infoLabel(category + " modules:")
         categoryLabelText.setFont(gui.titleFont())
@@ -118,9 +120,9 @@ class CategoryMenu(QWidget):
         
         bodyLayout = QGridLayout()
         bodyLayout.addWidget(categoryLabelText, 0, 0)
-        bodyLayout.addWidget(bodyModuleList, 1, 0)
-        bodyLayout.addWidget(bodyDocList, 2, 0)
-        bodyLayout.addWidget(bodyInfo, 0, 1, 3, 1)
+        bodyLayout.addWidget(moduleList, 1, 0)
+        bodyLayout.addWidget(docPageStack, 2, 0)
+        bodyLayout.addWidget(infoPageStack, 0, 1, 3, 1)
         bodyLayout.addWidget(backBtn, 3, 0)
         self.setLayout(bodyLayout)
 
