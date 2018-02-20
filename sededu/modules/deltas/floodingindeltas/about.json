@@ -1,0 +1,14 @@
+{
+    "title": "Flooding risk in low-lying landscapes",
+    "author": "Andrew J. Moodie",
+    "shortdesc": "Explore what flooding looks like in a delta",
+    "version": "0.1",
+    "projurl": "",
+    "projreadme": ["README.md"],
+    "preview": ["private", "guidemo_gif.gif"],
+    "exec": ["src", "backwater_flooding.py"],
+    "docloc": ["docs"],
+    "doclist": {
+    	"flooding_module_9-12.pdf": "Worksheet (Grades 9-12)"
+    }
+}

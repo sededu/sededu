@@ -45,7 +45,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 * **Andrew J. Moodie** - *Initial work* - (https://github.com/amoodie)
 * **Kensuke Naito** - *1 module* - (https://github.com/kensukename2)
 
-See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project.
+See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project in other ways.
 
 
 ## License
