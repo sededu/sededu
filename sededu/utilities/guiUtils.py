@@ -14,35 +14,9 @@ class NavButton(QPushButton):
         iIcon = QtGui.QIcon()
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
-        # self.setIconSize(QtCore.QSize(300,200))
         self.setIconSize(QtCore.QSize(225, 150))
 
 
-class CategoryList(QListWidget):
-    def __init__(self, category, parent):
-        QListWidget.__init__(self, parent)
-        categoryPath = os.path.join(self.parent().parent().thisPath, \
-            "sededu", "modules", category2path(category))
-        self.itemClicked.connect(self.setCategoryItemInfo)
-        self.bodyInfo = QStackedWidget()
-        subDirs = subDirPath(categoryPath)
-        idx = 0
-        for iDir in subDirs:
-            iData = json.load(open(os.path.join(iDir, "about.json")))
-            # iStack = genInfo(iDir, iData)
-            iStack = ModuleInfo(iDir, iData)
-            iListItem = categoryListItem(idx, iData)
-            self.addItem(iListItem)
-            self.bodyInfo.addWidget(iStack)
-            idx += 1
-
-    def setCategoryItemInfo(self, item):
-        self.bodyInfo.setCurrentIndex(item.idx)
-
-
-### DEVELOPING BELOW, AS REPLACEMENT FOR CATEGORY LIST CLASS,
-### THIS CLASS SHOULD BUILD ALL COMPONENETS FOR PAGE (WORKING ON DOCLIST NOW)
-### THEN THE CATEGORYMENU CLASS CAN INDEX THEM BACK TO SELF.
 class CategoryInfo(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
@@ -78,7 +52,9 @@ class CategoryInfo(QWidget):
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
                 iDocFile = list(iDocInfo.keys())[docIdx]
-                self.iDocList.addItem(iDocTitle)
+                iDocListItem = QListWidgetItem(iDocTitle)
+                iDocListItem.setSizeHint(QtCore.QSize(100,30))
+                self.iDocList.addItem(iDocListItem)
                 docIdx += 1
 
             self.moduleList.setCurrentRow(0)
@@ -151,10 +127,8 @@ def etcButton(btnStr):
 def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
     item.idx = idx
+    item.setSizeHint(QtCore.QSize(100,30))
     return item
-
-def categoryItemSelected(self, item):
-    item.setStackIdx()
 
 def HLine(self):
     toto = QFrame()
@@ -168,7 +142,29 @@ def VLine(self):
     toto.setFrameShadow(QFrame.Sunken)
     return toto
 
-## path definitions 
+class headerLogo(QWidget):
+    def __init__(self, privatePath, parent=None):
+        QWidget.__init__(self, parent)
+        headerLayout = QVBoxLayout()
+        etcLogo = QLabel()
+        print(os.path.join(privatePath, "sededu.png"))
+        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(privatePath, "sededu.png")))
+        etcDesc = infoLabel("sediment-related educational activity suite")
+        headerLayout.addWidget(etcLogo)
+        headerLayout.addWidget(etcDesc)
+        self.setLayout(headerLayout)
+
+## one off utils
+def parseReadme(path):
+    self = type('readmeData', (object,), {})()
+    self.readmePath = os.path.join(path, "README.md")
+    self.raw = open(self.readmePath, 'rt')
+    self.lines = [l for l in self.raw]
+    self.summary = self.lines[2].replace("\n","") # this shouldn't be fixed...?
+    # close(self.readmePath)
+    return(self)
+
+## path definitions / file finders
 def subDirPath(d):
     # list of direct subdirectories
     return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
@@ -183,7 +179,7 @@ def filesList(d):
     # list files in directory
     return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
 
-## font definitions
+## font definitions / text modifiers
 def versionFont():
     font = QtGui.QFont()
     font.setBold(False)
@@ -201,4 +197,5 @@ def titleFont():
 def cutTitle():
     # Use QFontMetrics to get measurements, 
     # e.g. the pixel length of a string using QFontMetrics.width().
+    # cut the titles down to textextext... for the list widgets
     a=1

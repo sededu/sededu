@@ -122,7 +122,6 @@ class CategoryMenu(QWidget):
         backBtn.clicked.connect(self.parent().drawMain)
         
         bodyLayout = QGridLayout()
-        # bodyLayout.setContentsMargins(0, 0, 0, 0)
         bodyLayout.addWidget(categoryLabelText, 0, 0)
         bodyLayout.addWidget(moduleList, 1, 0)
         bodyLayout.addWidget(docPageStack, 2, 0)
@@ -136,8 +135,11 @@ class AboutPage(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         
+        head1 = gui.headerLogo(self.parent().privatePath)
+
         headBox = QGroupBox()
         headLayout = QVBoxLayout()
+        headLayout.addWidget(head1)
         # categoryLabelText = QLabel(category + " modules:")
         categoryLabelText = QLabel("About the SedEdu project:")
         headLayout.addWidget(categoryLabelText)
@@ -146,14 +148,10 @@ class AboutPage(QWidget):
         headLayout.addWidget(backBtn)
         headBox.setLayout(headLayout)
         
+        readmeText = gui.parseReadme(self.parent().thisPath)
         bodyBox = QGroupBox()
         bodyLayout = QGridLayout()
-        descText = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod \
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, \
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo \
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse \
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non \
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum." 
+        descText = readmeText.summary
         descLabel = QLabel(descText)
         descLabel.setWordWrap(True);
         bodyLayout.addWidget(descLabel)
