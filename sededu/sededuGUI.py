@@ -16,6 +16,7 @@ class RootInit(QMainWindow):
         self.root = QWidget()
         self.stack = QStackedWidget()
         rootLayout = QVBoxLayout()
+        rootLayout.setContentsMargins(0, 0, 0, 0)
         rootLayout.addWidget(self.stack)
         self.root.setLayout(rootLayout)
         self.setCentralWidget(self.root)
@@ -23,6 +24,7 @@ class RootInit(QMainWindow):
         self.initializeGUI()
         self.setWindowTitle("SedEdu")
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, "sededuicon.png")))
+        self.setGeometry(10, 10, 900, 500)
 
 
     def initializeGUI(self):
@@ -117,7 +119,7 @@ class AboutPage(QWidget):
         readmeText = gui.parseReadme(self.parent().thisPath)
         bodyBox = QGroupBox()
         # bodyBox.minimumSizeHint(400)
-        bodyBox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
+        # bodyBox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         bodyLayout = QVBoxLayout()
         categoryLabelText = gui.InfoLabel("About the SedEdu project:")
         categoryLabelText.setFont(gui.titleFont())

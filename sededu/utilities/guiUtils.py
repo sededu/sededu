@@ -14,7 +14,7 @@ class NavButton(QPushButton):
         iIcon = QtGui.QIcon()
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
-        self.setIconSize(QtCore.QSize(225, 150))
+        self.setIconSize(QtCore.QSize(300, 200))
         # self.setScaledContents(True)
 
 
