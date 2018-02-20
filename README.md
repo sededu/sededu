@@ -37,26 +37,26 @@ A step by step series of examples that tell you have to get a development env ru
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
 
 ## Authors
 
 * **Andrew J. Moodie** - *Initial work* - (https://github.com/amoodie)
+* **Kensuke Naito** - *1 module* - (https://github.com/kensukename2)
 
-See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project.
 
 
 ## License
 
-This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details. It is provided without warranty or guaranteed support.
 
 
 ## Acknowledgments
 
-The SedEdu framework was created by Andrew J. Moodie and has been supported by: 
-* National Science Foundation under Grant No. 1427262 
-* NSF Graduate Research Fellowship to A.J.M. under Grant No. 1450681. 
+The SedEdu framework was created by Andrew J. Moodie but has been built through the efforts of many authors (see Authors above). The authors have been supported by: 
+* The National Science Foundation under Grant Nos. 1427262 and 1450681. 
 
 ### Disclaimer
 

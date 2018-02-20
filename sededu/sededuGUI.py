@@ -44,7 +44,6 @@ class RootInit(QMainWindow):
         self.stack.addWidget(btmodsMenu)
     
     def drawMain(self):
-        # self.setLayout(mainLayout)
         self.stack.setCurrentIndex(0)
 
     def drawNav(self, idx):
@@ -75,31 +74,12 @@ class MainMenu(QWidget):
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
-        ## need to stick this into a subclass
-        etcBox = QGroupBox() # etc box, group title here
-        etcLayout = QVBoxLayout()
-        etcLogo = QLabel() 
-        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(self.parent().privatePath, "sededu.png")))
-        etcDesc = gui.infoLabel("sediment-related educational activity suite")
-        etcButtons = QGroupBox()
-        etcButtonsLayout = QHBoxLayout()
-        etcQuit = gui.etcButton("Quit")
-        etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        etcAbout = gui.etcButton("About")
-        etcAbout.clicked.connect(self.parent().drawAbout)
-        etcButtonsLayout.addWidget(etcQuit)
-        etcButtonsLayout.addWidget(etcAbout)
-        etcButtons.setLayout(etcButtonsLayout)
-        etcLayout.addWidget(etcLogo)
-        etcLayout.addWidget(etcDesc)
-        etcLayout.addStretch(100)
-        etcLayout.addWidget(etcButtons)
-        etcBox.setLayout(etcLayout)
+        etcBox = gui.EtcBox("main", self)
 
-        layout = QGridLayout() #
-        layout.addWidget(navBox, 0, 2, 0, 4)
-        layout.addWidget(etcBox, 0, 0)
-        layout.addWidget(gui.VLine(self), 0, 1)
+        layout = QHBoxLayout()
+        layout.addWidget(etcBox)
+        layout.addWidget(gui.VLine(self))
+        layout.addWidget(navBox, 100)
         self.setLayout(layout)
 
 
@@ -108,15 +88,12 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
         
-        # categInfo = gui.CategoryList(category, self)
         categInfo = gui.CategoryInfo(category, self)
         moduleList = categInfo.moduleList
         infoPageStack = categInfo.infoPageStack
         docPageStack = categInfo.docPageStack
-        # docPageStack = QListWidget()
-        # docPageStack.addItem(QListWidgetItem("doc1"))
 
-        categoryLabelText = gui.infoLabel(category + " modules:")
+        categoryLabelText = gui.InfoLabel(category + " modules:")
         categoryLabelText.setFont(gui.titleFont())
         backBtn = gui.etcButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
@@ -135,31 +112,34 @@ class AboutPage(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         
-        head1 = gui.headerLogo(self.parent().privatePath)
-
-        headBox = QGroupBox()
-        headLayout = QVBoxLayout()
-        headLayout.addWidget(head1)
-        # categoryLabelText = QLabel(category + " modules:")
-        categoryLabelText = QLabel("About the SedEdu project:")
-        headLayout.addWidget(categoryLabelText)
-        backBtn = gui.etcButton("Back")
-        backBtn.clicked.connect(self.parent().drawMain)
-        headLayout.addWidget(backBtn)
-        headBox.setLayout(headLayout)
+        etcBox = gui.EtcBox("about", self)
         
         readmeText = gui.parseReadme(self.parent().thisPath)
         bodyBox = QGroupBox()
-        bodyLayout = QGridLayout()
-        descText = readmeText.summary
-        descLabel = QLabel(descText)
-        descLabel.setWordWrap(True);
+        # bodyBox.minimumSizeHint(400)
+        bodyBox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
+        bodyLayout = QVBoxLayout()
+        categoryLabelText = gui.InfoLabel("About the SedEdu project:")
+        categoryLabelText.setFont(gui.titleFont())
+        # descText = readmeText.summary
+        descLabel = QLabel(readmeText.summary)
+        descLabel.setWordWrap(True)
+        # descLabel.setFixedWidth(400)
+        bodyLayout.addWidget(categoryLabelText)
         bodyLayout.addWidget(descLabel)
+        bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
+        bodyLayout.addWidget(gui.InfoLabel("Contributors:"))
+        bodyLayout.addWidget(gui.InfoLabel(readmeText.contributors))
+        bodyLayout.addStretch(10)
+        bodyLayout.addWidget(gui.InfoLabel("Supported by:"))
+        bodyLayout.addWidget(gui.SupportedBox(self.parent().privatePath))
+        
         bodyBox.setLayout(bodyLayout)
         
-        layout = QVBoxLayout()
-        layout.addWidget(headBox)
-        layout.addWidget(bodyBox)
+        layout = QHBoxLayout()
+        layout.addWidget(etcBox)
+        layout.addWidget(gui.VLine(self))
+        layout.addWidget(bodyBox, 100)
         self.setLayout(layout)
 
 

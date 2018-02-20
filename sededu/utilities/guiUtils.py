@@ -15,6 +15,7 @@ class NavButton(QPushButton):
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
         self.setIconSize(QtCore.QSize(225, 150))
+        # self.setScaledContents(True)
 
 
 class CategoryInfo(QWidget):
@@ -84,7 +85,7 @@ class ModuleInfo(QWidget):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
         infoLayout.setContentsMargins(10, 0, 0, 0)
-        titleLabel = infoLabel(data["title"])
+        titleLabel = InfoLabel(data["title"])
         titleLabel.setFont(titleFont())
         versionLabel = QLabel("version " + data["version"])
         versionLabel.setFont(versionFont())
@@ -93,8 +94,8 @@ class ModuleInfo(QWidget):
         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
         	350, 350, QtCore.Qt.KeepAspectRatio))
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
-        authorLabel = infoLabel("Author(s): " + data["author"])
-        descLabel = infoLabel("Description: " + data["shortdesc"])
+        authorLabel = InfoLabel("Author(s): " + data["author"])
+        descLabel = InfoLabel("Description: " + data["shortdesc"])
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
@@ -112,12 +113,40 @@ class ModuleInfo(QWidget):
         subprocess.Popen(["python3", path])
 
 
-class infoLabel(QLabel):
+class InfoLabel(QLabel):
     def __init__(self, parent=None):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
         # self.setFont(font)
+
+class EtcBox(QGroupBox):
+    def __init__(self, auxKey, parent=None):
+        QGroupBox.__init__(self, parent)
+        # etcBox = QGroupBox() # etc box, group title here
+        etcLayout = QVBoxLayout()
+        etcLogo = QLabel() 
+        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(\
+            self.parent().parent().privatePath, "sededu.png")))
+        etcDesc = InfoLabel("sediment-related educational activity suite")
+        etcButtons = QGroupBox()
+        etcButtonsLayout = QHBoxLayout()
+        etcQuit = etcButton("Quit")
+        etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
+        if auxKey in {"main"}:
+            etcAuxButton = etcButton("About")
+            etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
+        elif auxKey in {"about"}:
+            etcAuxButton = etcButton("Back")
+            etcAuxButton.clicked.connect(self.parent().parent().drawMain)
+        etcButtonsLayout.addWidget(etcQuit)
+        etcButtonsLayout.addWidget(etcAuxButton)
+        etcButtons.setLayout(etcButtonsLayout)
+        etcLayout.addWidget(etcLogo)
+        etcLayout.addWidget(etcDesc)
+        etcLayout.addStretch(100)
+        etcLayout.addWidget(etcButtons)
+        self.setLayout(etcLayout)
 
 
 def etcButton(btnStr):
@@ -142,25 +171,40 @@ def VLine(self):
     toto.setFrameShadow(QFrame.Sunken)
     return toto
 
-class headerLogo(QWidget):
+
+class SupportedBox(QWidget):
     def __init__(self, privatePath, parent=None):
         QWidget.__init__(self, parent)
-        headerLayout = QVBoxLayout()
-        etcLogo = QLabel()
-        print(os.path.join(privatePath, "sededu.png"))
-        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(privatePath, "sededu.png")))
-        etcDesc = infoLabel("sediment-related educational activity suite")
-        headerLayout.addWidget(etcLogo)
-        headerLayout.addWidget(etcDesc)
-        self.setLayout(headerLayout)
+        supportLayout = QHBoxLayout()
+        nsfLogo = self.logoPixmap(os.path.join(privatePath, "nsf.gif"))
+        riceLogo = self.logoPixmap(os.path.join(privatePath, "rice.png"))
+        supportLayout.addWidget(nsfLogo)
+        supportLayout.addWidget(riceLogo)
+        supportLayout.addStretch(100)
+        self.setLayout(supportLayout)
+
+    def logoPixmap(self, path):
+        logo = QLabel()
+        logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
+        return logo
+
 
 ## one off utils
 def parseReadme(path):
     self = type('readmeData', (object,), {})()
     self.readmePath = os.path.join(path, "README.md")
     self.raw = open(self.readmePath, 'rt')
-    self.lines = [l for l in self.raw]
-    self.summary = self.lines[2].replace("\n","") # this shouldn't be fixed...?
+    self.lines = [l.replace("\n","").replace("*","") for l in self.raw]
+    self.summaryIdx = self.lines.index("# SedEdu") + 2
+    self.summary = self.lines[self.summaryIdx]
+    self.licenseIdx = self.lines.index("## License") + 2
+    licenseUrl = "<a href=\"https://github.com/amoodie/sededu/blob/master/LICENSE.md\">\
+        full license</a>"
+    self.license = self.lines[self.licenseIdx].replace("[LICENSE.md](LICENSE.md)", licenseUrl)
+    self.contributorsIdx = self.lines.index("## Authors") + 2
+    contributorsRaw = self.lines[self.contributorsIdx:self.licenseIdx-4]
+    self.contributors = "\n".join(contributorsRaw)
+    # print(self.license)
     # close(self.readmePath)
     return(self)
 
