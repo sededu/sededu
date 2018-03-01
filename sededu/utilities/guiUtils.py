@@ -85,8 +85,18 @@ class ModuleInfo(QWidget):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
         infoLayout.setContentsMargins(10, 0, 0, 0)
+        
+        # check and add data if needed
+        data = self.validateData(data)
+        
+        # handle required module fields
         titleLabel = InfoLabel(data["title"])
         titleLabel.setFont(titleFont())
+        authorLabel = InfoLabel("Author(s): " + data["author"])
+        descLabel = InfoLabel("Description: " + data["shortdesc"])
+        
+        # add fields (widgets) if data is present
+        # if 'version' in data
         versionLabel = QLabel("version " + data["version"])
         versionLabel.setFont(versionFont())
         previewLabel = QLabel()
@@ -94,8 +104,7 @@ class ModuleInfo(QWidget):
         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
             350, 350, QtCore.Qt.KeepAspectRatio))
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
-        authorLabel = InfoLabel("Author(s): " + data["author"])
-        descLabel = InfoLabel("Description: " + data["shortdesc"])
+        
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
@@ -108,6 +117,19 @@ class ModuleInfo(QWidget):
         infoLayout.addWidget(execButton)
         self.infoLayout = infoLayout
         self.setLayout(self.infoLayout)
+
+    def validateData(self, data):
+        requiredList = ['title', 'author', 'shortdesc']
+        for k in requiredList:
+            isPresent = k in data.keys()
+            if not isPresent:
+                print("Module missing necessary information in about.json\n")
+                print("Required field: ", k, " is missing")
+                print("Substituting placeholder text")        
+                data[k] = "No " + k + "supplied"
+        if not 'difficulty' in data.keys():
+            data['difficulty'] = 11 # default to end of list
+        return data
 
     def execModule(self, path):
         subprocess.Popen(["python3", path])

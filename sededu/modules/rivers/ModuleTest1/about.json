@@ -1,8 +1,9 @@
 {
     "title": "Test Module 1",
     "author": "Andrew Moodie",
-    "shortdesc": "This is not a drill! It's a test.",
     "version": "0.0",
+    "shortdesc": "This is not a drill! It's a test.",
+    "difficulty": 1,
     "projurl": "",
     "projreadme": ["README.md"],
     "preview": ["private", "commandprompt.jpeg"],
