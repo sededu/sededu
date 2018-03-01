@@ -6,7 +6,6 @@
     "difficulty": 1,
     "projurl": "",
     "projreadme": ["README.md"],
-    "preview": ["private", "commandprompt.jpeg"],
     "exec": ["module", "module_discharge_sediment.py"],
     "docloc": ["documents"],
     "doclist": {

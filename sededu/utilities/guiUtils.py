@@ -85,6 +85,11 @@ class ModuleInfo(QWidget):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
         infoLayout.setContentsMargins(10, 0, 0, 0)
+        optGroup = QGroupBox()
+        optLayout = QGridLayout()
+        optGroup.setLayout(optLayout)
+        # optLayout.setContentsMargins(0, 0, 0, 0)
+        optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
         data = self.validateData(data)
@@ -92,48 +97,66 @@ class ModuleInfo(QWidget):
         # handle required module fields
         titleLabel = InfoLabel(data["title"])
         titleLabel.setFont(titleFont())
-        authorLabel = InfoLabel("Author(s): " + data["author"])
-        descLabel = InfoLabel("Description: " + data["shortdesc"])
-        
-        # add fields (widgets) if data is present
-        # if 'version' in data
+        infoLayout.addWidget(titleLabel)
         versionLabel = QLabel("version " + data["version"])
         versionLabel.setFont(versionFont())
+        infoLayout.addWidget(versionLabel)
+
+        authorLabel = InfoLabel("Author(s): " + data["author"])
+        descLabel = InfoLabel("Description: " + data["shortdesc"])
+        optLayout.addWidget(authorLabel)
+        optLayout.addWidget(descLabel)
+
+        # add fields (widgets) if data is present
         previewLabel = QLabel()
-        previewPath = os.path.join(modDirPath, *data["preview"])
-        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-            350, 350, QtCore.Qt.KeepAspectRatio))
+        if 'preview' in data:
+            previewPath = os.path.join(modDirPath, *data["preview"])
+            if os.path.isfile(previewPath): # check that pixmap exists
+                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
+                    350, 350, QtCore.Qt.KeepAspectRatio))
+            else: # preview path supplied, but no image found
+                previewLabel.setText("**Image not found**")
+        else: # no preview path supplied
+            previewLabel.setText("**Image not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
-        
+        infoLayout.addWidget(previewLabel)
+
+        infoLayout.addWidget(optGroup)
+
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
-        infoLayout.addWidget(titleLabel)
-        infoLayout.addWidget(versionLabel)
-        infoLayout.addWidget(previewLabel)
-        infoLayout.addWidget(authorLabel)
-        infoLayout.addWidget(descLabel)
+        
+        
+        
+        
+
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
         self.infoLayout = infoLayout
         self.setLayout(self.infoLayout)
 
     def validateData(self, data):
-        requiredList = ['title', 'author', 'shortdesc']
+        requiredList = ['title', 'version', 'author', 'shortdesc', 'exec']
         for k in requiredList:
             isPresent = k in data.keys()
             if not isPresent:
                 print("Module missing necessary information in about.json\n")
                 print("Required field: ", k, " is missing")
-                print("Substituting placeholder text")        
-                data[k] = "No " + k + "supplied"
+                print("Substituting filler text")        
+                if not k == 'exec':
+                    data[k] = "No " + k + " supplied" # set appr filler text
+                else:
+                    data[k] = False # set 'exec' to false
         if not 'difficulty' in data.keys():
             data['difficulty'] = 11 # default to end of list
         return data
 
     def execModule(self, path):
-        subprocess.Popen(["python3", path])
-
+        if path:
+            subprocess.Popen(["python3", path])
+        else: # path is flase, no exec provided
+            print('No exec supplied, nothing to execute...')
 
 class InfoLabel(QLabel):
     def __init__(self, parent=None):
