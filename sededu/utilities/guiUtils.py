@@ -102,12 +102,6 @@ class ModuleInfo(QWidget):
         versionLabel.setFont(versionFont())
         infoLayout.addWidget(versionLabel)
 
-        authorLabel = InfoLabel("Author(s): " + data["author"])
-        descLabel = InfoLabel("Description: " + data["shortdesc"])
-        optLayout.addWidget(authorLabel)
-        optLayout.addWidget(descLabel)
-
-        # add fields (widgets) if data is present
         previewLabel = QLabel()
         if 'preview' in data:
             previewPath = os.path.join(modDirPath, *data["preview"])
@@ -120,6 +114,17 @@ class ModuleInfo(QWidget):
             previewLabel.setText("**Preview not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         infoLayout.addWidget(previewLabel)
+
+        # handle optional module fields (replace with for loop with dict of keys?)
+        optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+        optLayout.addWidget(InfoLabel(data["author"]), optLayoutInc, 1)
+        optLayoutInc = optLayoutInc + 1
+
+        optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+        optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
+        optLayoutInc = optLayoutInc + 1
+
+        
 
         infoLayout.addWidget(optGroup)
 
