@@ -117,7 +117,7 @@ class ModuleInfo(QWidget):
             else: # preview path supplied, but no image found
                 previewLabel.setText("**Image not found**")
         else: # no preview path supplied
-            previewLabel.setText("**Image not provided**")
+            previewLabel.setText("**Preview not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         infoLayout.addWidget(previewLabel)
 
