@@ -124,7 +124,8 @@ class ModuleInfo(QWidget):
         optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
         optLayoutInc = optLayoutInc + 1
 
-        
+        if 'projurl' in data:
+
 
         infoLayout.addWidget(optGroup)
 
@@ -143,6 +144,8 @@ class ModuleInfo(QWidget):
 
     def validateData(self, data):
         requiredList = ['title', 'version', 'author', 'shortdesc', 'exec']
+        # add support for more parsing here, if no version v=1.0, 
+        # if no author "sededu authors", etc. (use a dict for lookup?) -- if required list is dict with values to replace with should work
         for k in requiredList:
             isPresent = k in data.keys()
             if not isPresent:
