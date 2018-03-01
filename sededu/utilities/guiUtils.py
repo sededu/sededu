@@ -43,7 +43,7 @@ class CategoryInfo(QWidget):
             iDocPage = QWidget()
             self.iDocList = QListWidget()
             iDocPageLayout = QVBoxLayout()
-            iDocPageLayout.setContentsMargins(0, 0, 0,0)
+            iDocPageLayout.setContentsMargins(0, 0, 0, 0)
             iDocPageLayout.addWidget(QLabel("Activities/worksheets available:"))
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
@@ -84,7 +84,7 @@ class ModuleInfo(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
-        infoLayout.setContentsMargins(10, 0, 0, 0)
+        infoLayout.setContentsMargins(0, 0, 0, 0)
         optGroup = QGroupBox()
         optLayout = QGridLayout()
         optGroup.setLayout(optLayout)
@@ -124,18 +124,13 @@ class ModuleInfo(QWidget):
         optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
         optLayoutInc = optLayoutInc + 1
 
-        if 'projurl' in data:
-
+        # if 'projurl' in data:
 
         infoLayout.addWidget(optGroup)
 
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
-        
-        
-        
-        
 
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
