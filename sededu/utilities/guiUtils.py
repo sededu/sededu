@@ -92,7 +92,7 @@ class ModuleInfo(QWidget):
         previewLabel = QLabel()
         previewPath = os.path.join(modDirPath, *data["preview"])
         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-        	350, 350, QtCore.Qt.KeepAspectRatio))
+            350, 350, QtCore.Qt.KeepAspectRatio))
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         authorLabel = InfoLabel("Author(s): " + data["author"])
         descLabel = InfoLabel("Description: " + data["shortdesc"])

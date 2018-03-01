@@ -13,13 +13,8 @@ class RootInit(QMainWindow):
 
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
-        self.root = QWidget()
         self.stack = QStackedWidget()
-        rootLayout = QVBoxLayout()
-        rootLayout.setContentsMargins(0, 0, 0, 0)
-        rootLayout.addWidget(self.stack)
-        self.root.setLayout(rootLayout)
-        self.setCentralWidget(self.root)
+        self.setCentralWidget(self.stack)
 
         self.initializeGUI()
         self.setWindowTitle("SedEdu")

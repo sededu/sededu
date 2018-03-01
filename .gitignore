@@ -107,5 +107,11 @@ venv.bak/
 # backup/old code storage
 *.bak
 
+# sublime files
+*.sublime-project
+*.sublime-workspace
+
 # svg files in private
 /sededu/private/*.svg
+
+
