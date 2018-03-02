@@ -43,7 +43,7 @@ class CategoryInfo(QWidget):
             iDocPage = QWidget()
             self.iDocList = QListWidget()
             iDocPageLayout = QVBoxLayout()
-            iDocPageLayout.setContentsMargins(0, 0, 0,0)
+            iDocPageLayout.setContentsMargins(0, 0, 0, 0)
             iDocPageLayout.addWidget(QLabel("Activities/worksheets available:"))
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
@@ -64,9 +64,11 @@ class CategoryInfo(QWidget):
             self.docPageStack.addWidget(iDocPage)
             modIdx += 1
 
+
     def setCategoryItemInfo(self, item):
         self.infoPageStack.setCurrentIndex(item.idx)
         self.docPageStack.setCurrentIndex(item.idx)
+
 
     def docLaunch(self, launchList):
         launchIdx = self.iDocList.currentRow()
@@ -84,33 +86,83 @@ class ModuleInfo(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
-        infoLayout.setContentsMargins(10, 0, 0, 0)
+        infoLayout.setContentsMargins(0, 0, 0, 0)
+        optGroup = QGroupBox()
+        optLayout = QGridLayout()
+        optGroup.setLayout(optLayout)
+        # optLayout.setContentsMargins(0, 0, 0, 0)
+        optLayoutInc = 0 # layout incrementer
+        
+        # check and add data if needed
+        data = self.validateData(data)
+        
+        # handle required module fields
         titleLabel = InfoLabel(data["title"])
         titleLabel.setFont(titleFont())
+        infoLayout.addWidget(titleLabel)
         versionLabel = QLabel("version " + data["version"])
         versionLabel.setFont(versionFont())
+        infoLayout.addWidget(versionLabel)
+
         previewLabel = QLabel()
-        previewPath = os.path.join(modDirPath, *data["preview"])
-        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-            350, 350, QtCore.Qt.KeepAspectRatio))
+        if 'preview' in data:
+            previewPath = os.path.join(modDirPath, *data["preview"])
+            if os.path.isfile(previewPath): # check that pixmap exists
+                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
+                    350, 350, QtCore.Qt.KeepAspectRatio))
+            else: # preview path supplied, but no image found
+                previewLabel.setText("**Image not found**")
+        else: # no preview path supplied
+            previewLabel.setText("**Preview not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
-        authorLabel = InfoLabel("Author(s): " + data["author"])
-        descLabel = InfoLabel("Description: " + data["shortdesc"])
+        infoLayout.addWidget(previewLabel)
+
+        # handle optional module fields (replace with for loop with dict of keys?)
+        optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+        optLayout.addWidget(InfoLabel(data["author"]), optLayoutInc, 1)
+        optLayoutInc = optLayoutInc + 1
+
+        optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+        optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
+        optLayoutInc = optLayoutInc + 1
+
+        # if 'projurl' in data:
+
+        infoLayout.addWidget(optGroup)
+
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
-        infoLayout.addWidget(titleLabel)
-        infoLayout.addWidget(versionLabel)
-        infoLayout.addWidget(previewLabel)
-        infoLayout.addWidget(authorLabel)
-        infoLayout.addWidget(descLabel)
+
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
         self.infoLayout = infoLayout
         self.setLayout(self.infoLayout)
 
+
+    def validateData(self, data):
+        # in reqDict, value 0 indicates to print default, otherwise print the value
+        reqDict = {'title':0, 'version':'1.0', 'author':'The SedEdu contributors', 
+                   'shortdesc':0, 'exec':False, 'difficulty':11}
+        for k, v in reqDict.items():
+            isPresent = k in data.keys()
+            if not isPresent:
+                print("Module missing necessary information in about.json")
+                print("Required field: ", k, " is missing\n")
+                if v == 0: # if default print:
+                    print('got here')
+                    data[k] = "No " + k + " supplied" # set appr filler text
+                else:
+                    data[k] = v
+
+        return data
+
+
     def execModule(self, path):
-        subprocess.Popen(["python3", path])
+        if path:
+            subprocess.Popen(["python3", path])
+        else: # path is flase, no exec provided
+            print('No exec supplied, nothing to execute...')
 
 
 class InfoLabel(QLabel):
@@ -119,6 +171,7 @@ class InfoLabel(QLabel):
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
         # self.setFont(font)
+
 
 class EtcBox(QGroupBox):
     def __init__(self, auxKey, parent=None):
@@ -153,17 +206,20 @@ def etcButton(btnStr):
     etcBtn = QPushButton(btnStr)
     return etcBtn
 
+
 def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
     item.idx = idx
     item.setSizeHint(QtCore.QSize(100,30))
     return item
 
+
 def HLine(self):
     toto = QFrame()
     toto.setFrameShape(QFrame.HLine)
     toto.setFrameShadow(QFrame.Sunken)
     return toto
+
 
 def VLine(self):
     toto = QFrame()
@@ -182,6 +238,7 @@ class SupportedBox(QWidget):
         supportLayout.addWidget(riceLogo)
         supportLayout.addStretch(100)
         self.setLayout(supportLayout)
+
 
     def logoPixmap(self, path):
         logo = QLabel()
@@ -208,10 +265,12 @@ def parseReadme(path):
     # close(self.readmePath)
     return(self)
 
+
 ## path definitions / file finders
 def subDirPath(d):
     # list of direct subdirectories
     return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
+
 
 def category2path(c):
     # convert category name to folder name
@@ -219,9 +278,11 @@ def category2path(c):
     # case insensitive?
     return c.lower().replace(" ","").replace("\n","")
 
+
 def filesList(d):
     # list files in directory
     return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
+
 
 ## font definitions / text modifiers
 def versionFont():
@@ -231,12 +292,14 @@ def versionFont():
     font.setPointSize(9)
     return font
 
+
 def titleFont():
     font = QtGui.QFont()
     font.setBold(True)
     font.setItalic(False)
     font.setPointSize(14)
     return font
+
 
 def cutTitle():
     # Use QFontMetrics to get measurements, 
