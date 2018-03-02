@@ -48,7 +48,7 @@ class CategoryInfo(QWidget):
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
             docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
-            iInfoPage.infoLayout.insertWidget(6, docLaunch)
+            iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
@@ -90,14 +90,15 @@ class ModuleInfo(QWidget):
         optGroup = QGroupBox()
         optLayout = QGridLayout()
         optGroup.setLayout(optLayout)
-        # optLayout.setContentsMargins(0, 0, 0, 0)
+        optGroup.setFlat(True)
+        optLayout.setContentsMargins(2, 0, 2, 0)
         optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
         data = self.validateData(data)
         
         # handle required module fields
-        titleLabel = InfoLabel(data["title"])
+        titleLabel = InfoLabel(cutTitle(data["title"]))
         titleLabel.setFont(titleFont())
         infoLayout.addWidget(titleLabel)
         versionLabel = QLabel("version " + data["version"])
@@ -301,8 +302,9 @@ def titleFont():
     return font
 
 
-def cutTitle():
+def cutTitle(text0):
     # Use QFontMetrics to get measurements, 
     # e.g. the pixel length of a string using QFontMetrics.width().
     # cut the titles down to textextext... for the list widgets
-    a=1
+    text = text0
+    return text

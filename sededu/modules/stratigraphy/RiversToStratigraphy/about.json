@@ -3,13 +3,13 @@
     "author": "Andrew J. Moodie",
     "shortdesc": "Explore how rivers make up different stratigraphic patters",
     "version": "1.0",
-    "projurl": "",
+    "projurl": "https://github.com/amoodie/rivers2stratigraphy",
     "projreadme": ["README.md"],
+    "difficulty": 5,
     "preview": ["private", "preview.png"],
     "exec": ["module", "rivers_to_stratigraphy.py"],
     "docloc": ["documents"],
     "doclist": {
         "worksheet.pdf": "Worksheet (Grades 10-12)"
     }
-
 }
