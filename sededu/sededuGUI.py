@@ -90,7 +90,7 @@ class CategoryMenu(QWidget):
         infoPageStack = categInfo.infoPageStack
         docPageStack = categInfo.docPageStack
 
-        categoryLabelText = gui.InfoLabel(category + " modules:")
+        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"))
         categoryLabelText.setFont(gui.titleFont())
         backBtn = gui.etcButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)

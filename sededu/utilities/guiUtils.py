@@ -48,7 +48,7 @@ class CategoryInfo(QWidget):
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
             docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
-            iInfoPage.infoLayout.insertWidget(6, docLaunch)
+            iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
@@ -90,14 +90,15 @@ class ModuleInfo(QWidget):
         optGroup = QGroupBox()
         optLayout = QGridLayout()
         optGroup.setLayout(optLayout)
-        # optLayout.setContentsMargins(0, 0, 0, 0)
+        optGroup.setFlat(True)
+        optLayout.setContentsMargins(2, 0, 2, 0)
         optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
         data = self.validateData(data)
         
         # handle required module fields
-        titleLabel = InfoLabel(data["title"])
+        titleLabel = InfoLabel(cutTitle(data["title"]))
         titleLabel.setFont(titleFont())
         infoLayout.addWidget(titleLabel)
         versionLabel = QLabel("version " + data["version"])
@@ -301,8 +302,18 @@ def titleFont():
     return font
 
 
-def cutTitle():
+def cutTitle(text0):
     # Use QFontMetrics to get measurements, 
     # e.g. the pixel length of a string using QFontMetrics.width().
     # cut the titles down to textextext... for the list widgets
-    a=1
+
+    # also removes word module from end of string if two present
+    splt_t0 = text0.split()
+    spltend_t0 = splt_t0[-2:]
+    nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()] 
+                 for x in spltend_t0 ]
+    if nospec_t0[0] == nospec_t0[1]: # if last two words are same (i.e., 'modules')
+        text = ' '.join(splt_t0[:-1]) + ":"
+    else:
+        text = text0
+    return text
