@@ -64,9 +64,11 @@ class CategoryInfo(QWidget):
             self.docPageStack.addWidget(iDocPage)
             modIdx += 1
 
+
     def setCategoryItemInfo(self, item):
         self.infoPageStack.setCurrentIndex(item.idx)
         self.docPageStack.setCurrentIndex(item.idx)
+
 
     def docLaunch(self, launchList):
         launchIdx = self.iDocList.currentRow()
@@ -137,23 +139,24 @@ class ModuleInfo(QWidget):
         self.infoLayout = infoLayout
         self.setLayout(self.infoLayout)
 
+
     def validateData(self, data):
-        requiredList = ['title', 'version', 'author', 'shortdesc', 'exec']
-        # add support for more parsing here, if no version v=1.0, 
-        # if no author "sededu authors", etc. (use a dict for lookup?) -- if required list is dict with values to replace with should work
-        for k in requiredList:
+        # in reqDict, value 0 indicates to print default, otherwise print the value
+        reqDict = {'title':0, 'version':'1.0', 'author':'The SedEdu contributors', 
+                   'shortdesc':0, 'exec':False, 'difficulty':11}
+        for k, v in reqDict.items():
             isPresent = k in data.keys()
             if not isPresent:
-                print("Module missing necessary information in about.json\n")
-                print("Required field: ", k, " is missing")
-                print("Substituting filler text")        
-                if not k == 'exec':
+                print("Module missing necessary information in about.json")
+                print("Required field: ", k, " is missing\n")
+                if v == 0: # if default print:
+                    print('got here')
                     data[k] = "No " + k + " supplied" # set appr filler text
                 else:
-                    data[k] = False # set 'exec' to false
-        if not 'difficulty' in data.keys():
-            data['difficulty'] = 11 # default to end of list
+                    data[k] = v
+
         return data
+
 
     def execModule(self, path):
         if path:
@@ -161,12 +164,14 @@ class ModuleInfo(QWidget):
         else: # path is flase, no exec provided
             print('No exec supplied, nothing to execute...')
 
+
 class InfoLabel(QLabel):
     def __init__(self, parent=None):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
         # self.setFont(font)
+
 
 class EtcBox(QGroupBox):
     def __init__(self, auxKey, parent=None):
@@ -201,17 +206,20 @@ def etcButton(btnStr):
     etcBtn = QPushButton(btnStr)
     return etcBtn
 
+
 def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
     item.idx = idx
     item.setSizeHint(QtCore.QSize(100,30))
     return item
 
+
 def HLine(self):
     toto = QFrame()
     toto.setFrameShape(QFrame.HLine)
     toto.setFrameShadow(QFrame.Sunken)
     return toto
+
 
 def VLine(self):
     toto = QFrame()
@@ -230,6 +238,7 @@ class SupportedBox(QWidget):
         supportLayout.addWidget(riceLogo)
         supportLayout.addStretch(100)
         self.setLayout(supportLayout)
+
 
     def logoPixmap(self, path):
         logo = QLabel()
@@ -256,10 +265,12 @@ def parseReadme(path):
     # close(self.readmePath)
     return(self)
 
+
 ## path definitions / file finders
 def subDirPath(d):
     # list of direct subdirectories
     return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
+
 
 def category2path(c):
     # convert category name to folder name
@@ -267,9 +278,11 @@ def category2path(c):
     # case insensitive?
     return c.lower().replace(" ","").replace("\n","")
 
+
 def filesList(d):
     # list files in directory
     return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
+
 
 ## font definitions / text modifiers
 def versionFont():
@@ -279,12 +292,14 @@ def versionFont():
     font.setPointSize(9)
     return font
 
+
 def titleFont():
     font = QtGui.QFont()
     font.setBold(True)
     font.setItalic(False)
     font.setPointSize(14)
     return font
+
 
 def cutTitle():
     # Use QFontMetrics to get measurements, 
