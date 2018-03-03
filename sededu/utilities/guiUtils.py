@@ -26,6 +26,7 @@ class CategoryInfo(QWidget):
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
         self.infoPageStack = QStackedWidget()
+        # self.infoPageStack.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
         self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
         modIdx = 0
@@ -171,6 +172,7 @@ class InfoLabel(QLabel):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
+        self.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
         # self.setFont(font)
 
 
