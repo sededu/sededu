@@ -10,12 +10,11 @@ class NavButton(QPushButton):
         QPushButton.__init__(self, parent)
         iPath = os.path.join(thisPath, "sededu", "private", \
         	category2path(category) + ".png")
-        # print(category + " path: " + iPath)
         iIcon = QtGui.QIcon()
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
         self.setIconSize(QtCore.QSize(300, 200))
-        # self.setScaledContents(True)
+
 
 
 class CategoryInfo(QWidget):
@@ -26,13 +25,15 @@ class CategoryInfo(QWidget):
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
         self.infoPageStack = QStackedWidget()
-        # self.infoPageStack.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
+        self.infoPageStack.setSizePolicy(QSizePolicy(
+                                         QSizePolicy.MinimumExpanding,
+                                         QSizePolicy.Preferred))
         self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
         modIdx = 0
         for iDir in subDirs:
             iData = json.load(open(os.path.join(iDir, "about.json")))
-            iInfoPage = ModuleInfo(iDir, iData)
+            iInfoPage = ModuleInfoPage(iDir, iData)
             iListItem = categoryListItem(modIdx, iData)
             self.moduleList.addItem(iListItem)
             self.infoPageStack.addWidget(iInfoPage)
@@ -49,7 +50,9 @@ class CategoryInfo(QWidget):
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
             docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
-            iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+            if len(launchList) > 0:
+                iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+                # iInfoPage.infoLayout.goButtonLayout.insertWidget(0, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
@@ -83,11 +86,12 @@ class CategoryInfo(QWidget):
             print("unknown platform type")
 
 
-class ModuleInfo(QWidget):
+
+class ModuleInfoPage(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
-        infoLayout.setContentsMargins(0, 0, 0, 0)
+        infoLayout.setContentsMargins(10, 0, 0, 0)
         optGroup = QGroupBox()
         optLayout = QGridLayout()
         optGroup.setLayout(optLayout)
@@ -114,7 +118,7 @@ class ModuleInfo(QWidget):
                     350, 350, QtCore.Qt.KeepAspectRatio))
             else: # preview path supplied, but no image found
                 previewLabel.setText("**Image not found**")
-                previewLabel.setGeometry(QtCore.QRect(0, 0, 350, 350))
+                previewLabel.setMinimumSize(350,30)
         else: # no preview path supplied
             previewLabel.setText("**Preview not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
@@ -133,9 +137,15 @@ class ModuleInfo(QWidget):
 
         infoLayout.addWidget(optGroup)
 
+        # goButtonGrp = QGroupBox()
+        # goButtonLayout = QHBoxLayout()
+        # goButtonGrp.setLayout(goButtonLayout)
+        # goButtonGrp.setFlat(True)
+        # goButtonLayout.setContentsMargins(2, 0, 2, 0)
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
+        # goButtonLayout.addWidget(execButton)
 
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
@@ -167,6 +177,9 @@ class ModuleInfo(QWidget):
             print("bad path supplied in about.json?")
 
 
+
+
+
 class InfoLabel(QLabel):
     def __init__(self, parent=None):
         # add support to pass a font, and default to basic text if none
@@ -176,6 +189,7 @@ class InfoLabel(QLabel):
                            QSizePolicy.MinimumExpanding,
                            QSizePolicy.Preferred))
         # self.setFont(font)
+
 
 
 class EtcBox(QGroupBox):

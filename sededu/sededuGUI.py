@@ -99,9 +99,9 @@ class CategoryMenu(QWidget):
         bodyLayout.addWidget(categoryLabelText, 0, 0)
         bodyLayout.addWidget(moduleList, 1, 0)
         bodyLayout.addWidget(docPageStack, 2, 0)
-        bodyLayout.addWidget(gui.VLine(self), 0, 1, 4, 1)
-        bodyLayout.addWidget(infoPageStack, 0, 2, 4, 2)
+        bodyLayout.addWidget(infoPageStack, 0, 1, 4, 1)
         bodyLayout.addWidget(backBtn, 3, 0)
+        bodyLayout.setContentsMargins(15, 15, 15, 15)
         self.setLayout(bodyLayout)
 
 
