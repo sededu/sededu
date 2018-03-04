@@ -7,7 +7,6 @@
     "projreadme": ["README.md"],
     "difficulty": 5,
     "preview": ["private", "preview.png"],
-    "exec": ["module", "rivers_to_stratigraphy.py"],
     "docloc": ["documents"],
     "doclist": {
         "worksheet.pdf": "Worksheet (Grades 10-12)"

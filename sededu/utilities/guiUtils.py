@@ -96,7 +96,7 @@ class ModuleInfo(QWidget):
         optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
-        data = self.validateData(data)
+        data = self.validateData(data, modDirPath)
         
         # handle required module fields
         titleLabel = InfoLabel(cutTitle(data["title"]))
@@ -114,6 +114,7 @@ class ModuleInfo(QWidget):
                     350, 350, QtCore.Qt.KeepAspectRatio))
             else: # preview path supplied, but no image found
                 previewLabel.setText("**Image not found**")
+                previewLabel.setGeometry(QtCore.QRect(0, 0, 350, 350))
         else: # no preview path supplied
             previewLabel.setText("**Preview not provided**")
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
@@ -142,29 +143,28 @@ class ModuleInfo(QWidget):
         self.setLayout(self.infoLayout)
 
 
-    def validateData(self, data):
-        # in reqDict, value 0 indicates to print default, otherwise print the value
-        reqDict = {'title':0, 'version':'1.0', 'author':'The SedEdu contributors', 
-                   'shortdesc':0, 'exec':False, 'difficulty':11}
+    def validateData(self, data, modDirPath):
+        # in reqDict, value 'default' indicates to include key in info, otherwise print the value
+        reqDict = {'title':'default', 'version':'1.0', 'author':'The SedEdu contributors', 
+                   'shortdesc':'default', 'exec':['bad_path_supplied'], 'difficulty':11}
         for k, v in reqDict.items():
             isPresent = k in data.keys()
             if not isPresent:
-                print("Module missing necessary information in about.json")
-                print("Required field: ", k, " is missing\n")
-                if v == 0: # if default print:
-                    print('got here')
+                print("Module missing necessary information in:")
+                print(os.path.join(modDirPath, "about.json"))
+                print("Required field:", k, "is missing\n")
+                if v == 'default': # if default print:
                     data[k] = "No " + k + " supplied" # set appr filler text
                 else:
                     data[k] = v
-
         return data
 
 
     def execModule(self, path):
-        if path:
+        try:
             subprocess.Popen(["python3", path])
-        else: # path is flase, no exec provided
-            print('No exec supplied, nothing to execute...')
+        except:
+            print("bad path supplied in about.json?")
 
 
 class InfoLabel(QLabel):
@@ -172,12 +172,14 @@ class InfoLabel(QLabel):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.MinimumExpanding,
+                           QSizePolicy.Preferred))
         # self.setFont(font)
 
 
 class EtcBox(QGroupBox):
-    def __init__(self, auxKey, parent=None):
+    def __init__(self, aux_key, parent=None):
         QGroupBox.__init__(self, parent)
         # etcBox = QGroupBox() # etc box, group title here
         etcLayout = QVBoxLayout()
@@ -189,10 +191,10 @@ class EtcBox(QGroupBox):
         etcButtonsLayout = QHBoxLayout()
         etcQuit = etcButton("Quit")
         etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        if auxKey in {"main"}:
+        if aux_key in {"main"}:
             etcAuxButton = etcButton("About")
             etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
-        elif auxKey in {"about"}:
+        elif aux_key in {"about"}:
             etcAuxButton = etcButton("Back")
             etcAuxButton.clicked.connect(self.parent().parent().drawMain)
         etcButtonsLayout.addWidget(etcQuit)
