@@ -112,15 +112,18 @@ class ModuleInfoPage(QWidget):
 
         previewLabel = QLabel()
         if 'preview' in data:
+            previewHeight = 250
             previewPath = os.path.join(modDirPath, *data["preview"])
             if os.path.isfile(previewPath): # check that pixmap exists
-                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-                    350, 350, QtCore.Qt.KeepAspectRatio))
+                # previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
+                #     350, 350, QtCore.Qt.KeepAspectRatio))
+                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
+                                       previewHeight).copy(QtCore.QRect(
+                                       0,0,previewHeight*(4/3),previewHeight)))
             else: # preview path supplied, but no image found
-                previewLabel.setText("**Image not found**")
-                previewLabel.setMinimumSize(350,30)
+                previewLabel = NoImageFiller("**Image not found**", previewHeight)
         else: # no preview path supplied
-            previewLabel.setText("**Preview not provided**")
+            previewLabel = NoImageFiller("**Preview not provided**", previewHeight)
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         infoLayout.addWidget(previewLabel)
 
@@ -137,11 +140,6 @@ class ModuleInfoPage(QWidget):
 
         infoLayout.addWidget(optGroup)
 
-        # goButtonGrp = QGroupBox()
-        # goButtonLayout = QHBoxLayout()
-        # goButtonGrp.setLayout(goButtonLayout)
-        # goButtonGrp.setFlat(True)
-        # goButtonLayout.setContentsMargins(2, 0, 2, 0)
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
@@ -177,6 +175,19 @@ class ModuleInfoPage(QWidget):
             print("bad path supplied in about.json?")
 
 
+class NoImageFiller(QGroupBox):
+    def __init__(self, labelText, previewHeight, parent=None):
+        # filler image, takes text for label
+        QGroupBox.__init__(self, parent)
+        label = QLabel(labelText)
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        self.setLayout(layout)
+        self.setMinimumHeight(previewHeight)
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.Preferred,
+                           QSizePolicy.Fixed))
 
 
 
