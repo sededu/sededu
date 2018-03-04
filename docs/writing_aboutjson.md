@@ -40,3 +40,6 @@ Can be multiple people, will be printed exactly as written. UTF support?
 
 ### longdesc
 No support for linebreaking!
+
+### preview
+The preview will be scaled to 250 pixels in height, and then cropped to the center of the image at a 4:3 aspect ratio (W:H).

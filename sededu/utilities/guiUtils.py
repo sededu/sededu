@@ -10,12 +10,11 @@ class NavButton(QPushButton):
         QPushButton.__init__(self, parent)
         iPath = os.path.join(thisPath, "sededu", "private", \
         	category2path(category) + ".png")
-        # print(category + " path: " + iPath)
         iIcon = QtGui.QIcon()
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)
         self.setIconSize(QtCore.QSize(300, 200))
-        # self.setScaledContents(True)
+
 
 
 class CategoryInfo(QWidget):
@@ -26,13 +25,15 @@ class CategoryInfo(QWidget):
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
         self.infoPageStack = QStackedWidget()
-        # self.infoPageStack.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
+        self.infoPageStack.setSizePolicy(QSizePolicy(
+                                         QSizePolicy.MinimumExpanding,
+                                         QSizePolicy.Preferred))
         self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
         modIdx = 0
         for iDir in subDirs:
             iData = json.load(open(os.path.join(iDir, "about.json")))
-            iInfoPage = ModuleInfo(iDir, iData)
+            iInfoPage = ModuleInfoPage(iDir, iData)
             iListItem = categoryListItem(modIdx, iData)
             self.moduleList.addItem(iListItem)
             self.infoPageStack.addWidget(iInfoPage)
@@ -49,7 +50,9 @@ class CategoryInfo(QWidget):
             iDocPageLayout.addWidget(self.iDocList)
             docLaunch = QPushButton("Open activity")
             docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
-            iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+            if len(launchList) > 0:
+                iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+                # iInfoPage.infoLayout.goButtonLayout.insertWidget(0, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
                 iDocTitle = list(iDocInfo.values())[docIdx]
@@ -83,11 +86,12 @@ class CategoryInfo(QWidget):
             print("unknown platform type")
 
 
-class ModuleInfo(QWidget):
+
+class ModuleInfoPage(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
         infoLayout = QVBoxLayout()
-        infoLayout.setContentsMargins(0, 0, 0, 0)
+        infoLayout.setContentsMargins(10, 0, 0, 0)
         optGroup = QGroupBox()
         optLayout = QGridLayout()
         optGroup.setLayout(optLayout)
@@ -96,7 +100,7 @@ class ModuleInfo(QWidget):
         optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
-        data = self.validateData(data)
+        data = self.validateData(data, modDirPath)
         
         # handle required module fields
         titleLabel = InfoLabel(cutTitle(data["title"]))
@@ -108,14 +112,18 @@ class ModuleInfo(QWidget):
 
         previewLabel = QLabel()
         if 'preview' in data:
+            previewHeight = 250
             previewPath = os.path.join(modDirPath, *data["preview"])
             if os.path.isfile(previewPath): # check that pixmap exists
-                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-                    350, 350, QtCore.Qt.KeepAspectRatio))
+                # previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
+                #     350, 350, QtCore.Qt.KeepAspectRatio))
+                previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
+                                       previewHeight).copy(QtCore.QRect(
+                                       0,0,previewHeight*(4/3),previewHeight)))
             else: # preview path supplied, but no image found
-                previewLabel.setText("**Image not found**")
+                previewLabel = NoImageFiller("**Image not found**", previewHeight)
         else: # no preview path supplied
-            previewLabel.setText("**Preview not provided**")
+            previewLabel = NoImageFiller("**Preview not provided**", previewHeight)
         previewLabel.setAlignment(QtCore.Qt.AlignCenter)
         infoLayout.addWidget(previewLabel)
 
@@ -135,6 +143,7 @@ class ModuleInfo(QWidget):
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
+        # goButtonLayout.addWidget(execButton)
 
         infoLayout.addStretch(1)
         infoLayout.addWidget(execButton)
@@ -142,29 +151,44 @@ class ModuleInfo(QWidget):
         self.setLayout(self.infoLayout)
 
 
-    def validateData(self, data):
-        # in reqDict, value 0 indicates to print default, otherwise print the value
-        reqDict = {'title':0, 'version':'1.0', 'author':'The SedEdu contributors', 
-                   'shortdesc':0, 'exec':False, 'difficulty':11}
+    def validateData(self, data, modDirPath):
+        # in reqDict, value 'default' indicates to include key in info, otherwise print the value
+        reqDict = {'title':'default', 'version':'1.0', 'author':'The SedEdu contributors', 
+                   'shortdesc':'default', 'exec':['bad_path_supplied'], 'difficulty':11}
         for k, v in reqDict.items():
             isPresent = k in data.keys()
             if not isPresent:
-                print("Module missing necessary information in about.json")
-                print("Required field: ", k, " is missing\n")
-                if v == 0: # if default print:
-                    print('got here')
+                print("Module missing necessary information in:")
+                print(os.path.join(modDirPath, "about.json"))
+                print("Required field:", k, "is missing\n")
+                if v == 'default': # if default print:
                     data[k] = "No " + k + " supplied" # set appr filler text
                 else:
                     data[k] = v
-
         return data
 
 
     def execModule(self, path):
-        if path:
+        try:
             subprocess.Popen(["python3", path])
-        else: # path is flase, no exec provided
-            print('No exec supplied, nothing to execute...')
+        except:
+            print("bad path supplied in about.json?")
+
+
+class NoImageFiller(QGroupBox):
+    def __init__(self, labelText, previewHeight, parent=None):
+        # filler image, takes text for label
+        QGroupBox.__init__(self, parent)
+        label = QLabel(labelText)
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        self.setLayout(layout)
+        self.setMinimumHeight(previewHeight)
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.Preferred,
+                           QSizePolicy.Fixed))
+
 
 
 class InfoLabel(QLabel):
@@ -172,12 +196,15 @@ class InfoLabel(QLabel):
         # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
-        self.setSizePolicy(QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred))
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.MinimumExpanding,
+                           QSizePolicy.Preferred))
         # self.setFont(font)
 
 
+
 class EtcBox(QGroupBox):
-    def __init__(self, auxKey, parent=None):
+    def __init__(self, aux_key, parent=None):
         QGroupBox.__init__(self, parent)
         # etcBox = QGroupBox() # etc box, group title here
         etcLayout = QVBoxLayout()
@@ -189,10 +216,10 @@ class EtcBox(QGroupBox):
         etcButtonsLayout = QHBoxLayout()
         etcQuit = etcButton("Quit")
         etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        if auxKey in {"main"}:
+        if aux_key in {"main"}:
             etcAuxButton = etcButton("About")
             etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
-        elif auxKey in {"about"}:
+        elif aux_key in {"about"}:
             etcAuxButton = etcButton("Back")
             etcAuxButton.clicked.connect(self.parent().parent().drawMain)
         etcButtonsLayout.addWidget(etcQuit)

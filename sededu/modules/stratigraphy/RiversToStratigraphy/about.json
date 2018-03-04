@@ -6,8 +6,8 @@
     "projurl": "https://github.com/amoodie/rivers2stratigraphy",
     "projreadme": ["README.md"],
     "difficulty": 5,
+    "exec": ["module", "rivers2stratigraphy.py"],
     "preview": ["private", "preview.png"],
-    "exec": ["module", "rivers_to_stratigraphy.py"],
     "docloc": ["documents"],
     "doclist": {
         "worksheet.pdf": "Worksheet (Grades 10-12)"
