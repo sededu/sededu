@@ -78,12 +78,17 @@ class CategoryInfo(QWidget):
         launchIdx = self.iDocList.currentRow()
         filename = launchList[launchIdx]
         platType = platform.system()
-        if platType in {"Darwin", "Linux"}:
-            subprocess.Popen(["xdg-open", filename])
-        elif platType in {"Windows"}:
-            subprocess.Popen(["open", filename])
+        if os.path.isfile(filename):
+            if platType in {"Darwin", "Linux"}:
+                subprocess.Popen(["xdg-open", filename])
+            elif platType in {"Windows"}:
+                subprocess.Popen(["open", filename])
+            else:
+                print("unknown platform type")
         else:
-            print("unknown platform type")
+            msg = NoFileMessageBox(filename)
+            msg.exec_()
+        
 
 
 
@@ -168,16 +173,36 @@ class ModuleInfoPage(QWidget):
         return data
 
 
-    def execModule(self, path):
-        try:
-            subprocess.Popen(["python3", path])
-        except:
-            print("bad path supplied in about.json?")
+    def execModule(self, execPath):
+        if os.path.isfile(execPath):
+            subprocess.Popen(["python3", execPath])
+        else:
+            msg = NoFileMessageBox(execPath)
+            msg.exec_()
+
+
+
+class NoFileMessageBox(QMessageBox):
+    # warning nofile mesage box, path is a required arg.
+    # custom text can be passed as string mainText
+    default = 'There was no file found at the specified path.\n\n'
+
+    def __init__(self, givenPath, mainText=default, 
+                 informText=False, parent=None):
+        QMessageBox.__init__(self, parent)
+        self.setIcon(QMessageBox.Critical)
+        self.setText(mainText)
+        if informText:
+            self.setInformativeText(informText)
+        self.setDetailedText(' '.join(['Path given:\n\n', givenPath]))
+        self.setWindowTitle("Error")
+        self.setStandardButtons(QMessageBox.Ok)
+
 
 
 class NoImageFiller(QGroupBox):
+    # filler image, takes text for label
     def __init__(self, labelText, previewHeight, parent=None):
-        # filler image, takes text for label
         QGroupBox.__init__(self, parent)
         label = QLabel(labelText)
         label.setAlignment(QtCore.Qt.AlignCenter)
@@ -192,8 +217,8 @@ class NoImageFiller(QGroupBox):
 
 
 class InfoLabel(QLabel):
+    # add support to pass a font, and default to basic text if none
     def __init__(self, parent=None):
-        # add support to pass a font, and default to basic text if none
         QLabel.__init__(self, parent)
         self.setWordWrap(True)
         self.setSizePolicy(QSizePolicy(
