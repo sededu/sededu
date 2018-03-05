@@ -90,8 +90,7 @@ class CategoryMenu(QWidget):
         infoPageStack = categInfo.infoPageStack
         docPageStack = categInfo.docPageStack
 
-        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"))
-        categoryLabelText.setFont(gui.titleFont())
+        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
         backBtn = gui.etcButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         
@@ -117,8 +116,7 @@ class AboutPage(QWidget):
         # bodyBox.minimumSizeHint(400)
         # bodyBox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         bodyLayout = QVBoxLayout()
-        categoryLabelText = gui.InfoLabel("About the SedEdu project:")
-        categoryLabelText.setFont(gui.titleFont())
+        categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
         # descText = readmeText.summary
         descLabel = QLabel(readmeText.summary)
         descLabel.setWordWrap(True)

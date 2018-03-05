@@ -91,7 +91,6 @@ class CategoryInfo(QWidget):
         
 
 
-
 class ModuleInfoPage(QWidget):
     def __init__(self, modDirPath, data, parent=None):
         QWidget.__init__(self, parent)
@@ -108,11 +107,9 @@ class ModuleInfoPage(QWidget):
         data = self.validateData(data, modDirPath)
         
         # handle required module fields
-        titleLabel = InfoLabel(cutTitle(data["title"]))
-        titleLabel.setFont(titleFont())
+        titleLabel = InfoLabel(cutTitle(data["title"]), titleFont())
         infoLayout.addWidget(titleLabel)
-        versionLabel = QLabel("version " + data["version"])
-        versionLabel.setFont(versionFont())
+        versionLabel = InfoLabel("version " + data["version"], versionFont())
         infoLayout.addWidget(versionLabel)
 
         previewLabel = QLabel()
@@ -120,8 +117,6 @@ class ModuleInfoPage(QWidget):
             previewHeight = 250
             previewPath = os.path.join(modDirPath, *data["preview"])
             if os.path.isfile(previewPath): # check that pixmap exists
-                # previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaled( \
-                #     350, 350, QtCore.Qt.KeepAspectRatio))
                 previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
                                        previewHeight).copy(QtCore.QRect(
                                        0,0,previewHeight*(4/3),previewHeight)))
@@ -218,13 +213,15 @@ class NoImageFiller(QGroupBox):
 
 class InfoLabel(QLabel):
     # add support to pass a font, and default to basic text if none
-    def __init__(self, parent=None):
+    defaultFont = QtGui.QFont()
+    def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
+        self.setText(labelText)
         self.setWordWrap(True)
         self.setSizePolicy(QSizePolicy(
                            QSizePolicy.MinimumExpanding,
                            QSizePolicy.Preferred))
-        # self.setFont(font)
+        self.setFont(theFont)
 
 
 
@@ -257,6 +254,7 @@ class EtcBox(QGroupBox):
         self.setLayout(etcLayout)
 
 
+
 def etcButton(btnStr):
     etcBtn = QPushButton(btnStr)
     return etcBtn
@@ -281,6 +279,7 @@ def VLine(self):
     toto.setFrameShape(QFrame.VLine)
     toto.setFrameShadow(QFrame.Sunken)
     return toto
+
 
 
 class SupportedBox(QWidget):
