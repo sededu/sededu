@@ -42,7 +42,7 @@ DEM[DEM==-9999] = min_ele
 #3|x|4
 #5|6|7
 #load direction
-DIR = np.loadtxt(os.path.join(this_path, 'DIR.txt'),dtype = int, skiprows=6)
+DIR = np.loadtxt(os.path.join(this_path, 'dir.txt'),dtype = int, skiprows=6)
 DIR[DIR==8] = 5
 DIR[DIR==4] = 6
 DIR[DIR==2] = 7
@@ -83,13 +83,13 @@ AREA_new = np.zeros((res_width,res_height),dtype=int)
 
 #setup direction array
 direction = np.zeros((res_width,res_height,8),dtype=int)
-for i in xrange(0,8):
+for i in range(0,8):
     direction[:,:,i][np.transpose(DIR)==i] = 1
 
 #coordinate array
 coordinates = np.zeros((res_width,res_height,2))
-for x_temp in xrange(0,res_width):
-    for y_temp in xrange(0,res_height):
+for x_temp in range(0,res_width):
+    for y_temp in range(0,res_height):
         coordinates[x_temp,y_temp,0] = x_temp * scale
         coordinates[x_temp,y_temp,1] = y_temp * scale
 
