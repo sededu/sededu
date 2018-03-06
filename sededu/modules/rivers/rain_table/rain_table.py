@@ -9,6 +9,7 @@
 
 import pygame
 import numpy as np
+import os
 
 ############################
 ###PARAMETERS###
@@ -26,8 +27,12 @@ f_rate = 60
 ###RASTERS###
 ############################
 
+#this path
+this_dir = os.path.dirname(__file__)
+this_path = os.path.join(this_dir,'')
+
 #load dem
-DEM = np.loadtxt('dem.txt',skiprows=6)
+DEM = np.loadtxt(os.path.join(this_path, 'dem.txt'),skiprows=6)
 res_height,res_width = DEM.shape
 min_ele = np.min(DEM[DEM!=-9999])
 max_ele = np.max(DEM)
@@ -37,7 +42,7 @@ DEM[DEM==-9999] = min_ele
 #3|x|4
 #5|6|7
 #load direction
-DIR = np.loadtxt('DIR.txt',dtype = int, skiprows=6)
+DIR = np.loadtxt(os.path.join(this_path, 'DIR.txt'),dtype = int, skiprows=6)
 DIR[DIR==8] = 5
 DIR[DIR==4] = 6
 DIR[DIR==2] = 7

@@ -9,3 +9,22 @@ see the additional document for more details
 
 ## Writing the module (supported package use)
 enumerate allowed packages here, this is already in the readme?
+
+
+
+
+
+## Common challenges
+
+#### Cannot find files
+Your module will be executed from the location of SedEdu program, so you must determine the location of your files to specify. To load a file in the same directory as your executable called `DEM.txt` try:
+
+```
+import numpy as np
+import os
+
+this_dir = os.path.dirname(__file__)
+this_path = os.path.join(this_dir,'')
+DEM = np.loadtxt(os.path.join(this_path, 'DEM.txt'))
+
+```
