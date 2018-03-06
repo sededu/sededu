@@ -7,32 +7,59 @@ SedEdu is a suite of educational activities related to geomorphology and sedimen
 
 These instructions will get you a copy of the project up and running on your local machine for use in the classroom. See "Contributing" for information on becoming a part of the SedEdu project.
 
-### Prerequisites
-
-SedEdu runs in Python (v3) and utilizes PyQt5 for rendering the interface. Modules rely on scipy, matplotlib, Tkinter, and Pygames.
+SedEdu runs in Python (v3) and utilizes PyQt5 for rendering the interface. Modules rely on scipy, matplotlib, Tkinter, Pygames, and Shapely. You can check your python version by running: 
 
 ```
-Give examples
+python3 -V
 ```
 
-### Installing
+in a terminal. It is recommended you install the needed dependencies through `pip3`.
 
-Say what the step will be
+### Installing dependencies
+push to separate `installation.md` file?
+
+#### Windows instructions
+
+#### MacOSX instructions
+
+#### Linux instructions
+
+Install the needed python3 system libraries:
 
 ```
-Give the example
+sudo apt install python3 python3-pip python3-tk
 ```
 
-And repeat
+Install the needed python3 packages:
+```
+pip3 install pyqt5 scipy numpy matplotlib pygames shapely
+```
+
+### Installing SedEdu
+
+instructions for installing through pip, using either PyPI or from GitHub are forthcoming (see milestones).
+
+For now, you can clone the git repository to get the lastest version
 
 ```
-until finished
+git clone https://github.com/amoodie/sededu.git
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+and run SedEdu with:
+
+```
+python3 sededu/run_sededu.py
+```
 
 ### Running the program
-A step by step series of examples that tell you have to get a development env running
+
+A step by step series of examples
+
+```
+python3 <your-path-to-sededu>/run_sededu.py
+```
+
+installation through pip to give an executable?
 
 
 ## Contributing
@@ -42,8 +69,9 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-* **Andrew J. Moodie** - *Initial work* - (https://github.com/amoodie)
+* **Andrew J. Moodie** - *2 modules* - (https://github.com/amoodie)
 * **Kensuke Naito** - *1 module* - (https://github.com/kensukename2)
+* **Jeffrey Kwang** - *1 module* - (https://github.com/jeffskwang)
 
 See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project in other ways.
 
