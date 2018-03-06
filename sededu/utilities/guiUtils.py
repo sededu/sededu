@@ -116,8 +116,8 @@ class ModuleInfoPage(QWidget):
         infoLayout.addWidget(versionLabel)
 
         previewLabel = QLabel()
+        previewHeight = 250
         if 'preview' in data:
-            previewHeight = 250
             previewPath = os.path.join(modDirPath, *data["preview"])
             if os.path.isfile(previewPath): # check that pixmap exists
                 previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
