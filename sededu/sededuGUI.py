@@ -18,8 +18,9 @@ class RootInit(QMainWindow):
 
         self.initializeGUI()
         self.setWindowTitle("SedEdu")
-        self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, "sededuicon.png")))
-        self.setGeometry(10, 10, 900, 500)
+        self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
+                           "sededuicon.png")))
+        self.setGeometry(10, 10, 300, 500)
 
 
     def initializeGUI(self):

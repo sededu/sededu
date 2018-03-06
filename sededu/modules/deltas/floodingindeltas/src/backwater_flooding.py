@@ -1,121 +1,185 @@
-# This is a module to demonstrate Qw-Qt relation
-# The module is written and executed in Python
-# This is developed by Kensuke Naito, University of Illinois at Urbana-Champaign
-# Email: knaito2@illinois.edu
-# Modification for the SedEdu deployment by Andrew J. Moodie (amoodie@rice.edu)
+# interactive backwater module written by Andrew J. Moodie
+# see module and website for more information
+# classroom module for this model can be found at 
+# http://www.coastalsustainability.rice.edu/outreach/
+# the model setup below is parameterized to the Lower Mississippi River
+# as established by Nittrouer et al., 
+# Spatial and temporal trends, GSAB, 2012
 
 
 # IMPORT LIBLARIES
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.widgets import Slider, Button, RadioButtons
+import matplotlib.widgets as widget
+import channel, hydro, utils
 
 # SET PARAMETERS
-M = 100 #[1] Number of bin in flow discharge
-Qw = np.linspace(10., 1000., M)   #[m^3/s] Water discharge (x-axis)
-So = 0.05   #[%] Default channel slope
-Bo = 100.   #[m] Defauld channel width
-Do = 1.   #[mm] Default channel bed grain size
-Cfo = 0.05   #[1] Default bed resistance coefficient
-Smin = 0.01; Smax = 1.   #[%] Minimum and maximum values of channel slope
-Bmin = 50.; Bmax = 200.   #[m] Minimum and maximum values of channel width
-Dmin = 0.01; Dmax = 2.   #[mm] Minimum and maximum values of bed grain size
-Cfmin = 0.001; Cfmax = 0.1   #[1] Minimum and maximum values of channel resistance coeffienent
-ymin = 10; ymax = 5e4   # Minimun and maximum value of the y-axix of the plot
-day_in_sec = 60. * 60. * 24. #[s] One day in second
-g = 9.81 #[m/s^2] Gravitational acceleration
-Rr = 1.65 #[1] Submerged specific gravity of sediment (quartz)
+# def rootInit():
+L = 1600e3 # length of domain
+nx = 400 # number of nodes
+dx = L / nx # width of cells
+x = np.arange(0, L+1, dx) # define x-coordinates
 
+start = 43 # pin-point to start eta from
+S0 = 7e-5 # bed slope
+eta = np.linspace(start, start - S0*(L), nx+1) # channel bed
 
-# MAIN ROUTINE
-So /= 100. # unit transformation
-Do /= 1000. # unit transformation
-Czo = (1. / Cfo)**(1./2.) # unit transformation
+mou = 0.75 # fraction of x channelized (i.e. mouth position)
+mouIdx = int(mou*nx)
+thet = 2 # plume spreading angle
+RKs = np.array([0, 165, 368, 425, 505])
+RKidxs = np.int_( (nx*mou) - np.round(RKs*1000/dx) )
 
-So = 0.05 / 100.
-Bo = 100.
-Do = 1. / 1000.
-Cfo= 0.05; Czo = (1. / Cfo)**(1./2.)
-Ho = (4. * 3.**(1./3.) * Bo**3. * Czo**2. * g * Qw**2. * So + 2.**(1./3.) * \
-     (9.* Bo**7. * Czo**4. * g**2. * Qw**2. * So**2. + \
-     (3. * Bo**9. * Czo**6. * g**3. * Qw**4. * So**3. * \
-     (-32. * Qw**2. + 27. * Bo**5. * Czo**2. * g * So))**(1./2.))**(2./3.)) \
-      / (6.**(2./3.) * Bo**3. * Czo**2. * g * So * \
-     (9. * Bo**7. * Czo**4. * g**2. * Qw**2. * So**2. + \
-     (3. * Bo**9. * Czo**6. * g**3. * Qw**4. * So**3. * \
-     (-32. * Qw**2. + 27. * Bo**5. * Czo**2.*  g * So))**(1./2.))**(1./3.))
-Rho = Ho * Bo / (2. * Ho + Bo)
-tauso = Rho * So / (Rr * Do)
-Qto = 0.05 * Czo**2. * tauso**2.5 * (g * Rr * Do**3.)**(1./2.)\
-      * Bo * (Rr + 1.) * day_in_sec
+B0 = 1100 # basic channel width
+B = channel.set_B(B0, mou, thet, nx, dx) # channel width
+S = channel.get_slope(eta, nx, dx) # bed slope at each node
+H0 = 0 # 
+Cf = 0.0047
+Qwinit = 10000
+Qw = Qwinit
+Qwbf = 35000
+Qwmax = 60000
+Qwmin = 5000
 
+H = hydro.get_backwater_dBdx(eta, S, B, H0, Cf, Qw, nx, dx)
+Xs = hydro.find_backwaterregion(H, dx)
+zed = 0.5 + hydro.get_backwater_dBdx(eta, S, B, H0, Cf, Qwbf, nx, dx)
+
+nitt_bed, nitt_water = channel.load_nitt()
+nitt_water_dict = [{'10,000 m$^3$/s':nitt_water.hdr.index('f5k_10k')},
+                   {'20,000 m$^3$/s':nitt_water.hdr.index('f15k_20k')},
+                   {'35,000 m$^3$/s':nitt_water.hdr.index('f30k_35k')}]
+nitt_water_dict_idx = np.array( [ list(d.values()) for d in nitt_water_dict ] )
+# nitt_water.seldata = nitt_water.data[:, [int(v) for v in nitt_water_dict.values()]]
+nitt_water.seldata = nitt_water.data[:, nitt_water_dict_idx.flatten()]
 
 # setup the figure
 plt.rcParams['toolbar'] = 'None'
+plt.rcParams['figure.figsize'] = 11, 7
 fig, ax = plt.subplots()
-plt.subplots_adjust(left=0.15, bottom=0.4)
-l, = plt.plot(Qw, Qto, lw=2, color='blue') # plot initial condition
-plt.title('Discharge - Sediment load relation')
-ax.set_xlabel('Water discharge [m^3/s]')
-ax.set_ylabel('Sediment load [ton/day]')
-plt.ylim(ymin, ymax)
-plt.grid(b=True, which='both')
+plt.subplots_adjust(left=0.075, bottom=0.5, top=0.95, right=0.95)
+background_color = 'white'
+ax.set_xlabel("distance from Head of Passes (km)")
+ax.set_ylabel("elevation (m)")
+plt.ylim(-50, 100)
+plt.xlim(L/1000*0.25, L/1000-(L/1000*0.125))
+# set(hand.ax, 'xTickLabels', cellfun(@num2str, num2cell(abs((cellfun(@str2num, (get(gca, 'XTickLabels')))) - (L/1000*mou))), 'UniformOutput', false))
 
-# setup sliders
-ax_color = 'lightgoldenrodyellow'
-ax_S = plt.axes([0.25, 0.25, 0.65, 0.03], facecolor=ax_color)
-ax_B = plt.axes([0.25, 0.2, 0.65, 0.03], facecolor=ax_color)
-ax_D = plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=ax_color)
-ax_Cf = plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=ax_color)
-slid_S = Slider(ax_S, 'Channel slope [%]', Smin, Smax, valinit=So*100)
-slid_B = Slider(ax_B, 'Channel width [m]', Bmin, Bmax, valinit=Bo) 
-slid_D = Slider(ax_D, 'Grain size [mm]', Dmin, Dmax, valinit=Do*1000.) 
-slid_Cf = Slider(ax_Cf, 'Channel resitance [-]', Cfmin, Cfmax, valinit=Cfo) 
 
-# setup function to update results
+# add plot elements
+eta_line, = plt.plot(x/1000, eta, lw=2, color='black') # plot bed
+zed_line = plt.plot(x[:mouIdx]/1000, eta[:mouIdx]+zed[:mouIdx], 'k--', lw=1.2) # plot levee
+water_line, = plt.plot(x/1000, eta+H, lw=2, color='blue') # plot initial condition
+ax.set_prop_cycle(plt.cycler('color', ['green', 'gold', 'red']))
+nitt_water_line = plt.plot(np.tile((L/1000*mou - np.array(nitt_water.RK)).transpose(), (1,3)),
+                           nitt_water.seldata, lw=1.5)
+nitt_water_legend = ax.legend([l for l in nitt_water_line], 
+                              [ str(list(d.keys())[0]) for d in nitt_water_dict ])
+for l in nitt_water_line:
+    l.set_visible(False)
+nitt_water_legend.set_visible(False)
+nitt_bed_line, = plt.plot(L/1000*mou - nitt_bed.data[:,0], nitt_bed.data[:,1],
+                         '.', color='grey', visible=False)
+Qw_val = plt.text(0.7, 0.9, "Qw = " + utils.format_number(Qw), transform=ax.transAxes)
+Bw_val = plt.text(( (Xs[1]-Xs[0])/4 + Xs[0])/1000, 52, \
+    "backwater from \n" + "RK " + str(L*mou/1000-round(Xs[0]/1000)) + " to " + str(L*mou/1000-round(Xs[1]/1000)), \
+    horizontalalignment="center", backgroundcolor="white")
+Bw_brack, = plt.plot(np.array([Xs[0], Xs[0], Xs[1], Xs[1]])/1000, np.array([36, 40, 40, 36]), 'k-', lw=1.2)
+
+
+# add slider
+widget_color = 'lightgoldenrodyellow'
+ax_Qw = plt.axes([0.075, 0.35, 0.525, 0.05], facecolor=widget_color)
+slide_Qw = utils.MinMaxSlider(ax_Qw, 'water discharge (m$^3$/s)', Qwmin, Qwmax, 
+    valinit=Qwinit, valstep=500, transform=ax.transAxes)
+
+
+# add gui table
+ax_overTable = plt.axes([0.20, 0.1, 0.5, 0.1], frameon=False, xticks=[], yticks=[])
+tabData = [['0', '0', False], ['0', '0', False],
+           ['0', '0', False], ['0', '0', False],
+           ['0', '0', False]];
+tabRowName = ['Head of Passes (RK 0)', 'New Orleans (RK 165)', 'Baton Rouge (RK 368)',
+              'St. Francisville (RK 425)', 'Old River Diversion (RK 505)']
+tabColName = ['flow depth (m)', 'stage (m)', 'over levee?'];
+overTable = plt.table(cellText=tabData, rowLabels=tabRowName,
+                      colLabels=tabColName, colWidths=[0.3, 0.2, 0.2],
+                      loc="center")
+overTable.scale(1, 1.5) # xscale, yscale
+[ overTable._cells[(c, 0)]._text.set_text(utils.format_table(HRK)) 
+    for c, HRK in zip(np.arange(1,6), H[RKidxs]) ] # insert flow depth values
+[ overTable._cells[(c, 1)]._text.set_text(utils.format_table(StRK)) 
+    for c, StRK in zip(np.arange(1,6), H[RKidxs]+eta[RKidxs]) ] # insert stage values
+[ overTable._cells[(c, 2)]._text.set_text(str(ObRK)) 
+    for c, ObRK in zip(np.arange(1,6), 
+    H[RKidxs]+eta[RKidxs] > eta[RKidxs]+zed[RKidxs]) ] # insert flow depth values
+    
+
+# add gui buttons
+chk_data_ax = plt.axes([0.7, 0.3, 0.15, 0.15], facecolor=background_color)
+chk_data_dict = {'show water lines':'wl', 'show thalweg':'tw'}
+chk_data = widget.CheckButtons(chk_data_ax, chk_data_dict,
+                                            (False, False))
+
+btn_reset_ax = plt.axes([0.8, 0.01, 0.1, 0.04])
+btn_reset = widget.Button(btn_reset_ax, 'Reset', color=widget_color, hovercolor='0.975')
+
+
 def update(val):
     # read values from the sliders
-    S = slid_S.val / 100.
-    B = slid_B.val
-    D = slid_D.val / 1000.
-    Cf = slid_Cf.val
-    Cz = (1. / Cf)**(1./2.)
+    Qw = slide_Qw.val
+    H = hydro.get_backwater_dBdx(eta, S, B, H0, Cf, Qw, nx, dx)
+    Xs = hydro.find_backwaterregion(H, dx)
+    
+    water_line.set_ydata(eta+H)
+    Qw_val.set_text("Qw = " + utils.format_number(Qw))
+    Bw_val.set_text("backwater from \n" + "RK " + str(L*mou/1000-round(Xs[0]/1000)) + \
+        " to " + str(L*mou/1000-round(Xs[1]/1000)))
+    Bw_val.set_x(((Xs[1]-Xs[0])/4 + Xs[0])/1000)
+    Bw_brack.set_xdata(np.array([Xs[0], Xs[0], Xs[1], Xs[1]])/1000)
 
-    # conpute sediment load
-    H = (4. * 3.**(1./3.) * Bo**3. * Cz**2. * g * Qw**2. * S + 2.**(1./3.) * \
-         (9.* B**7. * Cz**4. * g**2. * Qw**2. * S**2. + \
-         (3. * B**9. * Cz**6. * g**3. * Qw**4. * S**3. * \
-         (-32. * Qw**2. + 27. * B**5. * Cz**2. * g * S))**(1./2.))**(2./3.)) \
-          / (6.**(2./3.) * B**3. * Cz**2. * g * S * \
-         (9. * B**7. * Cz**4. * g**2. * Qw**2. * S**2. + \
-         (3. * B**9. * Cz**6. * g**3. * Qw**4. * S**3. * \
-         (-32. * Qw**2. + 27. * B**5. * Cz**2.*  g * S))**(1./2.))**(1./3.))
-    Rh = H * B / (2. * H + B)
-    taus = Rh * S / (Rr * D)
-    Qt = 0.05 * Cz**2. * taus**2.5 * (g * Rr * D**3.)**(1./2.)\
-          * B * (Rr + 1.) * day_in_sec
-
-    # plot results
-    l.set_ydata(Qt)
+    # update table
+    [ overTable._cells[(c, 0)]._text.set_text(utils.format_table(HRK)) 
+    for c, HRK in zip(np.arange(1,6), H[RKidxs]) ] # insert flow depth values
+    [ overTable._cells[(c, 1)]._text.set_text(utils.format_table(StRK)) 
+        for c, StRK in zip(np.arange(1,6), H[RKidxs]+eta[RKidxs]) ] # insert stage values
+    [ overTable._cells[(c, 2)]._text.set_text(str(ObRK)) 
+        for c, ObRK in zip(np.arange(1,6), 
+        H[RKidxs]+eta[RKidxs] > eta[RKidxs]+zed[RKidxs]) ] # insert flow depth values
     fig.canvas.draw_idle()
 
-# connect sliders
-slid_S.on_changed(update)
-slid_B.on_changed(update)
-slid_D.on_changed(update)
-slid_Cf.on_changed(update)
-
-# setup Reset bottun
-resetax = plt.axes([0.8, 0.01, 0.1, 0.04])
-button = Button(resetax, 'Reset', color=ax_color, hovercolor='0.975')
 
 def reset(event):
-    slid_S.reset()
-    slid_B.reset()
-    slid_D.reset()
-    slid_Cf.reset()
-    # update()
-button.on_clicked(reset)
+    slide_Qw.reset()
+    chk_data_status = chk_data.get_status()
+    for cb in [i for i, x in enumerate(chk_data_status) if x]:
+        chk_data.set_active(cb)
+    fig.canvas.draw_idle()
+
+
+def draw_nitt(label):
+    chk_val = chk_data_dict[label]
+    if chk_val == 'wl':
+        for wl in nitt_water_line:
+            wl.set_visible(not wl.get_visible())
+        nitt_water_legend.set_visible(not nitt_water_legend.get_visible())
+    elif chk_val == 'tw':
+        nitt_bed_line.set_visible(not nitt_bed_line.get_visible())
+    fig.canvas.draw_idle()
+
+
+# connect widgets
+slide_Qw.on_changed(update)
+chk_data.on_clicked(draw_nitt)
+btn_reset.on_clicked(reset)
+
 
 # show the results
 plt.show()
+
+
+# if __name__ == '__main__':
+#     # app = QApplication(sys.argv)
+#     root = rootInit()
+#     # root.show()
+#     # sys.exit(app.exec_())
