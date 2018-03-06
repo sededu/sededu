@@ -7,7 +7,7 @@ SedEdu is a suite of educational activities related to geomorphology and sedimen
 
 These instructions will get you a copy of the project up and running on your local machine for use in the classroom. See "Contributing" for information on becoming a part of the SedEdu project.
 
-SedEdu runs in Python (v3) and utilizes PyQt5 for rendering the interface. Modules rely on scipy, matplotlib, Tkinter, Pygames, and Shapely. You can check your python version by running: 
+SedEdu runs in Python (v3) and utilizes PyQt5 for rendering the interface. Modules rely on scipy, matplotlib, Tkinter, Pygame, and Shapely. You can check your python version by running: 
 
 ```
 python3 -V
@@ -32,7 +32,7 @@ sudo apt install python3 python3-pip python3-tk
 
 Install the needed python3 packages:
 ```
-pip3 install pyqt5 scipy numpy matplotlib pygames shapely
+pip3 install pyqt5 scipy numpy matplotlib pygame shapely
 ```
 
 ### Installing SedEdu
