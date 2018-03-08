@@ -221,10 +221,12 @@ class InfoLabel(QLabel):
         QLabel.__init__(self, parent)
         self.setText(labelText)
         self.setWordWrap(True)
+        self.setFont(theFont)
         self.setSizePolicy(QSizePolicy(
                            QSizePolicy.MinimumExpanding,
-                           QSizePolicy.Preferred))
-        self.setFont(theFont)
+                           QSizePolicy.Maximum))
+        self.setAlignment(QtCore.Qt.AlignTop)
+
 
 
 
