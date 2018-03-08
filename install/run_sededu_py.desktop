@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Name=SedEdu
+Icon=/private/sededuicon.png
+Path=/home/andrew/Dropbox/git_repos/SedEdu
+Exec=python3 run_sededu.py
+StartupNotify=false
+StartupWMClass=run_sededu.py
+OnlyShowIn=Unity;
+X-UnityGenerated=true
