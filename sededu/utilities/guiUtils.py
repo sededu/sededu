@@ -92,7 +92,7 @@ class CategoryInfo(QWidget):
             msg = NoFileMessageBox(filename)
             msg.exec_()
         
-
+        
 
 class ModuleInfoPage(QWidget):
     def __init__(self, modDirPath, data, parent=None):

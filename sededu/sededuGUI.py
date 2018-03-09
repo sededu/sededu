@@ -84,8 +84,11 @@ class MainMenu(QWidget):
 class CategoryMenu(QWidget):
     # class for navigation menu
     def __init__(self, category, parent):
+        # super().__init__(parent)
         QWidget.__init__(self, parent)
         
+        # moduleLister = gui.ModuleList()
+
         categInfo = gui.CategoryInfo(category, self)
         moduleList = categInfo.moduleList
         infoPageStack = categInfo.infoPageStack
