@@ -139,7 +139,16 @@ class ModuleInfoPage(QWidget):
         optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
         optLayoutInc = optLayoutInc + 1
 
-        # if 'projurl' in data:
+        if 'projurl' in data:
+            optLayout.addWidget(QLabel("Proj. web:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+            optLayout.addWidget(QLabel(data["projurl"]), optLayoutInc, 1)
+            optLayoutInc = optLayoutInc + 1
+
+        if 'projreadme' in data:
+            optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+            readmeButton = QPushButton("open README")
+            # readmeButton.clicked.connect()
+            optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
 
         infoLayout.addWidget(optGroup)
 
