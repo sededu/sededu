@@ -136,7 +136,7 @@ class AboutPage(QWidget):
         bodyLayout.addWidget(gui.InfoLabel('For complete information visit \
             the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont()))
         bodyLayout.addStretch(10)
-        bodyLayout.addWidget(gui.InfoLabel("Supported by:"))
+        bodyLayout.addWidget(gui.InfoLabel("SedEdu is supported by:"))
         bodyLayout.addWidget(gui.SupportedBox(self.parent().privatePath))
         
         bodyBox.setLayout(bodyLayout)
