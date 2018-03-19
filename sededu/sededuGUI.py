@@ -48,7 +48,6 @@ class RootInit(QMainWindow):
         self.stack.setCurrentIndex(1)
 
     def drawNav(self, idx):
-        print("idx = " + str(idx))
         self.stack.setCurrentIndex(idx)
 
 
@@ -68,7 +67,8 @@ class MainMenu(QWidget):
         navLayout = QGridLayout()
         for i in range(nList):
             iButton = gui.NavButton(mainList[i], self.parent().thisPath)
-            iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
+            # iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
+            iButton.clicked.connect(lambda x, i=i: self.parent().parent().drawNav(i+2))
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
@@ -86,8 +86,6 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         # super().__init__(parent)
         QWidget.__init__(self, parent)
-        
-        # moduleLister = gui.ModuleList()
 
         categInfo = gui.CategoryInfo(category, self)
         moduleList = categInfo.moduleList
@@ -115,7 +113,7 @@ class AboutPage(QWidget):
         
         etcBox = gui.EtcBox("about", self)
         
-        readmeText = gui.parseReadme(self.parent().thisPath)
+        readmeText = gui.ParseReadmeInfo(self.parent().thisPath)
         bodyBox = QGroupBox()
         bodyLayout = QVBoxLayout()
         categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
@@ -124,8 +122,19 @@ class AboutPage(QWidget):
         bodyLayout.addWidget(categoryLabelText)
         bodyLayout.addWidget(descLabel)
         bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
+        bodyLayout.addStretch(1)
         bodyLayout.addWidget(gui.InfoLabel("Contributors:"))
-        bodyLayout.addWidget(gui.InfoLabel(readmeText.contributors))
+        print(readmeText.contributors)
+        # bodyLayout.addWidget(gui.InfoLabel('\n'.join(tuple(readmeText.contributors))))
+        for c in readmeText.contributors:
+            print(c)
+            contrib = gui.InfoLabel(c)
+            contrib.setContentsMargins(10, 0, 0, 0)
+            bodyLayout.addWidget(contrib)
+
+        bodyLayout.addStretch(2)
+        bodyLayout.addWidget(gui.InfoLabel('For complete information visit \
+            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont()))
         bodyLayout.addStretch(10)
         bodyLayout.addWidget(gui.InfoLabel("Supported by:"))
         bodyLayout.addWidget(gui.SupportedBox(self.parent().privatePath))

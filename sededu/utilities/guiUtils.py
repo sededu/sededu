@@ -1,4 +1,4 @@
-import os, subprocess, platform
+import os, subprocess, platform, re
 import numpy as np
 import json
 from PyQt5.QtWidgets import *
@@ -80,19 +80,11 @@ class CategoryInfo(QWidget):
     def docLaunch(self, launchList):
         launchIdx = self.iDocList.currentRow()
         filename = launchList[launchIdx]
-        platType = platform.system()
-        if os.path.isfile(filename):
-            if platType in {"Darwin", "Linux"}:
-                subprocess.Popen(["xdg-open", filename])
-            elif platType in {"Windows"}:
-                subprocess.Popen(["open", filename])
-            else:
-                print("unknown platform type")
-        else:
-            msg = NoFileMessageBox(filename)
-            msg.exec_()
         
+        open_file(filename)
         
+
+    
 
 class ModuleInfoPage(QWidget):
     def __init__(self, modDirPath, data, parent=None):
@@ -224,10 +216,10 @@ class NoImageFiller(QGroupBox):
 
 
 class InfoLabel(QLabel):
-    # add support to pass a font, and default to basic text if none
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
+        labelText = self.url_checker(labelText)
         self.setText(labelText)
         self.setWordWrap(True)
         self.setFont(theFont)
@@ -235,6 +227,17 @@ class InfoLabel(QLabel):
                            QSizePolicy.MinimumExpanding,
                            QSizePolicy.Maximum))
         self.setAlignment(QtCore.Qt.AlignTop)
+        self.setOpenExternalLinks(True)
+
+    def url_checker(self, labelText):
+        name_regex = "[^]]+"
+        url_regex = "[^)]+"
+        join_url = '(\[{0}]\(\s*{1}\s*\))'.format(name_regex, url_regex)
+        split_url = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
+        for j, s in zip(re.findall(join_url, labelText), re.findall(split_url, labelText)):
+            labelText = labelText.replace(j, 
+                ''.join(('<a href=\"', s[1], '\">', s[0], '</a>')))
+        return labelText
 
 
 
@@ -267,6 +270,18 @@ class EtcBox(QGroupBox):
         etcLayout.addWidget(etcButtons)
         self.setLayout(etcLayout)
 
+def open_file(filename):
+    platType = platform.system()
+    if os.path.isfile(filename):
+        if platType in {"Darwin", "Linux"}:
+            subprocess.Popen(["xdg-open", filename])
+        elif platType in {"Windows"}:
+            subprocess.Popen(["open", filename])
+        else:
+            print("unknown platform type")
+    else:
+        msg = NoFileMessageBox(filename)
+        msg.exec_()
 
 
 def etcButton(btnStr):
@@ -315,23 +330,41 @@ class SupportedBox(QWidget):
 
 
 ## one off utils
-def parseReadme(path):
-    self = type('readmeData', (object,), {})()
-    self.readmePath = os.path.join(path, "README.md")
-    self.raw = open(self.readmePath, 'rt')
-    self.lines = [l.replace("\n","").replace("*","") for l in self.raw]
-    self.summaryIdx = self.lines.index("# SedEdu") + 2
-    self.summary = self.lines[self.summaryIdx]
-    self.licenseIdx = self.lines.index("## License") + 2
-    licenseUrl = "<a href=\"https://github.com/amoodie/sededu/blob/master/LICENSE.md\">\
-        full license</a>"
-    self.license = self.lines[self.licenseIdx].replace("[LICENSE.md](LICENSE.md)", licenseUrl)
-    self.contributorsIdx = self.lines.index("## Authors") + 2
-    contributorsRaw = self.lines[self.contributorsIdx:self.licenseIdx-4]
-    self.contributors = "\n".join(contributorsRaw)
-    # print(self.license)
-    # close(self.readmePath)
-    return(self)
+class ParseReadmeInfo():
+    def __init__(self, path):
+        raw, lines = self.make_info(path)
+        self.summary = self.make_summary(lines)
+        self.license = self.make_license(lines)
+        self.contributors = self.make_contributors(lines)
+        
+
+    def make_info(self, path):
+        readmePath = os.path.join(path, "README.md")
+        raw = open(readmePath, 'rt')
+        lines = [l.replace("\n","").replace("*","") for l in raw]
+        return raw, lines
+
+
+    def make_summary(self, lines):
+        summaryIdx = lines.index("# SedEdu") + 2
+        summary = lines[summaryIdx]
+        return summary
+
+
+    def make_license(self, lines):
+        licenseIdx = lines.index("## License") + 2
+        license = lines[licenseIdx]
+        return license
+
+
+    def make_contributors(self, lines):
+        licenseIdx = lines.index("## License") + 2
+        contributorsIdx = lines.index("## Authors") + 2
+        contributorsRaw = lines[contributorsIdx:licenseIdx-4]
+        # contributors = "\n".join(contributorsRaw)
+        contributors = contributorsRaw
+        return contributors
+
 
 
 ## path definitions / file finders

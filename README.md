@@ -64,21 +64,21 @@ installation through pip to give an executable?
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
+Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
 
 ## Authors
 
-* **Andrew J. Moodie** - *2 modules* - (https://github.com/amoodie)
-* **Kensuke Naito** - *1 module* - (https://github.com/kensukename2)
-* **Jeffrey Kwang** - *1 module* - (https://github.com/jeffskwang)
+* **Andrew J. Moodie** - *2 modules* - [github.com/amoodie](https://github.com/amoodie)
+* **Kensuke Naito** - *1 module* - [github.com/kensukename2](https://github.com/kensukename2)
+* **Jeffrey Kwang** - *1 module* - [github.com/jeffskwang](https://github.com/jeffskwang)
 
 See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project in other ways.
 
 
 ## License
 
-This project is licensed under the GNU GPL License - see the [LICENSE.md](LICENSE.md) file for details. It is provided without warranty or guaranteed support.
+This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/master/LICENSE.md) file for details. It is provided without warranty or guaranteed support.
 
 
 ## Acknowledgments
