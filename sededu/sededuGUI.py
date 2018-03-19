@@ -44,12 +44,12 @@ class RootInit(QMainWindow):
     def drawMain(self):
         self.stack.setCurrentIndex(0)
 
+    def drawAbout(self):
+        self.stack.setCurrentIndex(1)
+
     def drawNav(self, idx):
         print("idx = " + str(idx))
         self.stack.setCurrentIndex(idx)
-
-    def drawAbout(self):
-        self.stack.setCurrentIndex(1)
 
 
 class MainMenu(QWidget):
@@ -117,14 +117,10 @@ class AboutPage(QWidget):
         
         readmeText = gui.parseReadme(self.parent().thisPath)
         bodyBox = QGroupBox()
-        # bodyBox.minimumSizeHint(400)
-        # bodyBox.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         bodyLayout = QVBoxLayout()
         categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
-        # descText = readmeText.summary
         descLabel = QLabel(readmeText.summary)
         descLabel.setWordWrap(True)
-        # descLabel.setFixedWidth(400)
         bodyLayout.addWidget(categoryLabelText)
         bodyLayout.addWidget(descLabel)
         bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
