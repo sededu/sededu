@@ -4,8 +4,10 @@
     "shortdesc": "Explore what flooding looks like in a delta",
     "version": "0.1",
     "projurl": "",
+    "difficulty": "7",
+    "projurl": "[github.com/.../flooding_in_deltas](https://github.com/amoodie/flooding_in_deltas)",
     "projreadme": ["README.md"],
-    "preview": ["private", "guidemo_gif.gif"],
+    "preview": ["private", "preview.png"],
     "exec": ["src", "backwater_flooding.py"],
     "docloc": ["docs"],
     "doclist": {

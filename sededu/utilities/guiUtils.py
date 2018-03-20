@@ -54,7 +54,8 @@ class CategoryInfo(QWidget):
             docLaunch = QPushButton("Open activity")
             docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
             if len(launchList) > 0:
-                iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+                # iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
+                iInfoPage.launchLayout.addWidget(docLaunch, 0, 0)
                 # iInfoPage.infoLayout.goButtonLayout.insertWidget(0, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
             for iDoc in docList:
                 iDocInfo = iData["doclist"]
@@ -96,6 +97,9 @@ class ModuleInfoPage(QWidget):
         optGroup.setLayout(optLayout)
         optGroup.setFlat(True)
         optLayout.setContentsMargins(2, 0, 2, 0)
+        optLayout.setVerticalSpacing(10)
+        # optLayout.setRowMinumumHeight(8)
+        optLayout.setHorizontalSpacing(15)
         optLayoutInc = 0 # layout incrementer
         
         # check and add data if needed
@@ -131,26 +135,35 @@ class ModuleInfoPage(QWidget):
         optLayout.addWidget(InfoLabel(data["shortdesc"]), optLayoutInc, 1)
         optLayoutInc = optLayoutInc + 1
 
+        # optLayoutInc = optLayoutInc + 1
         if 'projurl' in data:
-            optLayout.addWidget(QLabel("Proj. web:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(QLabel(data["projurl"]), optLayoutInc, 1)
+            optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+            projurlLabel = InfoLabel(data["projurl"])
+            optLayout.addWidget(projurlLabel, optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
         if 'projreadme' in data:
             optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
             readmeButton = QPushButton("open README")
-            # readmeButton.clicked.connect()
+            readmeButton.setFixedSize(QtCore.QSize(200,25))
+            readmeButton.clicked.connect(lambda: open_file(os.path.join(modDirPath, *data["projreadme"])))
             optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
 
         infoLayout.addWidget(optGroup)
 
+        launchGroup = QGroupBox()
+        self.launchLayout = QGridLayout()
+        launchGroup.setLayout(self.launchLayout)
+        launchGroup.setFlat(True)
+        self.launchLayout.setContentsMargins(20, 0, 20, 10)
         execButton = QPushButton("Run module")
         execPath = os.path.join(modDirPath, *data["exec"])
         execButton.clicked.connect(lambda: self.execModule(execPath))
-        # goButtonLayout.addWidget(execButton)
+        self.launchLayout.addWidget(QLabel(), 0, 0)
+        self.launchLayout.addWidget(execButton, 0, 1)
 
         infoLayout.addStretch(1)
-        infoLayout.addWidget(execButton)
+        infoLayout.addWidget(launchGroup)
         self.infoLayout = infoLayout
         self.setLayout(self.infoLayout)
 
@@ -250,7 +263,7 @@ class EtcBox(QGroupBox):
         etcLogo = QLabel() 
         etcLogo.setPixmap(QtGui.QPixmap(os.path.join(\
             self.parent().parent().privatePath, "sededu.png")))
-        etcDesc = InfoLabel("sediment-related educational activity suite")
+        etcDesc = InfoLabel("a sediment-related educational activity suite", titleFont())
         etcButtons = QGroupBox()
         etcButtonsLayout = QHBoxLayout()
         etcQuit = etcButton("Quit")
@@ -293,6 +306,7 @@ def categoryListItem(idx, data):
     item = QListWidgetItem(data["title"])
     item.idx = idx
     item.setSizeHint(QtCore.QSize(100,30))
+    item.setFont(subtitleFont())
     return item
 
 
@@ -401,6 +415,12 @@ def titleFont():
     font.setPointSize(14)
     return font
 
+def subtitleFont():
+    font = QtGui.QFont()
+    font.setBold(False)
+    font.setItalic(False)
+    font.setPointSize(12)
+    return font
 
 def cutTitle(text0):
     # Use QFontMetrics to get measurements, 
