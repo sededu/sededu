@@ -93,7 +93,7 @@ class CategoryMenu(QWidget):
         docPageStack = categInfo.docPageStack
 
         categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
-        backBtn = gui.etcButton("Back to Main Menu")
+        backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))
         

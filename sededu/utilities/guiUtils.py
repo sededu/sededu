@@ -266,13 +266,13 @@ class EtcBox(QGroupBox):
         etcDesc = InfoLabel("a sediment-related educational activity suite", titleFont())
         etcButtons = QGroupBox()
         etcButtonsLayout = QHBoxLayout()
-        etcQuit = etcButton("Quit")
+        etcQuit = QPushButton("Quit")
         etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
         if aux_key in {"main"}:
-            etcAuxButton = etcButton("About")
+            etcAuxButton = QPushButton("About")
             etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
         elif aux_key in {"about"}:
-            etcAuxButton = etcButton("Back")
+            etcAuxButton = QPushButton("Back")
             etcAuxButton.clicked.connect(self.parent().parent().drawMain)
         etcButtonsLayout.addWidget(etcQuit)
         etcButtonsLayout.addWidget(etcAuxButton)
@@ -295,11 +295,6 @@ def open_file(filename):
     else:
         msg = NoFileMessageBox(filename)
         msg.exec_()
-
-
-def etcButton(btnStr):
-    etcBtn = QPushButton(btnStr)
-    return etcBtn
 
 
 def categoryListItem(idx, data):
