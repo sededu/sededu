@@ -4,10 +4,10 @@
     "version": "0.5",
     "shortdesc": "Explore how a migrating river becomes stratigraphy",
     "difficulty": 7,
-    "projurl": "https://github.com/amoodie/rivers2stratigraphy",
+    "projurl": "[github.com/.../rivers2stratigraphy](https://github.com/amoodie/rivers2stratigraphy)",
     "projreadme": ["README.md"],
     "preview": ["private", "demo.png"],
-    "exec": ["module", "rivers2stratigraphy_gui.py"],
+    "exec": ["src", "rivers2stratigraphy_gui.py"],
     "docloc": ["docs"],
     "doclist": {
     	"blankdoc.txt": "A blank textfile"

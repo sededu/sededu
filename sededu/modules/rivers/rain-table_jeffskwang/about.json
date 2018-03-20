@@ -4,7 +4,7 @@
     "version": "0.5",
     "shortdesc": "Determine where rain falls, and watch as it is routed through a drainage basin",
     "difficulty": 2,
-    "projurl": "https://github.com/jeffskwang/rain_table",
+    "projurl": "[github.com/.../rain_table](https://github.com/jeffskwang/rain_table)",
     "projreadme": ["README.md"],
     "exec": ["rain_table.py"],
     "docloc": ["docs"],

@@ -93,8 +93,10 @@ class CategoryMenu(QWidget):
         docPageStack = categInfo.docPageStack
 
         categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
-        backBtn = gui.etcButton("Back to Main Menu")
+        backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
+        backBtn.setFixedSize(QtCore.QSize(200,40))
+        backBtn.setFont(gui.subtitleFont())
         
         bodyLayout = QGridLayout()
         bodyLayout.addWidget(categoryLabelText, 0, 0)
@@ -124,10 +126,7 @@ class AboutPage(QWidget):
         bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
         bodyLayout.addStretch(1)
         bodyLayout.addWidget(gui.InfoLabel("Contributors:"))
-        print(readmeText.contributors)
-        # bodyLayout.addWidget(gui.InfoLabel('\n'.join(tuple(readmeText.contributors))))
         for c in readmeText.contributors:
-            print(c)
             contrib = gui.InfoLabel(c)
             contrib.setContentsMargins(10, 0, 0, 0)
             bodyLayout.addWidget(contrib)
