@@ -96,6 +96,7 @@ class CategoryMenu(QWidget):
         backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))
+        backBtn.setFont(gui.subtitleFont())
         
         bodyLayout = QGridLayout()
         bodyLayout.addWidget(categoryLabelText, 0, 0)
