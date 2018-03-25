@@ -4,13 +4,14 @@ If you want to contirbute a module, this file will guide you through the necessa
 
 ## File structure of module
 
-## The `about.json` file
-see the additional document for more details
-
-## Writing the module (supported package use)
+### Writing the module (supported package use)
 enumerate allowed packages here, this is already in the readme?
 
+### The `about.json` file
+see the additional document for more details
 
+## Adding your module to SedEdu
+submodules?
 
 
 
