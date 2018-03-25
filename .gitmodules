@@ -1,3 +1,12 @@
 [submodule "sededu/modules/stratigraphy/rivers2stratigraphy"]
 	path = sededu/modules/stratigraphy/rivers2stratigraphy
 	url = https://github.com/amoodie/rivers2stratigraphy
+[submodule "sededu/modules/rivers/rain-table_jeffskwang"]
+	path = sededu/modules/rivers/rain-table_jeffskwang
+	url = https://github.com/amoodie/rain-table_jeffskwang
+[submodule "sededu/modules/rivers/sediment-load-calculator_kensukename2"]
+	path = sededu/modules/rivers/sediment-load-calculator_kensukename2
+	url = https://github.com/amoodie/sediment-load-calculator_kensukename2
+[submodule "sededu/modules/deltas/flooding_in_deltas"]
+	path = sededu/modules/deltas/flooding_in_deltas
+	url = https://github.com/amoodie/flooding_in_deltas
