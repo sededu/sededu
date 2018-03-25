@@ -1,0 +1,3 @@
+[submodule "sededu/modules/stratigraphy/rivers2stratigraphy"]
+	path = sededu/modules/stratigraphy/rivers2stratigraphy
+	url = https://github.com/amoodie/rivers2stratigraphy
