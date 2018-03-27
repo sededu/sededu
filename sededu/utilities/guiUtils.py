@@ -88,7 +88,6 @@ class CategoryInfo(QWidget):
     def docLaunch(self, launchList):
         launchIdx = self.iDocList.currentRow()
         filename = launchList[launchIdx]
-        
         open_file(filename)
         
 

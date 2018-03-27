@@ -24,7 +24,7 @@ class RootInit(QMainWindow):
 
 
     def initializeGUI(self):
-        main = MainMenu(self) # build MainMenu
+        MainMenu = MainMenuWidget(self) # build MainMenuWidget
         about = AboutMenu(self) # build AboutMenu
         riversMenu = CategoryMenu("Rivers", self)
         deltasMenu = CategoryMenu("Deltas", self)
@@ -32,7 +32,7 @@ class RootInit(QMainWindow):
         coastsMenu = CategoryMenu("Coasts", self)
         stratMenu = CategoryMenu("Stratigraphy", self)
         btmodsMenu = CategoryMenu("Behind the Modules", self)
-        self.stack.addWidget(main)
+        self.stack.addWidget(MainMenu)
         self.stack.addWidget(about)
         self.stack.addWidget(riversMenu)
         self.stack.addWidget(deltasMenu)
@@ -41,17 +41,21 @@ class RootInit(QMainWindow):
         self.stack.addWidget(stratMenu)
         self.stack.addWidget(btmodsMenu)
     
+
     def drawMain(self):
         self.stack.setCurrentIndex(0)
 
+
     def drawAbout(self):
         self.stack.setCurrentIndex(1)
+
 
     def drawNav(self, idx):
         self.stack.setCurrentIndex(idx)
 
 
-class MainMenu(QWidget):
+
+class MainMenuWidget(QWidget):
     # class for main menu
     def __init__(self, parent):
         super().__init__(parent)
@@ -79,6 +83,7 @@ class MainMenu(QWidget):
         layout.addWidget(gui.VLine(self))
         layout.addWidget(navBox, 100)
         self.setLayout(layout)
+
 
 
 class AboutMenu(QWidget):
@@ -120,18 +125,26 @@ class AboutMenu(QWidget):
         self.setLayout(layout)
 
 
+
 class CategoryMenu(QWidget):
     # class for navigation menu
     def __init__(self, category, parent):
-        # super().__init__(parent)
         QWidget.__init__(self, parent)
+
+        self.ModuleList = self.ModuleListWidget(self)
+        self.infoPageStack = self.ModulePageStackWidget(self)
+        
+        self.loopModules()
+
+
 
         categInfo = gui.CategoryInfo(category, self)
         moduleList = categInfo.moduleList
         infoPageStack = categInfo.infoPageStack
         docPageStack = categInfo.docPageStack
 
-        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
+        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"),
+                                          gui.titleFont())
         backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))
@@ -146,12 +159,32 @@ class CategoryMenu(QWidget):
         bodyLayout.setContentsMargins(15, 15, 15, 15)
         self.setLayout(bodyLayout)
 
-    def loop_modules():
-        for i in self.parent().iDir:
-            a=1
+    def loopModules(self):
+        # for i in self.iDir:
+        a=1
+
+    class ModuleListWidget(QListWidget):
+        def __init__(self, parent=None):
+            QListWidget.__init__(self, parent)
+            self.itemClicked.connect(self.parent().setCategoryItemInfo)
+
+    class ModulePageStackWidget(QStackedWidget):
+        def __init__(self, parent=None):
+            QStackedWidget.__init__(self, parent)
+            self.setSizePolicy(QSizePolicy(
+                               QSizePolicy.MinimumExpanding,
+                               QSizePolicy.Preferred))
+
+    def setCategoryItemInfo(self, item):
+        self.infoPageStack.setCurrentIndex(item.idx)
+        self.docPageStack.setCurrentIndex(item.idx)
 
 
-
+    def docLaunch(self, launchList):
+        launchIdx = self.iDocList.currentRow()
+        filename = launchList[launchIdx]
+        
+        open_file(filename)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
