@@ -28,10 +28,12 @@ class CategoryInfo(QWidget):
         
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
+
         self.infoPageStack = QStackedWidget()
         self.infoPageStack.setSizePolicy(QSizePolicy(
                                          QSizePolicy.MinimumExpanding,
                                          QSizePolicy.Preferred))
+
         self.docPageStack = QStackedWidget()
         subDirs = subDirPath(categoryPath)
         modIdx = 0
@@ -73,6 +75,10 @@ class CategoryInfo(QWidget):
             self.docPageStack.addWidget(iDocPage)
             modIdx += 1
 
+    class ModuleListWidget(QListWidget):
+        def __init__(self, parent):
+            QListWidget.__init__(self, parent)
+            self.itemClicked.connect(self.setCategoryItemInfo)
 
     def setCategoryItemInfo(self, item):
         self.infoPageStack.setCurrentIndex(item.idx)

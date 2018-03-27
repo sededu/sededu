@@ -25,7 +25,7 @@ class RootInit(QMainWindow):
 
     def initializeGUI(self):
         main = MainMenu(self) # build MainMenu
-        about = AboutPage(self) # build AboutPage
+        about = AboutMenu(self) # build AboutMenu
         riversMenu = CategoryMenu("Rivers", self)
         deltasMenu = CategoryMenu("Deltas", self)
         desertsMenu = CategoryMenu("Deserts", self)
@@ -81,7 +81,7 @@ class MainMenu(QWidget):
         self.setLayout(layout)
 
 
-class AboutPage(QWidget):
+class AboutMenu(QWidget):
     # class for about page
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -146,6 +146,9 @@ class CategoryMenu(QWidget):
         bodyLayout.setContentsMargins(15, 15, 15, 15)
         self.setLayout(bodyLayout)
 
+    def loop_modules():
+        for i in self.parent().iDir:
+            a=1
 
 
 
