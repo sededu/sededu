@@ -17,6 +17,11 @@ example: git submodule add https://github.com/amoodie/rivers2stratigraphy sededu
 
 https://gist.github.com/gitaarik/8735255
 
+how to update the submodules periodically:
+```
+git submodule foreach git pull
+```
+
 
 
 ## Common challenges

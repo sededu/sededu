@@ -81,33 +81,6 @@ class MainMenu(QWidget):
         self.setLayout(layout)
 
 
-class CategoryMenu(QWidget):
-    # class for navigation menu
-    def __init__(self, category, parent):
-        # super().__init__(parent)
-        QWidget.__init__(self, parent)
-
-        categInfo = gui.CategoryInfo(category, self)
-        moduleList = categInfo.moduleList
-        infoPageStack = categInfo.infoPageStack
-        docPageStack = categInfo.docPageStack
-
-        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
-        backBtn = QPushButton("Back to Main Menu")
-        backBtn.clicked.connect(self.parent().drawMain)
-        backBtn.setFixedSize(QtCore.QSize(200,40))
-        backBtn.setFont(gui.subtitleFont())
-        
-        bodyLayout = QGridLayout()
-        bodyLayout.addWidget(categoryLabelText, 0, 0)
-        bodyLayout.addWidget(moduleList, 1, 0)
-        bodyLayout.addWidget(docPageStack, 2, 0)
-        bodyLayout.addWidget(infoPageStack, 0, 1, 4, 1)
-        bodyLayout.addWidget(backBtn, 3, 0)
-        bodyLayout.setContentsMargins(15, 15, 15, 15)
-        self.setLayout(bodyLayout)
-
-
 class AboutPage(QWidget):
     # class for about page
     def __init__(self, parent=None):
@@ -145,6 +118,36 @@ class AboutPage(QWidget):
         layout.addWidget(gui.VLine(self))
         layout.addWidget(bodyBox, 100)
         self.setLayout(layout)
+
+
+class CategoryMenu(QWidget):
+    # class for navigation menu
+    def __init__(self, category, parent):
+        # super().__init__(parent)
+        QWidget.__init__(self, parent)
+
+        categInfo = gui.CategoryInfo(category, self)
+        moduleList = categInfo.moduleList
+        infoPageStack = categInfo.infoPageStack
+        docPageStack = categInfo.docPageStack
+
+        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"), gui.titleFont())
+        backBtn = QPushButton("Back to Main Menu")
+        backBtn.clicked.connect(self.parent().drawMain)
+        backBtn.setFixedSize(QtCore.QSize(200,40))
+        backBtn.setFont(gui.subtitleFont())
+        
+        bodyLayout = QGridLayout()
+        bodyLayout.addWidget(categoryLabelText, 0, 0)
+        bodyLayout.addWidget(moduleList, 1, 0)
+        bodyLayout.addWidget(docPageStack, 2, 0)
+        bodyLayout.addWidget(infoPageStack, 0, 1, 4, 1)
+        bodyLayout.addWidget(backBtn, 3, 0)
+        bodyLayout.setContentsMargins(15, 15, 15, 15)
+        self.setLayout(bodyLayout)
+
+
+
 
 
 if __name__ == '__main__':

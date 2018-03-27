@@ -25,6 +25,7 @@ class CategoryInfo(QWidget):
         QWidget.__init__(self, parent)
         categoryPath = os.path.join(self.parent().parent().thisPath, \
             "sededu", "modules", category2path(category))
+        
         self.moduleList = QListWidget()
         self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
         self.infoPageStack = QStackedWidget()
