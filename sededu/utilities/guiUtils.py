@@ -35,6 +35,7 @@ class CategoryInfo(QWidget):
                                          QSizePolicy.Preferred))
 
         self.docPageStack = QStackedWidget()
+        
         subDirs = subDirPath(categoryPath)
         modIdx = 0
         for iDir in subDirs:

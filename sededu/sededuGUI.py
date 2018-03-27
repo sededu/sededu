@@ -131,11 +131,22 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
 
-        self.ModuleList = self.ModuleListWidget(self)
-        self.infoPageStack = self.ModulePageStackWidget(self)
-        
-        self.loopModules()
+        self.categoryPath = os.path.join(self.parent().thisPath, 
+                                          "sededu", "modules", 
+                                          gui.category2path(category))
+        self.modulePathList = gui.subDirPath(self.categoryPath)
 
+        self.ModuleList = self.ModuleListWidget(self)
+        self.ModulePageStack = self.ModulePageStackWidget(self)
+        self.ModuleDocStack = QStackedWidget()
+        
+        modIdx = 0
+        for iModuleDirectory in self.modulePathList:
+            iData = json.load(open(os.path.join(iModuleDirectory, "about.json")))
+            # iInfoPage = gui.ModuleInfoPage(iModuleDirectory, iData)
+            # iListItem = gui.categoryListItem(modIdx, iData)
+            # self.moduleList.addItem(iListItem)
+            # self.infoPageStack.addWidget(iInfoPage)
 
 
         categInfo = gui.CategoryInfo(category, self)
