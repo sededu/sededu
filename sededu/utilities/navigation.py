@@ -22,9 +22,11 @@ class NavigationPageWidget(QWidget):
         rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
         navLayout = QGridLayout()
         for i in range(nList):
-            iButton = gui.NavButton(mainList[i], self.parent().thisPath)
+            iButton = CategoryButtonWidget(mainList[i], self.parent().thisPath)
             # iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
-            iButton.clicked.connect(lambda x, i=i: self.parent().parent().drawNav(i+2))
+            # iButton.clicked.connect(lambda x, i=i: self.parent().drawNav(i+2))
+            # iButton.clicked.connect(lambda x, i=i: self.parent().set_MainPageStackIndex(i+2))
+            iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
             navLayout.addWidget(iButton, rPos[i], cPos[i])
         navBox.setLayout(navLayout)
 
@@ -43,7 +45,7 @@ class CategoryButtonWidget(QPushButton):
     def __init__(self, category, thisPath, parent=None):
         QPushButton.__init__(self, parent)
         iPath = os.path.join(thisPath, "sededu", "private", \
-            category2path(category) + ".png")
+            gui.category2path(category) + ".png")
         iIcon = QtGui.QIcon()
         iIcon.addPixmap(QtGui.QPixmap(iPath))
         self.setIcon(iIcon)

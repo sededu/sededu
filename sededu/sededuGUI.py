@@ -12,14 +12,16 @@ from sededu.utilities.about import AboutPageWidget
 class RootWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
-
-        MainBackground = MainBackgroundWidget()
-        self.setCentralWidget(MainBackground)
-
         self.find_paths()
 
+        self.buildGUI()
+
+    def buildGUI(self):
+        MainBackground = MainBackgroundWidget(self)
+        self.setCentralWidget(MainBackground)
+
+        MainPageStack = MainPageStackWidget(MainBackground)
         MainSideBar = MainSideBarWidget(self)
-        MainPageStack = MainPageStackWidget(self)
 
         MainBackground.layout().addWidget(MainSideBar)
         MainBackground.layout().addWidget(MainPageStack)
@@ -30,19 +32,19 @@ class RootWindow(QMainWindow):
         AboutPage = AboutPageWidget(self)
         MainPageStack.addWidget(AboutPage)
 
-
         # self.initializeGUI()
-
 
         self.setWindowTitle("SedEdu")
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
                            "sededuicon.png")))
         self.setGeometry(10, 10, 300, 500)
 
+    # def set_MainPageStackIndex(self, stack=MainPageStack, idx=0):
+    #     stack.setCurrentIndex(idx)
 
     def find_paths(self):
-        self.thisDir = os.path.dirname(__file__)
-        self.thisPath = os.path.join(self.thisDir,'')
+        thisDir = os.path.dirname(__file__)
+        self.thisPath = os.path.join(thisDir,'')
         self.privatePath = os.path.join(self.thisPath, "sededu", "private")
 
     def initializeGUI(self):
@@ -70,11 +72,11 @@ class RootWindow(QMainWindow):
 
 
     def drawAbout(self):
-        self.parent().MainPageStack.setCurrentIndex(1)
+        self.MainPageStack.setCurrentIndex(1)
 
 
-    # def drawNav(self, idx):
-    #     self.stack.setCurrentIndex(idx)
+    def drawNav(self, idx):
+        self.MainPageStack.setCurrentIndex(idx)
 
 
 

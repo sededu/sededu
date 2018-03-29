@@ -35,7 +35,7 @@ class MainSideBarWidget(QGroupBox):
         #     etcAuxButton = QPushButton("Back")
         #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
         etcAuxButton = QPushButton("About")
-        etcAuxButton.clicked.connect(self.parent().drawAbout)
+        # etcAuxButton.clicked.connect(self.parent().set_MainPageStackIndex(1))
         # elif aux_key in {"about"}:
         #     etcAuxButton = QPushButton("Back")
         #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
