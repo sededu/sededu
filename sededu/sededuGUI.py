@@ -4,54 +4,72 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
+from sededu.utilities.about import AboutMenu
+from sededu.utilities.base import MainBackgroundWidget, MainSideBarWidget
 
-class RootInit(QMainWindow):
-    # determine path to private
-    thisDir = os.path.dirname(__file__)
-    thisPath = os.path.join(thisDir,'')
-    privatePath = os.path.join(thisPath, "sededu", "private")
-
+class RootWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
-        self.stack = QStackedWidget()
-        self.setCentralWidget(self.stack)
 
-        self.initializeGUI()
-        self.setWindowTitle("SedEdu")
-        self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
-                           "sededuicon.png")))
-        self.setGeometry(10, 10, 300, 500)
+        MainBackground = MainBackgroundWidget()
+        self.setCentralWidget(MainBackground)
 
+
+        self.find_paths()
+
+        # self.SideBar = MainSideBar(self)
+        self.PageStack = QStackedWidget()
+
+        # layout = QHBoxLayout()
+        MainBackground.layout().addWidget(MainSideBarWidget(self))
+        MainBackground.layout().addWidget(QLabel("TESTING!!"))
+
+        # self.setLayout(layout)
+
+        # self.setCentralWidget(self.stack)
+
+        # self.initializeGUI()
+        # self.setWindowTitle("SedEdu")
+        # self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
+        #                    "sededuicon.png")))
+        # self.setGeometry(10, 10, 300, 500)
+
+
+    def find_paths(self):
+        self.thisDir = os.path.dirname(__file__)
+        self.thisPath = os.path.join(self.thisDir,'')
+        self.privatePath = os.path.join(self.thisPath, "sededu", "private")
 
     def initializeGUI(self):
-        MainMenu = MainMenuWidget(self) # build MainMenuWidget
-        about = AboutMenu(self) # build AboutMenu
-        riversMenu = CategoryMenu("Rivers", self)
-        deltasMenu = CategoryMenu("Deltas", self)
-        desertsMenu = CategoryMenu("Deserts", self)
-        coastsMenu = CategoryMenu("Coasts", self)
-        stratMenu = CategoryMenu("Stratigraphy", self)
-        btmodsMenu = CategoryMenu("Behind the Modules", self)
-        self.stack.addWidget(MainMenu)
-        self.stack.addWidget(about)
-        self.stack.addWidget(riversMenu)
-        self.stack.addWidget(deltasMenu)
-        self.stack.addWidget(desertsMenu)
-        self.stack.addWidget(coastsMenu)
-        self.stack.addWidget(stratMenu)
-        self.stack.addWidget(btmodsMenu)
+        a = 1
+        # MainMenu = MainMenuWidget(self) # build MainMenuWidget
+        # about = AboutMenu(self) # build AboutMenu
+        # riversMenu = CategoryMenu("Rivers", self)
+        # deltasMenu = CategoryMenu("Deltas", self)
+        # desertsMenu = CategoryMenu("Deserts", self)
+        # coastsMenu = CategoryMenu("Coasts", self)
+        # stratMenu = CategoryMenu("Stratigraphy", self)
+        # btmodsMenu = CategoryMenu("Behind the Modules", self)
+        # self.stack.addWidget(MainMenu)
+        # self.stack.addWidget(about)
+        # self.stack.addWidget(riversMenu)
+        # self.stack.addWidget(deltasMenu)
+        # self.stack.addWidget(desertsMenu)
+        # self.stack.addWidget(coastsMenu)
+        # self.stack.addWidget(stratMenu)
+        # self.stack.addWidget(btmodsMenu)
     
 
-    def drawMain(self):
-        self.stack.setCurrentIndex(0)
+    # def drawMain(self):
+    #     self.stack.setCurrentIndex(0)
 
 
     def drawAbout(self):
         self.stack.setCurrentIndex(1)
 
 
-    def drawNav(self, idx):
-        self.stack.setCurrentIndex(idx)
+    # def drawNav(self, idx):
+    #     self.stack.setCurrentIndex(idx)
 
 
 
@@ -86,43 +104,7 @@ class MainMenuWidget(QWidget):
 
 
 
-class AboutMenu(QWidget):
-    # class for about page
-    def __init__(self, parent=None):
-        QWidget.__init__(self, parent)
-        
-        etcBox = gui.EtcBox("about", self)
-        
-        readmeText = gui.ParseReadmeInfo(self.parent().thisPath)
-        bodyBox = QGroupBox()
-        bodyLayout = QVBoxLayout()
-        categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
-        descLabel = QLabel(readmeText.summary)
-        descLabel.setWordWrap(True)
-        bodyLayout.addWidget(categoryLabelText)
-        bodyLayout.addWidget(descLabel)
-        bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
-        bodyLayout.addStretch(1)
-        bodyLayout.addWidget(gui.InfoLabel("Contributors:"))
-        for c in readmeText.contributors:
-            contrib = gui.InfoLabel(c)
-            contrib.setContentsMargins(10, 0, 0, 0)
-            bodyLayout.addWidget(contrib)
 
-        bodyLayout.addStretch(2)
-        bodyLayout.addWidget(gui.InfoLabel('For complete information visit \
-            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont()))
-        bodyLayout.addStretch(10)
-        bodyLayout.addWidget(gui.InfoLabel("SedEdu is supported by:"))
-        bodyLayout.addWidget(gui.SupportedBox(self.parent().privatePath))
-        
-        bodyBox.setLayout(bodyLayout)
-        
-        layout = QHBoxLayout()
-        layout.addWidget(etcBox)
-        layout.addWidget(gui.VLine(self))
-        layout.addWidget(bodyBox, 100)
-        self.setLayout(layout)
 
 
 
@@ -131,20 +113,20 @@ class CategoryMenu(QWidget):
     def __init__(self, category, parent):
         QWidget.__init__(self, parent)
 
-        self.categoryPath = os.path.join(self.parent().thisPath, 
-                                          "sededu", "modules", 
-                                          gui.category2path(category))
-        self.modulePathList = gui.subDirPath(self.categoryPath)
+        # self.categoryPath = os.path.join(self.parent().thisPath, 
+        #                                   "sededu", "modules", 
+        #                                   gui.category2path(category))
+        # self.modulePathList = gui.subDirPath(self.categoryPath)
 
-        self.ModuleList = self.ModuleListWidget(self)
-        self.ModulePageStack = self.ModulePageStackWidget(self)
-        self.ModuleDocStack = QStackedWidget()
+        # self.ModuleList = self.ModuleListWidget(self)
+        # self.ModulePageStack = self.ModulePageStackWidget(self)
+        # self.ModuleDocStack = QStackedWidget()
         
-        modIdx = 0
-        for iModuleDirectory in self.modulePathList:
-            iData = json.load(open(os.path.join(iModuleDirectory, "about.json")))
-            # iInfoPage = gui.ModuleInfoPage(iModuleDirectory, iData)
-            # iListItem = gui.categoryListItem(modIdx, iData)
+        # moduleNum = 0
+        # for iModuleDirectory in self.modulePathList:
+        #     iModuleAbout = json.load(open(os.path.join(iModuleDirectory, "about.json")))
+            # iInfoPage = gui.ModuleInfoPage(iModuleDirectory, iModuleAbout)
+            # iListItem = gui.categoryListItem(moduleNum, iModuleAbout)
             # self.moduleList.addItem(iListItem)
             # self.infoPageStack.addWidget(iInfoPage)
 
@@ -199,6 +181,6 @@ class CategoryMenu(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    root = RootInit()
+    root = RootWindow()
     root.show()
     sys.exit(app.exec_())

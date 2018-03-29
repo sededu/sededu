@@ -235,19 +235,12 @@ class NoImageFiller(QGroupBox):
 
 
 
-class InfoLabel(QLabel):
-    defaultFont = QtGui.QFont()
-    def __init__(self, labelText='', theFont=defaultFont, parent=None):
+class MultilineInfoLabel(QLabel):
+    def __init__(self, parent=None):
         QLabel.__init__(self, parent)
-        labelText = self.url_checker(labelText)
-        self.setText(labelText)
+        
         self.setWordWrap(True)
-        self.setFont(theFont)
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.MinimumExpanding,
-                           QSizePolicy.Maximum))
-        self.setAlignment(QtCore.Qt.AlignTop)
-        self.setOpenExternalLinks(True)
+
 
     def url_checker(self, labelText):
         name_regex = "[^]]+"
@@ -261,34 +254,21 @@ class InfoLabel(QLabel):
 
 
 
+class InfoLabel(MultilineInfoLabel):
+    defaultFont = QtGui.QFont()
+    def __init__(self, labelText='', theFont=defaultFont, parent=None):
+        MultilineInfoLabel.__init__(self, parent)
+        
+        labelText = self.url_checker(labelText)
+        self.setText(labelText)
+        self.setWordWrap(True)
+        self.setFont(theFont)
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.MinimumExpanding,
+                           QSizePolicy.Maximum))
+        self.setAlignment(QtCore.Qt.AlignTop)
+        self.setOpenExternalLinks(True)
 
-class EtcBox(QGroupBox):
-    def __init__(self, aux_key, parent=None):
-        QGroupBox.__init__(self, parent)
-        # etcBox = QGroupBox() # etc box, group title here
-        etcLayout = QVBoxLayout()
-        etcLogo = QLabel() 
-        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(\
-            self.parent().parent().privatePath, "sededu.png")))
-        etcDesc = InfoLabel("a sediment-related educational activity suite", titleFont())
-        etcButtons = QGroupBox()
-        etcButtonsLayout = QHBoxLayout()
-        etcQuit = QPushButton("Quit")
-        etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        if aux_key in {"main"}:
-            etcAuxButton = QPushButton("About")
-            etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
-        elif aux_key in {"about"}:
-            etcAuxButton = QPushButton("Back")
-            etcAuxButton.clicked.connect(self.parent().parent().drawMain)
-        etcButtonsLayout.addWidget(etcQuit)
-        etcButtonsLayout.addWidget(etcAuxButton)
-        etcButtons.setLayout(etcButtonsLayout)
-        etcLayout.addWidget(etcLogo)
-        etcLayout.addWidget(etcDesc)
-        etcLayout.addStretch(100)
-        etcLayout.addWidget(etcButtons)
-        self.setLayout(etcLayout)
 
 def open_file(filename):
     platType = platform.system()
@@ -346,40 +326,7 @@ class SupportedBox(QWidget):
 
 
 ## one off utils
-class ParseReadmeInfo():
-    def __init__(self, path):
-        raw, lines = self.make_info(path)
-        self.summary = self.make_summary(lines)
-        self.license = self.make_license(lines)
-        self.contributors = self.make_contributors(lines)
-        
 
-    def make_info(self, path):
-        readmePath = os.path.join(path, "README.md")
-        raw = open(readmePath, 'rt')
-        lines = [l.replace("\n","").replace("*","") for l in raw]
-        return raw, lines
-
-
-    def make_summary(self, lines):
-        summaryIdx = lines.index("# SedEdu") + 2
-        summary = lines[summaryIdx]
-        return summary
-
-
-    def make_license(self, lines):
-        licenseIdx = lines.index("## License") + 2
-        license = lines[licenseIdx]
-        return license
-
-
-    def make_contributors(self, lines):
-        licenseIdx = lines.index("## License") + 2
-        contributorsIdx = lines.index("## Authors") + 2
-        contributorsRaw = lines[contributorsIdx:licenseIdx-4]
-        # contributors = "\n".join(contributorsRaw)
-        contributors = contributorsRaw
-        return contributors
 
 
 
