@@ -5,12 +5,13 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
 
-class AboutMenu(QWidget):
+class AboutPageWidget(QWidget):
     # class for about page
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         
-        etcBox = gui.EtcBox("about", self)
+        # etcBox = gui.EtcBox("about", self)
+        # etcBox = QLabel("FILLER")
         
         readmeText = self.ReadmeFileData(self.parent().thisPath)
         bodyBox = QGroupBox()
@@ -39,8 +40,8 @@ class AboutMenu(QWidget):
         bodyBox.setLayout(bodyLayout)
         
         layout = QHBoxLayout()
-        layout.addWidget(etcBox)
-        layout.addWidget(gui.VLine(self))
+        # layout.addWidget(etcBox)
+        # layout.addWidget(gui.VLine(self))
         layout.addWidget(bodyBox, 100)
         self.setLayout(layout)
 

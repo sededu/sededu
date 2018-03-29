@@ -4,8 +4,10 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
-from sededu.utilities.about import AboutMenu
-from sededu.utilities.base import MainBackgroundWidget, MainSideBarWidget
+
+from sededu.utilities.base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
+from sededu.utilities.navigation import NavigationPageWidget
+from sededu.utilities.about import AboutPageWidget
 
 class RootWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -14,25 +16,28 @@ class RootWindow(QMainWindow):
         MainBackground = MainBackgroundWidget()
         self.setCentralWidget(MainBackground)
 
-
         self.find_paths()
 
-        # self.SideBar = MainSideBar(self)
-        self.PageStack = QStackedWidget()
+        MainSideBar = MainSideBarWidget(self)
+        MainPageStack = MainPageStackWidget(self)
 
-        # layout = QHBoxLayout()
-        MainBackground.layout().addWidget(MainSideBarWidget(self))
-        MainBackground.layout().addWidget(QLabel("TESTING!!"))
+        MainBackground.layout().addWidget(MainSideBar)
+        MainBackground.layout().addWidget(MainPageStack)
 
-        # self.setLayout(layout)
+        NavigationPage = NavigationPageWidget(self)
+        MainPageStack.addWidget(NavigationPage)
 
-        # self.setCentralWidget(self.stack)
+        AboutPage = AboutPageWidget(self)
+        MainPageStack.addWidget(AboutPage)
+
 
         # self.initializeGUI()
-        # self.setWindowTitle("SedEdu")
-        # self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
-        #                    "sededuicon.png")))
-        # self.setGeometry(10, 10, 300, 500)
+
+
+        self.setWindowTitle("SedEdu")
+        self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
+                           "sededuicon.png")))
+        self.setGeometry(10, 10, 300, 500)
 
 
     def find_paths(self):
@@ -65,7 +70,7 @@ class RootWindow(QMainWindow):
 
 
     def drawAbout(self):
-        self.stack.setCurrentIndex(1)
+        self.parent().MainPageStack.setCurrentIndex(1)
 
 
     # def drawNav(self, idx):

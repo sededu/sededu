@@ -10,6 +10,7 @@ from sededu.utilities import guiUtils as gui
 class MainBackgroundWidget(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
+
         self.setLayout(QHBoxLayout())
 
 
@@ -17,7 +18,7 @@ class MainBackgroundWidget(QWidget):
 class MainSideBarWidget(QGroupBox):
     def __init__(self, parent=None):
         QGroupBox.__init__(self, parent)
-        # etcBox = QGroupBox() # etc box, group title here
+
         etcLayout = QVBoxLayout()
         etcLogo = QLabel() 
         etcLogo.setPixmap(QtGui.QPixmap(os.path.join(\
@@ -45,4 +46,16 @@ class MainSideBarWidget(QGroupBox):
         etcLayout.addWidget(etcDesc)
         etcLayout.addStretch(100)
         etcLayout.addWidget(etcButtons)
+
+        # NEED TO ADD BACK IN THE VERTICAL LINE BREAKER
+        # layout.addWidget(gui.VLine(self))
+
         self.setLayout(etcLayout)
+
+class MainPageStackWidget(QStackedWidget):
+    def __init__(self, parent=None):
+        QStackedWidget.__init__(self, parent)
+
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.MinimumExpanding,
+                           QSizePolicy.Preferred))
