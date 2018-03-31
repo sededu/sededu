@@ -10,3 +10,6 @@
 [submodule "sededu/modules/deltas/flooding_in_deltas"]
 	path = sededu/modules/deltas/flooding_in_deltas
 	url = https://github.com/amoodie/flooding_in_deltas
+[submodule "sededu/modules/stratigraphy/stratigraphic_filter"]
+	path = sededu/modules/stratigraphy/stratigraphic_filter
+	url = https://github.com/amoodie/stratigraphic_filter_toy

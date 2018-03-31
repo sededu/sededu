@@ -13,7 +13,11 @@ see the additional document for more details
 ## Adding your module to SedEdu
 submodules?
 
-example: git submodule add https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
+cd into the git repository and use git submodule add to add your module to the SedEdu repository:
+```
+git submodule add https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
+```
+
 
 https://gist.github.com/gitaarik/8735255
 
