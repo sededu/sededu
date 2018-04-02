@@ -270,6 +270,7 @@ class InfoLabel(MultilineInfoLabel):
         self.setOpenExternalLinks(True)
 
 
+
 def open_file(filename):
     platType = platform.system()
     if os.path.isfile(filename):

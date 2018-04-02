@@ -12,43 +12,56 @@ from sededu.utilities.about import AboutPageWidget
 class RootWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
+
         self.find_paths()
 
-        self.buildGUI()
-
-    def buildGUI(self):
         MainBackground = MainBackgroundWidget(self)
         self.setCentralWidget(MainBackground)
 
-        MainPageStack = MainPageStackWidget(MainBackground)
-        MainSideBar = MainSideBarWidget(self)
-
-        MainBackground.layout().addWidget(MainSideBar)
-        MainBackground.layout().addWidget(MainPageStack)
+        self.MainPageStack = MainPageStackWidget(MainBackground)
+        self.MainSideBar = MainSideBarWidget(self)
 
         NavigationPage = NavigationPageWidget(self)
-        MainPageStack.addWidget(NavigationPage)
-
         AboutPage = AboutPageWidget(self)
-        MainPageStack.addWidget(AboutPage)
 
-        # self.initializeGUI()
+        MainBackground.layout().addWidget(self.MainSideBar)
+        MainBackground.layout().addWidget(self.MainPageStack)
 
+        self.MainPageStack.addWidget(NavigationPage)
+        self.MainPageStack.addWidget(AboutPage)
+
+        # configure the window header and size options
         self.setWindowTitle("SedEdu")
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
                            "sededuicon.png")))
         self.setGeometry(10, 10, 300, 500)
 
-    # def set_MainPageStackIndex(self, stack=MainPageStack, idx=0):
-    #     stack.setCurrentIndex(idx)
 
     def find_paths(self):
         thisDir = os.path.dirname(__file__)
         self.thisPath = os.path.join(thisDir,'')
         self.privatePath = os.path.join(self.thisPath, "sededu", "private")
 
-    def initializeGUI(self):
-        a = 1
+
+    def _setMainPageStackIndex(self, idx):
+        self.MainPageStack.setCurrentIndex(idx)
+
+
+    def navToMain(self, idx=0):
+        self.MainPageStack.setCurrentIndex(idx)
+
+
+    def navToAbout(self, idx=1):
+        # self.MainPageStack.setCurrentIndex(idx)
+        self._setMainPageStackIndex(idx=idx)
+
+
+    def navToCategory(self, idx):
+        self.MainPageStack.setCurrentIndex(idx)
+
+
+    # def initializeGUI(self):
+    #     a = 1
         # MainMenu = MainMenuWidget(self) # build MainMenuWidget
         # about = AboutMenu(self) # build AboutMenu
         # riversMenu = CategoryMenu("Rivers", self)
@@ -67,16 +80,7 @@ class RootWindow(QMainWindow):
         # self.stack.addWidget(btmodsMenu)
     
 
-    # def drawMain(self):
-    #     self.stack.setCurrentIndex(0)
 
-
-    def drawAbout(self):
-        self.MainPageStack.setCurrentIndex(1)
-
-
-    def drawNav(self, idx):
-        self.MainPageStack.setCurrentIndex(idx)
 
 
 

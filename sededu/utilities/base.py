@@ -14,7 +14,6 @@ class MainBackgroundWidget(QWidget):
         self.setLayout(QHBoxLayout())
 
 
-
 class MainSideBarWidget(QGroupBox):
     def __init__(self, parent=None):
         QGroupBox.__init__(self, parent)
@@ -35,7 +34,8 @@ class MainSideBarWidget(QGroupBox):
         #     etcAuxButton = QPushButton("Back")
         #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
         etcAuxButton = QPushButton("About")
-        # etcAuxButton.clicked.connect(self.parent().set_MainPageStackIndex(1))
+        # etcAuxButton.clicked.connect(lambda: self.parent().parent().MainPageStack.setCurrentIndex(1))
+        etcAuxButton.clicked.connect(lambda: self.parent().parent().navToAbout(idx=1))
         # elif aux_key in {"about"}:
         #     etcAuxButton = QPushButton("Back")
         #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
@@ -51,6 +51,8 @@ class MainSideBarWidget(QGroupBox):
         # layout.addWidget(gui.VLine(self))
 
         self.setLayout(etcLayout)
+
+
 
 class MainPageStackWidget(QStackedWidget):
     def __init__(self, parent=None):
