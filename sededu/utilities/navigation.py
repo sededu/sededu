@@ -10,11 +10,10 @@ class NavigationPageWidget(QWidget):
     # class for navigation button page
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
+        self.setLayout(QGridLayout())
 
-        mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
-            "Stratigraphy", "Behind the \nModules"] # read these from file?
+        mainList = self.parent().categoryList
         
-        navBox = QGroupBox() # category navigation box, group title here
         nList = len(mainList)
         gridSize = [3, 2]
         # xPos = np.tile( range(gridSize[1]), (1, int(np.ceil(nList/gridSize[1]))) )
@@ -22,34 +21,21 @@ class NavigationPageWidget(QWidget):
         rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
         navLayout = QGridLayout()
         for i in range(nList):
-            iButton = CategoryButtonWidget(mainList[i], self.parent().thisPath)
-            # iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
-            # iButton.clicked.connect(lambda x, i=i: self.parent().drawNav(i+2))
-            # iButton.clicked.connect(lambda x, i=i: self.parent().set_MainPageStackIndex(i+2))
-            iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
-            navLayout.addWidget(iButton, rPos[i], cPos[i])
-        navBox.setLayout(navLayout)
-
-        # etcBox = gui.EtcBox("main", self)
-
-        layout = QHBoxLayout()
-        # layout.addWidget(etcBox)
-        layout.addWidget(gui.VLine(self))
-        layout.addWidget(navBox, 100)
-        self.setLayout(layout)
+            iButton = self._NavigationCategoryButtonWidget(mainList[i], self.parent().thisPath)
+            iButton.clicked.connect(lambda x, i=i: self.parent().parent().parent().navToCategory(i+2))
+            self.layout().addWidget(iButton, rPos[i], cPos[i])
 
 
 
-
-class CategoryButtonWidget(QPushButton):
-    def __init__(self, category, thisPath, parent=None):
-        QPushButton.__init__(self, parent)
-        iPath = os.path.join(thisPath, "sededu", "private", \
-            gui.category2path(category) + ".png")
-        iIcon = QtGui.QIcon()
-        iIcon.addPixmap(QtGui.QPixmap(iPath))
-        self.setIcon(iIcon)
-        self.setIconSize(QtCore.QSize(300, 200))
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.Maximum,
-                           QSizePolicy.Maximum))
+    class _NavigationCategoryButtonWidget(QPushButton):
+        def __init__(self, category, thisPath, parent=None):
+            QPushButton.__init__(self, parent)
+            iPath = os.path.join(thisPath, "sededu", "private", \
+                gui.category2path(category) + ".png")
+            iIcon = QtGui.QIcon()
+            iIcon.addPixmap(QtGui.QPixmap(iPath))
+            self.setIcon(iIcon)
+            self.setIconSize(QtCore.QSize(300, 200))
+            self.setSizePolicy(QSizePolicy(
+                               QSizePolicy.Maximum,
+                               QSizePolicy.Maximum))

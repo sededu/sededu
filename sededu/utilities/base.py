@@ -14,43 +14,70 @@ class MainBackgroundWidget(QWidget):
         self.setLayout(QHBoxLayout())
 
 
-class MainSideBarWidget(QGroupBox):
+
+class MainSideBarWidget(QWidget):
     def __init__(self, parent=None):
-        QGroupBox.__init__(self, parent)
+        QWidget.__init__(self, parent)
+        self.setLayout(QVBoxLayout())
 
-        etcLayout = QVBoxLayout()
-        etcLogo = QLabel() 
-        etcLogo.setPixmap(QtGui.QPixmap(os.path.join(\
-            self.parent().privatePath, "sededu.png")))
-        etcDesc = gui.InfoLabel("a sediment-related educational activity suite", gui.titleFont())
-        etcButtons = QGroupBox()
-        etcButtonsLayout = QHBoxLayout()
-        etcQuit = QPushButton("Quit")
-        etcQuit.clicked.connect(QtCore.QCoreApplication.instance().quit)
-        # if aux_key in {"main"}:
-        #     etcAuxButton = QPushButton("About")
-        #     etcAuxButton.clicked.connect(self.parent().parent().drawAbout)
-        # elif aux_key in {"about"}:
-        #     etcAuxButton = QPushButton("Back")
-        #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
-        etcAuxButton = QPushButton("About")
-        # etcAuxButton.clicked.connect(lambda: self.parent().parent().MainPageStack.setCurrentIndex(1))
-        etcAuxButton.clicked.connect(lambda: self.parent().parent().navToAbout(idx=1))
-        # elif aux_key in {"about"}:
-        #     etcAuxButton = QPushButton("Back")
-        #     etcAuxButton.clicked.connect(self.parent().parent().drawMain)
-        etcButtonsLayout.addWidget(etcQuit)
-        etcButtonsLayout.addWidget(etcAuxButton)
-        etcButtons.setLayout(etcButtonsLayout)
-        etcLayout.addWidget(etcLogo)
-        etcLayout.addWidget(etcDesc)
-        etcLayout.addStretch(100)
-        etcLayout.addWidget(etcButtons)
+        self.SideBarHeader = self._SideBarHeaderWidget(self)
+        self.SideBarButtons = self._SideBarButtonsWidget(self)
 
-        # NEED TO ADD BACK IN THE VERTICAL LINE BREAKER
-        # layout.addWidget(gui.VLine(self))
+        self.layout().addWidget(self.SideBarHeader)
+        self.layout().addStretch(100)
+        self.layout().addWidget(self.SideBarButtons)
 
-        self.setLayout(etcLayout)
+
+    class _SideBarHeaderWidget(QGroupBox):
+        def __init__(self, parent=None):
+            QGroupBox.__init__(self, parent)
+            self.setLayout(QVBoxLayout())
+
+            Logo = self.make_Logo()
+            Desc = self.make_Desc()
+            
+            self.layout().addWidget(Logo)
+            self.layout().addWidget(Desc)
+            self.setAlignment(QtCore.Qt.AlignLeft)
+
+
+        def make_Logo(self):
+            Logo = QLabel() 
+            Logo.setPixmap(QtGui.QPixmap(os.path.join(\
+                self.parent().parent().privatePath, "sededu.png")))
+            return Logo
+
+
+        def make_Desc(self):
+            Desc = gui.InfoLabel("a sediment-related educational activity suite", 
+                                 gui.titleFont())
+            return Desc
+
+
+
+    class _SideBarButtonsWidget(QGroupBox):
+        def __init__(self, parent=None):
+            QGroupBox.__init__(self, parent)
+            self.setLayout(QHBoxLayout())
+
+            self.Quit = QPushButton("Quit")
+            self.Quit.clicked.connect(QtCore.QCoreApplication.instance().quit)
+            self.layout().addWidget(self.Quit)
+
+            self.AuxButton = QPushButton("About")
+            self.setAuxButtonToAbout()
+            self.layout().addWidget(self.AuxButton)
+            
+
+        def setAuxButtonToAbout(self):
+            self.AuxButton.setText("About")
+            self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToAbout(idx=1))
+
+
+        def setAuxButtonToMain(self):
+            self.AuxButton.setText("Back")
+            self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToMain())
+
 
 
 

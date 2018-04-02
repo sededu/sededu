@@ -8,39 +8,56 @@ from sededu.utilities import guiUtils as gui
 from sededu.utilities.base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
 from sededu.utilities.navigation import NavigationPageWidget
 from sededu.utilities.about import AboutPageWidget
+from sededu.utilities.category import CategoryPageWidget
+
+
 
 class RootWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self)
 
-        self.find_paths()
+        # find the local path and folder information
+        self.findPaths()
 
+        # construct the central widget of the gui
         MainBackground = MainBackgroundWidget(self)
         self.setCentralWidget(MainBackground)
 
+        # construct the sidebar and page stack
         self.MainPageStack = MainPageStackWidget(MainBackground)
         self.MainSideBar = MainSideBarWidget(self)
 
+        # construct the navigation page and about page
         NavigationPage = NavigationPageWidget(self)
         AboutPage = AboutPageWidget(self)
 
+        # add the side bar and page stack to the central widget
         MainBackground.layout().addWidget(self.MainSideBar)
+        MainBackground.layout().addWidget(gui.VLine(self))
         MainBackground.layout().addWidget(self.MainPageStack)
 
+        # add the navigation and about page
         self.MainPageStack.addWidget(NavigationPage)
         self.MainPageStack.addWidget(AboutPage)
 
-        # configure the window header and size options
+        # construct and add the category pages
+        for i in self.categoryList:
+            iCategoryPage = CategoryPageWidget(i, self)
+            self.MainPageStack.addWidget(iCategoryPage)
+
+        # configure the main window header and size
         self.setWindowTitle("SedEdu")
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
                            "sededuicon.png")))
         self.setGeometry(10, 10, 300, 500)
 
 
-    def find_paths(self):
+    def findPaths(self):
         thisDir = os.path.dirname(__file__)
         self.thisPath = os.path.join(thisDir,'')
         self.privatePath = os.path.join(self.thisPath, "sededu", "private")
+        self.categoryList = ["Rivers", "Deltas", "Deserts", "Coasts", 
+            "Stratigraphy", "Behind the \nModules"] # read these from file?
 
 
     def _setMainPageStackIndex(self, idx):
@@ -48,147 +65,22 @@ class RootWindow(QMainWindow):
 
 
     def navToMain(self, idx=0):
-        self.MainPageStack.setCurrentIndex(idx)
+        self._setMainPageStackIndex(idx=idx)
+        self.MainSideBar.SideBarButtons.setAuxButtonToAbout()
 
 
     def navToAbout(self, idx=1):
-        # self.MainPageStack.setCurrentIndex(idx)
         self._setMainPageStackIndex(idx=idx)
+        self.MainSideBar.SideBarButtons.setAuxButtonToMain()
 
 
     def navToCategory(self, idx):
-        self.MainPageStack.setCurrentIndex(idx)
-
-
-    # def initializeGUI(self):
-    #     a = 1
-        # MainMenu = MainMenuWidget(self) # build MainMenuWidget
-        # about = AboutMenu(self) # build AboutMenu
-        # riversMenu = CategoryMenu("Rivers", self)
-        # deltasMenu = CategoryMenu("Deltas", self)
-        # desertsMenu = CategoryMenu("Deserts", self)
-        # coastsMenu = CategoryMenu("Coasts", self)
-        # stratMenu = CategoryMenu("Stratigraphy", self)
-        # btmodsMenu = CategoryMenu("Behind the Modules", self)
-        # self.stack.addWidget(MainMenu)
-        # self.stack.addWidget(about)
-        # self.stack.addWidget(riversMenu)
-        # self.stack.addWidget(deltasMenu)
-        # self.stack.addWidget(desertsMenu)
-        # self.stack.addWidget(coastsMenu)
-        # self.stack.addWidget(stratMenu)
-        # self.stack.addWidget(btmodsMenu)
-    
+        self._setMainPageStackIndex(idx=idx)
+        self.MainSideBar.SideBarButtons.setAuxButtonToMain()
 
 
 
 
-
-class MainMenuWidget(QWidget):
-    # class for main menu
-    def __init__(self, parent):
-        super().__init__(parent)
-        mainList = ["Rivers", "Deltas", "Deserts", "Coasts", 
-            "Stratigraphy", "Behind the \nModules"] # read these from file?
-         
-        navBox = QGroupBox() # category navigation box, group title here
-        nList = len(mainList)
-        gridSize = [3, 2]
-        # xPos = np.tile( range(gridSize[1]), (1, int(np.ceil(nList/gridSize[1]))) )
-        cPos = [0, 1, 0, 1, 0, 1]
-        rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
-        navLayout = QGridLayout()
-        for i in range(nList):
-            iButton = gui.NavButton(mainList[i], self.parent().thisPath)
-            # iButton.clicked.connect(lambda x, i=i: self.parent().setCurrentIndex(i+2))
-            iButton.clicked.connect(lambda x, i=i: self.parent().parent().drawNav(i+2))
-            navLayout.addWidget(iButton, rPos[i], cPos[i])
-        navBox.setLayout(navLayout)
-
-        etcBox = gui.EtcBox("main", self)
-
-        layout = QHBoxLayout()
-        layout.addWidget(etcBox)
-        layout.addWidget(gui.VLine(self))
-        layout.addWidget(navBox, 100)
-        self.setLayout(layout)
-
-
-
-
-
-
-
-class CategoryMenu(QWidget):
-    # class for navigation menu
-    def __init__(self, category, parent):
-        QWidget.__init__(self, parent)
-
-        # self.categoryPath = os.path.join(self.parent().thisPath, 
-        #                                   "sededu", "modules", 
-        #                                   gui.category2path(category))
-        # self.modulePathList = gui.subDirPath(self.categoryPath)
-
-        # self.ModuleList = self.ModuleListWidget(self)
-        # self.ModulePageStack = self.ModulePageStackWidget(self)
-        # self.ModuleDocStack = QStackedWidget()
-        
-        # moduleNum = 0
-        # for iModuleDirectory in self.modulePathList:
-        #     iModuleAbout = json.load(open(os.path.join(iModuleDirectory, "about.json")))
-            # iInfoPage = gui.ModuleInfoPage(iModuleDirectory, iModuleAbout)
-            # iListItem = gui.categoryListItem(moduleNum, iModuleAbout)
-            # self.moduleList.addItem(iListItem)
-            # self.infoPageStack.addWidget(iInfoPage)
-
-
-        categInfo = gui.CategoryInfo(category, self)
-        moduleList = categInfo.moduleList
-        infoPageStack = categInfo.infoPageStack
-        docPageStack = categInfo.docPageStack
-
-        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"),
-                                          gui.titleFont())
-        backBtn = QPushButton("Back to Main Menu")
-        backBtn.clicked.connect(self.parent().drawMain)
-        backBtn.setFixedSize(QtCore.QSize(200,40))
-        backBtn.setFont(gui.subtitleFont())
-        
-        bodyLayout = QGridLayout()
-        bodyLayout.addWidget(categoryLabelText, 0, 0)
-        bodyLayout.addWidget(moduleList, 1, 0)
-        bodyLayout.addWidget(docPageStack, 2, 0)
-        bodyLayout.addWidget(infoPageStack, 0, 1, 4, 1)
-        bodyLayout.addWidget(backBtn, 3, 0)
-        bodyLayout.setContentsMargins(15, 15, 15, 15)
-        self.setLayout(bodyLayout)
-
-    def loopModules(self):
-        # for i in self.iDir:
-        a=1
-
-    class ModuleListWidget(QListWidget):
-        def __init__(self, parent=None):
-            QListWidget.__init__(self, parent)
-            self.itemClicked.connect(self.parent().setCategoryItemInfo)
-
-    class ModulePageStackWidget(QStackedWidget):
-        def __init__(self, parent=None):
-            QStackedWidget.__init__(self, parent)
-            self.setSizePolicy(QSizePolicy(
-                               QSizePolicy.MinimumExpanding,
-                               QSizePolicy.Preferred))
-
-    def setCategoryItemInfo(self, item):
-        self.infoPageStack.setCurrentIndex(item.idx)
-        self.docPageStack.setCurrentIndex(item.idx)
-
-
-    def docLaunch(self, launchList):
-        launchIdx = self.iDocList.currentRow()
-        filename = launchList[launchIdx]
-        
-        open_file(filename)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
