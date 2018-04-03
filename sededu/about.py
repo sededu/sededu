@@ -96,34 +96,48 @@ class AboutPageWidget(QWidget):
 
     class _ReadmeFileData(object):
         def __init__(self, path):
-            raw, lines = self.make_info(path)
+            raw, lines = self.extract_from_file(path)
             self.summary = self.make_summary(lines)
+            print(self.summary)
             self.license = self.make_license(lines)
+            print(self.license)
             self.contributors = self.make_contributors(lines)
             
 
-        def make_info(self, path):
-            readmePath = os.path.join(path, "README.md")
+        def extract_from_file(self, path):
+            readmePath = os.path.join(path, 'README.md')
             raw = open(readmePath, 'rt')
-            lines = [l.replace("\n","").replace("*","") for l in raw]
+            lines = [l.replace('\n','').replace('*','') for l in raw]
             return raw, lines
 
 
+        def strip_and_join(self, lines0):
+            lines_stripped = []
+            for l in range(len(lines0)):
+                lines_stripped.append( lines0[l].rstrip() )
+            lines = ' '.join((lines_stripped))
+            print(type(lines))
+            return lines
+
+
         def make_summary(self, lines):
-            summaryIdx = lines.index("# SedEdu") + 2
+            summaryIdx = lines.index('# SedEdu') + 2
+            # ![image of SedEdu main menu]
             summary = lines[summaryIdx]
             return summary
 
 
         def make_license(self, lines):
-            licenseIdx = lines.index("## License") + 2
-            license = lines[licenseIdx]
+            licenseIdx = lines.index('## License') + 2
+            acknowledgeIdx = lines.index('## Acknowledgments')
+            license_raw = lines[licenseIdx:acknowledgeIdx-3]
+            licence = self.strip_and_join(license_raw)
             return license
 
 
         def make_contributors(self, lines):
-            licenseIdx = lines.index("## License") + 2
-            contributorsIdx = lines.index("## Authors") + 2
-            contributorsRaw = lines[contributorsIdx:licenseIdx-4]
+            contributorsIdx = lines.index('## Authors') + 2
+            licenseIdx = lines.index('## License')
+            contributorsRaw = lines[contributorsIdx:licenseIdx]
             contributors = contributorsRaw
             return contributors
