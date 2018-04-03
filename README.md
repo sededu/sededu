@@ -51,6 +51,7 @@ pip3 install pyqt5 scipy numpy matplotlib pygame shapely
 
 
 ### Installing SedEdu
+
 Eventually SedEdu will be packaged and deployed on [PyPi the Python Package Index](https://pypi.python.org/pypi) and can be installed seamlessly through `pip`.
 This will allow a launcher/executable to be added to the host OS, making launching the application very easy.
 Importantly, it also makes it easy for the SedEdu authors to deploy updates and bug fixes to your SedEdu installation.
@@ -116,6 +117,6 @@ The authors have been supported by:
 * The US National Science Foundation under Grant Nos. 1427262 and 1450681.
 
 
-### Disclaimer
+## Disclaimer
 
 Any opinion, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of any funding agency.

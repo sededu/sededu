@@ -98,9 +98,7 @@ class AboutPageWidget(QWidget):
         def __init__(self, path):
             raw, lines = self.extract_from_file(path)
             self.summary = self.make_summary(lines)
-            print(self.summary)
             self.license = self.make_license(lines)
-            print(self.license)
             self.contributors = self.make_contributors(lines)
             
 
@@ -111,33 +109,33 @@ class AboutPageWidget(QWidget):
             return raw, lines
 
 
-        def strip_and_join(self, lines0):
-            lines_stripped = []
-            for l in range(len(lines0)):
-                lines_stripped.append( lines0[l].rstrip() )
-            lines = ' '.join((lines_stripped))
-            print(type(lines))
+        def strip_and_join(self, lines_raw):
+            lines_rstripped = [l.rstrip() for l in lines_raw]
+            lines = ' '.join(lines_rstripped)
             return lines
 
 
         def make_summary(self, lines):
             summaryIdx = lines.index('# SedEdu') + 2
-            # ![image of SedEdu main menu]
-            summary = lines[summaryIdx]
+            imageIdx = [i for i, s in enumerate(lines) 
+                        if '![image of SedEdu main menu]' in s]
+            imageIdx = imageIdx[0]
+            summary_raw = lines[summaryIdx:imageIdx]
+            summary = self.strip_and_join(summary_raw)
             return summary
 
 
         def make_license(self, lines):
             licenseIdx = lines.index('## License') + 2
             acknowledgeIdx = lines.index('## Acknowledgments')
-            license_raw = lines[licenseIdx:acknowledgeIdx-3]
-            licence = self.strip_and_join(license_raw)
+            license_raw = lines[licenseIdx:acknowledgeIdx]
+            license = self.strip_and_join(license_raw)
             return license
 
 
         def make_contributors(self, lines):
             contributorsIdx = lines.index('## Authors') + 2
             licenseIdx = lines.index('## License')
-            contributorsRaw = lines[contributorsIdx:licenseIdx]
-            contributors = contributorsRaw
+            contributors_raw = lines[contributorsIdx:licenseIdx]
+            contributors = contributors_raw
             return contributors
