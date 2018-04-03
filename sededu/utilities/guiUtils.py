@@ -116,29 +116,6 @@ def VLine(self):
 
 
 
-class SupportedBox(QWidget):
-    def __init__(self, privatePath, parent=None):
-        QWidget.__init__(self, parent)
-        supportLayout = QHBoxLayout()
-        nsfLogo = self.logoPixmap(os.path.join(privatePath, "nsf.gif"))
-        riceLogo = self.logoPixmap(os.path.join(privatePath, "rice.png"))
-        supportLayout.addWidget(nsfLogo)
-        supportLayout.addWidget(riceLogo)
-        supportLayout.addStretch(100)
-        self.setLayout(supportLayout)
-
-
-    def logoPixmap(self, path):
-        logo = QLabel()
-        logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
-        return logo
-
-
-## one off utils
-
-
-
-
 ## path definitions / file finders
 def subDirPath(d):
     # list of direct subdirectories

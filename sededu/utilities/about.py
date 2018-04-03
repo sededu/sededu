@@ -5,51 +5,93 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
 
+
+
 class AboutPageWidget(QWidget):
     # class for about page
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
+        self.setLayout(QVBoxLayout())
         
-        # etcBox = gui.EtcBox("about", self)
-        # etcBox = QLabel("FILLER")
+        # construct readme data to parse out into fields
+        readmeText = self._ReadmeFileData(self.parent().thisPath)
         
-        readmeText = self.ReadmeFileData(self.parent().thisPath)
-        bodyBox = QGroupBox()
-        bodyLayout = QVBoxLayout()
+        # construct the header
         categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
+        
+        # construct the summary multiline text
         descLabel = gui.MultilineInfoLabel(readmeText.summary)
 
-        bodyLayout.addWidget(categoryLabelText)
-        bodyLayout.addWidget(descLabel)
-        bodyLayout.addWidget(gui.InfoLabel(readmeText.license))
-        bodyLayout.addStretch(1)
-        bodyLayout.addWidget(gui.InfoLabel("Contributors:"))
+        # construct the contributors box
+        contribBox = self._ContributorWidget(readmeText)
+
+        # construct the more information text
+        completeInfoLabel = gui.InfoLabel('For complete information visit \
+            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont())
+
+        # construct the supported by box
+        SupportedBy = self._SupportedByWidget(self.parent().privatePath)
+
+        # add widgets in specific vertical order
+        self.layout().addWidget(categoryLabelText)
+        self.layout().addWidget(descLabel)
+        self.layout().addWidget(gui.InfoLabel(readmeText.license))
         
-        for c in readmeText.contributors:
-            contrib = gui.InfoLabel(c)
-            contrib.setContentsMargins(10, 0, 0, 0)
-            bodyLayout.addWidget(contrib)
+        self.layout().addStretch(1)
+        self.layout().addWidget(contribBox)
 
-        bodyLayout.addStretch(2)
-        bodyLayout.addWidget(gui.InfoLabel('For complete information visit \
-            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont()))
-        bodyLayout.addStretch(10)
-        bodyLayout.addWidget(gui.InfoLabel("SedEdu is supported by:"))
-        bodyLayout.addWidget(gui.SupportedBox(self.parent().privatePath))
+        self.layout().addStretch(2)
+        self.layout().addWidget(completeInfoLabel)
+
+        self.layout().addStretch(10)
+        self.layout().addWidget(SupportedBy)
         
-        bodyBox.setLayout(bodyLayout)
-        
-        layout = QHBoxLayout()
-        # layout.addWidget(etcBox)
-        # layout.addWidget(gui.VLine(self))
-        layout.addWidget(bodyBox, 100)
-        self.setLayout(layout)
+
+    class _ContributorWidget(QGroupBox):
+        def __init__(self, readmeText, parent=None):
+            QGroupBox.__init__(self, parent)
+            self.setLayout(QVBoxLayout())
+            self.setContentsMargins(0, 0, 0, 0)
+
+            self.layout().addWidget(gui.InfoLabel("Contributors:"))
+
+            for c in readmeText.contributors:
+                contrib = gui.InfoLabel(c)
+                contrib.setContentsMargins(10, 0, 0, 0)
+                self.layout().addWidget(contrib)
 
 
+    class _SupportedByWidget(QWidget):
+        def __init__(self, privatePath, parent=None):
+            QWidget.__init__(self, parent)
+            self.setLayout(QVBoxLayout())
+
+            LogoBox = self.LogoBoxWidget()
+
+            supportedText = gui.InfoLabel("SedEdu is supported by:")
+            nsfLogo = self.logoPixmap(os.path.join(privatePath, "nsf.gif"))
+            riceLogo = self.logoPixmap(os.path.join(privatePath, "rice.png"))
+            
+            self.layout().addWidget(supportedText)
+            self.layout().addWidget(nsfLogo)
+            self.layout().addWidget(riceLogo)
+            self.layout().addStretch(100)
 
 
+        class LogoBoxWidget(QGroupBox):
+            def __init__(self, parent=None):
+                QGroupBox.__init__(self, parent)
+                self.setLayout(QHBoxLayout())
+                self.layout().setContentsMargins(0, 0, 0, 0)
 
-    class ReadmeFileData():
+
+        def logoPixmap(self, path):
+            logo = QLabel()
+            logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
+            return logo
+
+
+    class _ReadmeFileData(object):
         def __init__(self, path):
             raw, lines = self.make_info(path)
             self.summary = self.make_summary(lines)

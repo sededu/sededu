@@ -6,6 +6,7 @@ from PyQt5 import QtGui, QtCore
 from sededu.utilities import guiUtils as gui
 
 
+
 class NavigationPageWidget(QWidget):
     # class for navigation button page
     def __init__(self, parent=None):
@@ -24,7 +25,6 @@ class NavigationPageWidget(QWidget):
             iButton = self._NavigationCategoryButtonWidget(mainList[i], self.parent().thisPath)
             iButton.clicked.connect(lambda x, i=i: self.parent().parent().parent().navToCategory(i+2))
             self.layout().addWidget(iButton, rPos[i], cPos[i])
-
 
 
     class _NavigationCategoryButtonWidget(QPushButton):

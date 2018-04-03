@@ -54,7 +54,6 @@ class MainSideBarWidget(QWidget):
             return Desc
 
 
-
     class _SideBarButtonsWidget(QGroupBox):
         def __init__(self, parent=None):
             QGroupBox.__init__(self, parent)
@@ -77,7 +76,6 @@ class MainSideBarWidget(QWidget):
         def setAuxButtonToMain(self):
             self.AuxButton.setText("Back")
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToMain())
-
 
 
 
