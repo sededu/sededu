@@ -3,7 +3,8 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
+
+import sededu.utilities as utls
 
 
 
@@ -17,17 +18,17 @@ class AboutPageWidget(QWidget):
         readmeText = self._ReadmeFileData(self.parent().thisPath)
         
         # construct the header
-        categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
+        categoryLabelText = utls.InfoLabel("About the SedEdu project:", utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = gui.MultilineInfoLabel(readmeText.summary)
+        descLabel = utls.MultilineInfoLabel(readmeText.summary)
 
         # construct the contributors box
         contribBox = self._ContributorWidget(readmeText)
 
         # construct the more information text
-        completeInfoLabel = gui.InfoLabel('For complete information visit \
-            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont())
+        completeInfoLabel = utls.InfoLabel('For complete information visit \
+            the [SedEdu project page](https://github.com/amoodie/sededu).', utls.titleFont())
 
         # construct the supported by box
         SupportedBy = self._SupportedByWidget(self.parent().privatePath)
@@ -35,7 +36,7 @@ class AboutPageWidget(QWidget):
         # add widgets in specific vertical order
         self.layout().addWidget(categoryLabelText)
         self.layout().addWidget(descLabel)
-        self.layout().addWidget(gui.InfoLabel(readmeText.license))
+        self.layout().addWidget(utls.InfoLabel(readmeText.license))
         
         self.layout().addStretch(1)
         self.layout().addWidget(contribBox)
@@ -53,10 +54,10 @@ class AboutPageWidget(QWidget):
             self.setLayout(QVBoxLayout())
             self.setContentsMargins(0, 0, 0, 0)
 
-            self.layout().addWidget(gui.InfoLabel("Contributors:"))
+            self.layout().addWidget(utls.InfoLabel("Contributors:"))
 
             for c in readmeText.contributors:
-                contrib = gui.InfoLabel(c)
+                contrib = utls.InfoLabel(c)
                 contrib.setContentsMargins(10, 0, 0, 0)
                 self.layout().addWidget(contrib)
 
@@ -68,7 +69,7 @@ class AboutPageWidget(QWidget):
 
             LogoBox = self.LogoBoxWidget()
 
-            supportedText = gui.InfoLabel("SedEdu is supported by:")
+            supportedText = utls.InfoLabel("SedEdu is supported by:")
             nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, "nsf.gif"))
             riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, "rice.png"))
             
@@ -95,34 +96,46 @@ class AboutPageWidget(QWidget):
 
     class _ReadmeFileData(object):
         def __init__(self, path):
-            raw, lines = self.make_info(path)
+            raw, lines = self.extract_from_file(path)
             self.summary = self.make_summary(lines)
             self.license = self.make_license(lines)
             self.contributors = self.make_contributors(lines)
             
 
-        def make_info(self, path):
-            readmePath = os.path.join(path, "README.md")
+        def extract_from_file(self, path):
+            readmePath = os.path.join(path, 'README.md')
             raw = open(readmePath, 'rt')
-            lines = [l.replace("\n","").replace("*","") for l in raw]
+            lines = [l.replace('\n','').replace('*','') for l in raw]
             return raw, lines
 
 
+        def strip_and_join(self, lines_raw):
+            lines_rstripped = [l.rstrip() for l in lines_raw]
+            lines = ' '.join(lines_rstripped)
+            return lines
+
+
         def make_summary(self, lines):
-            summaryIdx = lines.index("# SedEdu") + 2
-            summary = lines[summaryIdx]
+            summaryIdx = lines.index('# SedEdu') + 2
+            imageIdx = [i for i, s in enumerate(lines) 
+                        if '![image of SedEdu main menu]' in s]
+            imageIdx = imageIdx[0]
+            summary_raw = lines[summaryIdx:imageIdx]
+            summary = self.strip_and_join(summary_raw)
             return summary
 
 
         def make_license(self, lines):
-            licenseIdx = lines.index("## License") + 2
-            license = lines[licenseIdx]
+            licenseIdx = lines.index('## License') + 2
+            acknowledgeIdx = lines.index('## Acknowledgments')
+            license_raw = lines[licenseIdx:acknowledgeIdx]
+            license = self.strip_and_join(license_raw)
             return license
 
 
         def make_contributors(self, lines):
-            licenseIdx = lines.index("## License") + 2
-            contributorsIdx = lines.index("## Authors") + 2
-            contributorsRaw = lines[contributorsIdx:licenseIdx-4]
-            contributors = contributorsRaw
+            contributorsIdx = lines.index('## Authors') + 2
+            licenseIdx = lines.index('## License')
+            contributors_raw = lines[contributorsIdx:licenseIdx]
+            contributors = contributors_raw
             return contributors

@@ -3,12 +3,12 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
 
-from sededu.utilities.base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
-from sededu.utilities.navigation import NavigationPageWidget
-from sededu.utilities.about import AboutPageWidget
-from sededu.utilities.category import CategoryPageWidget
+import sededu.utilities as utls
+from sededu.base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
+from sededu.navigation import NavigationPageWidget
+from sededu.about import AboutPageWidget
+from sededu.category import CategoryPageWidget
 
 
 
@@ -33,7 +33,7 @@ class RootWindow(QMainWindow):
 
         # add the side bar and page stack to the central widget
         MainBackground.layout().addWidget(self.MainSideBar)
-        MainBackground.layout().addWidget(gui.VLine(self))
+        MainBackground.layout().addWidget(utls.VLine(self))
         MainBackground.layout().addWidget(self.MainPageStack)
 
         # add the navigation and about page

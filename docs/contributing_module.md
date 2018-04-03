@@ -26,7 +26,10 @@ how to update the submodules periodically:
 git submodule foreach git pull
 ```
 
+## Updating SedEdu metadata
+https://semver.org/
 
+## Open a pull request
 
 ## Common challenges
 
