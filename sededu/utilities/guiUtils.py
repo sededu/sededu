@@ -5,93 +5,6 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
 
-class NavButton(QPushButton):
-    def __init__(self, category, thisPath, parent=None):
-        QPushButton.__init__(self, parent)
-        iPath = os.path.join(thisPath, "sededu", "private", \
-        	category2path(category) + ".png")
-        iIcon = QtGui.QIcon()
-        iIcon.addPixmap(QtGui.QPixmap(iPath))
-        self.setIcon(iIcon)
-        self.setIconSize(QtCore.QSize(300, 200))
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.Maximum,
-                           QSizePolicy.Maximum))
-
-
-
-class CategoryInfo(QWidget):
-    def __init__(self, category, parent):
-        QWidget.__init__(self, parent)
-        categoryPath = os.path.join(self.parent().parent().thisPath, \
-            "sededu", "modules", category2path(category))
-        
-        self.moduleList = QListWidget()
-        self.moduleList.itemClicked.connect(self.setCategoryItemInfo)
-
-        self.infoPageStack = QStackedWidget()
-        self.infoPageStack.setSizePolicy(QSizePolicy(
-                                         QSizePolicy.MinimumExpanding,
-                                         QSizePolicy.Preferred))
-
-        self.docPageStack = QStackedWidget()
-        
-        subDirs = subDirPath(categoryPath)
-        modIdx = 0
-        for iDir in subDirs:
-            iData = json.load(open(os.path.join(iDir, "about.json")))
-            iInfoPage = ModuleInfoPage(iDir, iData)
-            iListItem = categoryListItem(modIdx, iData)
-            self.moduleList.addItem(iListItem)
-            self.infoPageStack.addWidget(iInfoPage)
-
-            docPath = os.path.join(iDir, *iData["docloc"])
-            docList = iData["doclist"]
-            launchList = [os.path.join(docPath, f) for f in list(docList.keys())]
-            docIdx = 0
-            iDocPage = QWidget()
-            self.iDocList = QListWidget()
-            iDocPageLayout = QVBoxLayout()
-            iDocPageLayout.setContentsMargins(0, 0, 0, 0)
-            iDocPageLayout.addWidget(QLabel("Activities/worksheets available:"))
-            iDocPageLayout.addWidget(self.iDocList)
-            docLaunch = QPushButton("Open activity")
-            docLaunch.clicked.connect(lambda: self.docLaunch(launchList))
-            if len(launchList) > 0:
-                # iInfoPage.infoLayout.insertWidget(6, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
-                iInfoPage.launchLayout.addWidget(docLaunch, 0, 0)
-                # iInfoPage.infoLayout.goButtonLayout.insertWidget(0, docLaunch) # THIS IS WHERE THE BUTTON SLIPS IN
-            for iDoc in docList:
-                iDocInfo = iData["doclist"]
-                iDocTitle = list(iDocInfo.values())[docIdx]
-                iDocFile = list(iDocInfo.keys())[docIdx]
-                iDocListItem = QListWidgetItem(iDocTitle)
-                iDocListItem.setSizeHint(QtCore.QSize(100,30))
-                self.iDocList.addItem(iDocListItem)
-                docIdx += 1
-
-            self.moduleList.setCurrentRow(0)
-            self.iDocList.setCurrentRow(0)
-            iDocPage.setLayout(iDocPageLayout)
-            self.docPageStack.addWidget(iDocPage)
-            modIdx += 1
-
-    class ModuleListWidget(QListWidget):
-        def __init__(self, parent):
-            QListWidget.__init__(self, parent)
-            self.itemClicked.connect(self.setCategoryItemInfo)
-
-    def setCategoryItemInfo(self, item):
-        self.infoPageStack.setCurrentIndex(item.idx)
-        self.docPageStack.setCurrentIndex(item.idx)
-
-
-    def docLaunch(self, launchList):
-        launchIdx = self.iDocList.currentRow()
-        filename = launchList[launchIdx]
-        open_file(filename)
-        
-
 
 class NoFileMessageBox(QMessageBox):
     # warning nofile mesage box, path is a required arg.
@@ -162,6 +75,16 @@ class InfoLabel(MultilineInfoLabel):
         self.setOpenExternalLinks(True)
 
 
+class GenericLargePushButton(QPushButton):
+    def __init__(self, buttonText='', parent=None):
+        QPushButton.__init__(self, parent)
+        backBtn = QPushButton("Back to Main Menu")
+        backBtn.clicked.connect(self.parent().drawMain)
+        backBtn.setFixedSize(QtCore.QSize(200,40))
+        backBtn.setFont(gui.subtitleFont())
+
+
+
 def open_file(filename):
     platType = platform.system()
     if os.path.isfile(filename):
@@ -176,11 +99,13 @@ def open_file(filename):
         msg.exec_()
 
 
+
 def HLine(self):
     toto = QFrame()
     toto.setFrameShape(QFrame.HLine)
     toto.setFrameShadow(QFrame.Sunken)
     return toto
+
 
 
 def VLine(self):
@@ -220,6 +145,7 @@ def subDirPath(d):
     return filter(os.path.isdir, [os.path.join(d,f) for f in os.listdir(d)])
 
 
+
 def category2path(c):
     # convert category name to folder name
     # this is very specific now -- any way to generalize the folders to
@@ -227,9 +153,11 @@ def category2path(c):
     return c.lower().replace(" ","").replace("\n","")
 
 
+
 def filesList(d):
     # list files in directory
     return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
+
 
 
 ## font definitions / text modifiers
@@ -241,6 +169,7 @@ def versionFont():
     return font
 
 
+
 def titleFont():
     font = QtGui.QFont()
     font.setBold(True)
@@ -248,12 +177,16 @@ def titleFont():
     font.setPointSize(14)
     return font
 
+
+
 def subtitleFont():
     font = QtGui.QFont()
     font.setBold(False)
     font.setItalic(False)
     font.setPointSize(12)
     return font
+
+
 
 def cutTitle(text0):
     # Use QFontMetrics to get measurements, 

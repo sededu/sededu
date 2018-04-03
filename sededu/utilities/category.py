@@ -20,9 +20,19 @@ class CategoryPageWidget(QWidget):
         self.ModuleList = self._ModuleListWidget(self)
         self.ModulePageStack = self._ModulePageStackWidget(self)
         self.ModuleDocStack = QStackedWidget()
+        self.categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"),
+                                               gui.titleFont())
+
+        self.layout().addWidget(self.categoryLabelText, 0, 0)
+        self.layout().addWidget(self.ModuleList, 1, 0)
+        self.layout().addWidget(self.ModuleDocStack, 2, 0)
+        self.layout().addWidget(self.ModulePageStack, 0, 1, 4, 1)
+        self.layout().setContentsMargins(15, 15, 15, 15)
         
+        # loop through all the modules
         moduleNum = 0
         for iModuleDirectory in modulePathList:
+            # get module metadata from the about.json file
             iModuleAbout = json.load(open(os.path.join(iModuleDirectory, "about.json")))
             
             # construct and add the item to the module list
@@ -31,7 +41,7 @@ class CategoryPageWidget(QWidget):
             self.ModuleList.setCurrentRow(0)
 
             # construct and add the info page to the stack
-            iModuleInfoPage = self._ModuleInfoPage(iModuleDirectory, iModuleAbout)
+            iModuleInfoPage = self._ModuleInformationPage(iModuleDirectory, iModuleAbout)
             self.ModulePageStack.addWidget(iModuleInfoPage)
 
             # construct and add the doc page to the stack
@@ -39,21 +49,15 @@ class CategoryPageWidget(QWidget):
             iModuleDocNames = iModuleAbout["doclist"]
             iModuleDocLaunchList = [os.path.join(iModuleDocPath, f) for 
                                     f in list(iModuleDocNames.keys())]
-            
-            docNum = 0
-            iModuleDocPage = QWidget()
-            iModuleDocList = QListWidget()
-            iModuleDocPage.setLayout(QVBoxLayout())
-            iModuleDocPage.layout().setContentsMargins(0, 0, 0, 0)
-            iModuleDocPage.layout().addWidget(QLabel("Activities/worksheets available:"))
-            iModuleDocPage.layout().addWidget(iModuleDocList)
-            
+            iModuleDocPage = self._ModuleDocumentPage()
             self.ModuleDocStack.addWidget(iModuleDocPage)
 
-            iModuleDocLaunchButton = QPushButton("Open activity")
-            iModuleDocLaunchButton.clicked.connect(lambda: self.docLaunch(iModuleDocLaunchList))
-            if len(iModuleDocLaunchList) > 0:
-                iModuleInfoPage.launchLayout.addWidget(iModuleDocLaunchButton, 0, 0)
+            # construct and add the document list to the doc page
+            iModuleDocList = self._DocumentListWidget(iModuleDocLaunchList)
+            iModuleDocPage.layout().addWidget(iModuleDocList)
+
+            # loop through the docs and add to the list 
+            docNum = 0
             for iDoc in iModuleDocNames:
                 iDocInfo = iModuleAbout["doclist"]
                 iDocTitle = list(iDocInfo.values())[docNum]
@@ -63,25 +67,15 @@ class CategoryPageWidget(QWidget):
                 iModuleDocList.addItem(iDocListItem)
                 docNum += 1
             iModuleDocList.setCurrentRow(0)
+            
+            # create a document launcher button if docs
+            if len(iModuleDocLaunchList) > 0:
+                iModuleDocLaunchButton = QPushButton("Open activity")
+                iModuleDocLaunchButton.clicked.connect(lambda x, lL=iModuleDocLaunchList: iModuleDocList.docLaunch(lL))
+                iModuleInfoPage.launchLayout.addWidget(iModuleDocLaunchButton, 0, 0)
+
+            # increment to next module
             moduleNum += 1
-
-            # add the widgets to the 
-
-
-
-        categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"),
-                                          gui.titleFont())
-        # backBtn = QPushButton("Back to Main Menu")
-        # backBtn.clicked.connect(self.parent().drawMain)
-        # backBtn.setFixedSize(QtCore.QSize(200,40))
-        # backBtn.setFont(gui.subtitleFont())
-        
-        
-        self.layout().addWidget(categoryLabelText, 0, 0)
-        self.layout().addWidget(self.ModuleList, 1, 0)
-        self.layout().addWidget(self.ModuleDocStack, 2, 0)
-        self.layout().addWidget(self.ModulePageStack, 0, 1, 4, 1)
-        self.layout().setContentsMargins(15, 15, 15, 15)
 
 
     def setModulePage(self, item):
@@ -89,16 +83,21 @@ class CategoryPageWidget(QWidget):
         self.ModuleDocStack.setCurrentIndex(item.idx)
 
 
-    def docLaunch(self, launchList):
-        launchIdx = self.iModuleDocList.currentRow()
-        filename = launchList[launchIdx]
-        gui.open_file(filename)
-
-
     class _ModuleListWidget(QListWidget):
         def __init__(self, parent=None):
             QListWidget.__init__(self, parent)
             self.itemClicked.connect(self.parent().setModulePage)
+
+
+    class _DocumentListWidget(QListWidget):
+        def __init__(self, launchList, parent=None):
+            QListWidget.__init__(self, parent)
+
+
+        def docLaunch(self, launchList):
+            launchIdx = self.currentRow()
+            filename = launchList[launchIdx]
+            gui.open_file(filename)
 
 
     class _ModulePageStackWidget(QStackedWidget):
@@ -118,9 +117,15 @@ class CategoryPageWidget(QWidget):
             self.setFont(gui.subtitleFont())
 
 
+    class _ModuleDocumentPage(QWidget):
+        def __init__(self, parent=None):
+            QWidget.__init__(self, parent)
+            self.setLayout(QVBoxLayout())
+            self.layout().setContentsMargins(0, 0, 0, 0)
+            self.layout().addWidget(QLabel("Activities/worksheets available:"))
 
 
-    class _ModuleInfoPage(QWidget):
+    class _ModuleInformationPage(QWidget):
         def __init__(self, modDirPath, data, parent=None):
             QWidget.__init__(self, parent)
             infoLayout = QVBoxLayout()
