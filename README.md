@@ -56,7 +56,7 @@ Eventually SedEdu will be packaged and deployed on [PyPi the Python Package Inde
 This will allow a launcher/executable to be added to the host OS, making launching the application very easy.
 Importantly, it also makes it easy for the SedEdu authors to deploy updates and bug fixes to your SedEdu installation.
 
-For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Package+for+deployment+on+Pypi%22)), SedEdu must be installed by cloning the GitHub git repository. 
+For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Package+for+deployment+on+Pypi%22)), SedEdu must be installed by cloning the GitHub git repository.
 
 You can clone the git repository to get the latest release version with:
 
@@ -78,7 +78,7 @@ git clone https://github.com/amoodie/sededu.git
 git checkout -b <name-of-working-branch> develop
 ```
 
-See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the `git` workflow preferred for SedEdu.
+See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
 
 <!-- 
 #### Windows instructions
@@ -96,6 +96,7 @@ Some opportunities for contributions are listed below (in no particular order):
 
 * write (code) a standalone interactive module
 * write an activity for an existing module
+* write (code) features and bug fixes for existing modules
 * write (code) features and bug fixes for SedEdu
 * write documentation for SedEdu
 
