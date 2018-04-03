@@ -75,8 +75,10 @@ python3 sededu/run_sededu.py
 
 ```
 git clone https://github.com/amoodie/sededu.git
-git checkout develop
+git checkout -b <name-of-working-branch> develop
 ```
+
+See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the `git` workflow preferred for SedEdu.
 
 <!-- 
 #### Windows instructions
