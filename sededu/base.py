@@ -3,7 +3,8 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
+
+import sededu.utilities as utls
 
 
 
@@ -52,8 +53,8 @@ class MainSideBarWidget(QWidget):
 
 
         def make_Desc(self):
-            Desc = gui.InfoLabel("a sediment-related educational activity suite", 
-                                 gui.titleFont())
+            Desc = utls.InfoLabel("a sediment-related educational activity suite", 
+                                 utls.titleFont())
             return Desc
 
 
@@ -85,7 +86,4 @@ class MainSideBarWidget(QWidget):
 class MainPageStackWidget(QStackedWidget):
     def __init__(self, parent=None):
         QStackedWidget.__init__(self, parent)
-
-        # self.setSizePolicy(QSizePolicy(
-        #                    QSizePolicy.MinimumExpanding,
-        #                    QSizePolicy.Preferred))
+        

@@ -3,8 +3,8 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
 
+import sededu.utilities as utls
 
 
 class NavigationPageWidget(QWidget):
@@ -31,7 +31,7 @@ class NavigationPageWidget(QWidget):
         def __init__(self, category, thisPath, parent=None):
             QPushButton.__init__(self, parent)
             iPath = os.path.join(thisPath, "sededu", "private", \
-                gui.category2path(category) + ".png")
+                utls.category2path(category) + ".png")
             iIcon = QtGui.QIcon()
             iIcon.addPixmap(QtGui.QPixmap(iPath))
             self.setIcon(iIcon)

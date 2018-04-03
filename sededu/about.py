@@ -3,7 +3,8 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
+
+import sededu.utilities as utls
 
 
 
@@ -17,17 +18,17 @@ class AboutPageWidget(QWidget):
         readmeText = self._ReadmeFileData(self.parent().thisPath)
         
         # construct the header
-        categoryLabelText = gui.InfoLabel("About the SedEdu project:", gui.titleFont())
+        categoryLabelText = utls.InfoLabel("About the SedEdu project:", utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = gui.MultilineInfoLabel(readmeText.summary)
+        descLabel = utls.MultilineInfoLabel(readmeText.summary)
 
         # construct the contributors box
         contribBox = self._ContributorWidget(readmeText)
 
         # construct the more information text
-        completeInfoLabel = gui.InfoLabel('For complete information visit \
-            the [SedEdu project page](https://github.com/amoodie/sededu).', gui.titleFont())
+        completeInfoLabel = utls.InfoLabel('For complete information visit \
+            the [SedEdu project page](https://github.com/amoodie/sededu).', utls.titleFont())
 
         # construct the supported by box
         SupportedBy = self._SupportedByWidget(self.parent().privatePath)
@@ -35,7 +36,7 @@ class AboutPageWidget(QWidget):
         # add widgets in specific vertical order
         self.layout().addWidget(categoryLabelText)
         self.layout().addWidget(descLabel)
-        self.layout().addWidget(gui.InfoLabel(readmeText.license))
+        self.layout().addWidget(utls.InfoLabel(readmeText.license))
         
         self.layout().addStretch(1)
         self.layout().addWidget(contribBox)
@@ -53,10 +54,10 @@ class AboutPageWidget(QWidget):
             self.setLayout(QVBoxLayout())
             self.setContentsMargins(0, 0, 0, 0)
 
-            self.layout().addWidget(gui.InfoLabel("Contributors:"))
+            self.layout().addWidget(utls.InfoLabel("Contributors:"))
 
             for c in readmeText.contributors:
-                contrib = gui.InfoLabel(c)
+                contrib = utls.InfoLabel(c)
                 contrib.setContentsMargins(10, 0, 0, 0)
                 self.layout().addWidget(contrib)
 
@@ -68,7 +69,7 @@ class AboutPageWidget(QWidget):
 
             LogoBox = self.LogoBoxWidget()
 
-            supportedText = gui.InfoLabel("SedEdu is supported by:")
+            supportedText = utls.InfoLabel("SedEdu is supported by:")
             nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, "nsf.gif"))
             riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, "rice.png"))
             

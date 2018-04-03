@@ -1,6 +1,6 @@
 # SedEdu
 
-SedEdu is a suite of educational activities related to geomorphology and sedimentology. The suite is targeted at grade school educators who want to bring enagaging, interactive, and scientifically relevant activities into their classroom. SedEdu is built entirely in Python and is *free and open source* software. Modules included in SedEdu are built by reseachers at the cutting edge of their fields and are designed to showcase their research in a digestable manner.
+SedEdu is a suite of educational activities related to geomorphology and sedimentology. The suite is targeted at grade school educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. SedEdu is built entirely in Python and is *free and open source* software. Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
 
 ## Getting Started
@@ -20,7 +20,7 @@ push to separate `installation.md` file?
 
 #### Windows instructions
 
-#### MacOSX instructions
+#### Mac OSX instructions
 
 #### Linux instructions
 
@@ -39,7 +39,7 @@ pip3 install pyqt5 scipy numpy matplotlib pygame shapely
 
 instructions for installing through pip, using either PyPI or from GitHub are forthcoming (see milestones).
 
-For now, you can clone the git repository to get the lastest version
+For now, you can clone the git repository to get the latest version
 
 ```
 git clone https://github.com/amoodie/sededu.git

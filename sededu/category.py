@@ -3,7 +3,8 @@ import numpy as np
 import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
-from sededu.utilities import guiUtils as gui
+
+import sededu.utilities as utls
 
 
 class CategoryPageWidget(QWidget):
@@ -14,14 +15,14 @@ class CategoryPageWidget(QWidget):
 
         self.categoryPath = os.path.join(self.parent().thisPath, 
                                           "sededu", "modules", 
-                                          gui.category2path(category))
-        modulePathList = gui.subDirPath(self.categoryPath)
+                                          utls.category2path(category))
+        modulePathList = utls.subDirPath(self.categoryPath)
 
         self.ModuleList = self._ModuleListWidget(self)
         self.ModulePageStack = self._ModulePageStackWidget(self)
         self.ModuleDocStack = QStackedWidget()
-        self.categoryLabelText = gui.InfoLabel(gui.cutTitle(category + " modules:"),
-                                               gui.titleFont())
+        self.categoryLabelText = utls.InfoLabel(utls.cutTitle(category + " modules:"),
+                                               utls.titleFont())
 
         self.layout().addWidget(self.categoryLabelText, 0, 0)
         self.layout().addWidget(self.ModuleList, 1, 0)
@@ -97,7 +98,7 @@ class CategoryPageWidget(QWidget):
         def docLaunch(self, launchList):
             launchIdx = self.currentRow()
             filename = launchList[launchIdx]
-            gui.open_file(filename)
+            utls.open_file(filename)
 
 
     class _ModulePageStackWidget(QStackedWidget):
@@ -114,7 +115,7 @@ class CategoryPageWidget(QWidget):
             self.setText(data["title"])
             self.idx = idx
             self.setSizeHint(QtCore.QSize(100,30))
-            self.setFont(gui.subtitleFont())
+            self.setFont(utls.subtitleFont())
 
 
     class _ModuleDocumentPage(QWidget):
@@ -144,9 +145,9 @@ class CategoryPageWidget(QWidget):
             data = self.validateData(data, modDirPath)
             
             # handle required module fields
-            titleLabel = gui.InfoLabel(gui.cutTitle(data["title"]), gui.titleFont())
+            titleLabel = utls.InfoLabel(utls.cutTitle(data["title"]), utls.titleFont())
             infoLayout.addWidget(titleLabel)
-            versionLabel = gui.InfoLabel("version " + data["version"], gui.versionFont())
+            versionLabel = utls.InfoLabel("version " + data["version"], utls.versionFont())
             infoLayout.addWidget(versionLabel)
 
             previewLabel = QLabel()
@@ -158,25 +159,25 @@ class CategoryPageWidget(QWidget):
                                            previewHeight).copy(QtCore.QRect(
                                            0,0,previewHeight*(4/3),previewHeight)))
                 else: # preview path supplied, but no image found
-                    previewLabel = gui.NoImageFiller("**Image not found**", previewHeight)
+                    previewLabel = utls.NoImageFiller("**Image not found**", previewHeight)
             else: # no preview path supplied
-                previewLabel = gui.NoImageFiller("**Preview not provided**", previewHeight)
+                previewLabel = utls.NoImageFiller("**Preview not provided**", previewHeight)
             previewLabel.setAlignment(QtCore.Qt.AlignCenter)
             infoLayout.addWidget(previewLabel)
 
             # handle optional module fields (replace with for loop with dict of keys?)
             optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(gui.InfoLabel(data["author"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.InfoLabel(data["author"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(gui.InfoLabel(data["shortdesc"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.InfoLabel(data["shortdesc"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             # optLayoutInc = optLayoutInc + 1
             if 'projurl' in data:
                 optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-                projurlLabel = gui.InfoLabel(data["projurl"])
+                projurlLabel = utls.InfoLabel(data["projurl"])
                 optLayout.addWidget(projurlLabel, optLayoutInc, 1)
                 optLayoutInc = optLayoutInc + 1
 
@@ -184,7 +185,7 @@ class CategoryPageWidget(QWidget):
                 optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
                 readmeButton = QPushButton("open README")
                 readmeButton.setFixedSize(QtCore.QSize(200,25))
-                readmeButton.clicked.connect(lambda: gui.open_file(os.path.join(modDirPath, *data["projreadme"])))
+                readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(modDirPath, *data["projreadme"])))
                 optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
 
             infoLayout.addWidget(optGroup)
