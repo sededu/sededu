@@ -1,6 +1,6 @@
 # Contributing a module
 
-If you want to contirbute a module, this file will guide you through the necessary steps --  whether your module exists already, or you only have an idea!
+If you want to contribute a module, this file will guide you through the necessary steps --  whether your module exists already, or you only have an idea!
 
 ## File structure of module
 
@@ -9,6 +9,8 @@ enumerate allowed packages here, this is already in the readme?
 
 ### The `about.json` file
 see the additional document for more details
+
+### Writing activities for your module
 
 ## Adding your module to SedEdu
 submodules?
@@ -30,6 +32,10 @@ git submodule foreach git pull
 https://semver.org/
 
 ## Open a pull request
+TEST TEST TEST! Please make sure you have stable module.
+Open PR to stable
+http://nvie.com/posts/a-successful-git-branching-model/
+http://nvie.com/files/Git-branching-model.pdf
 
 ## Common challenges
 
