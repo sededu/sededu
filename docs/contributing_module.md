@@ -20,6 +20,7 @@ cd into the git repository and use git submodule add to add your module to the S
 git submodule add https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
 ```
 
+IT IS REALLY IMPORTANT TO KEEP YOUR DEFAULT BRANCH STABLE!!!!
 
 https://gist.github.com/gitaarik/8735255
 

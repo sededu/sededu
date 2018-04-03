@@ -1,19 +1,90 @@
-# Contributing
+# Contributing to SedEdu
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change. 
 
-Please note we have a code of conduct ([CODEOFCONDUCT.md](https://github.com/amoodie/sededu/blob/master/CODEOFCONDUCT.md)), please follow it in all your interactions with the project.
 
-## Project `git` workflow
+## Ways to contribute
+
+The SedEdu project needs contributions from the community to be successful.
+However, there are __many different ways you can contribute!__
+You do not even need to write code to contribute to SedEdu.
+Some opportunities for contributions are listed below (in no particular order):
+
+* write (code) a standalone interactive module
+* write an activity for an existing module
+* write (code) features and bug fixes for existing modules
+* write (code) features and bug fixes for SedEdu
+* write documentation for SedEdu
+
+Please note that we have a code of conduct ([CODEOFCONDUCT.md](https://github.com/amoodie/sededu/blob/master/CODEOFCONDUCT.md)), please follow it in all your interactions with the project.
+
+
+### Writing a standalone module
+Contributing a module and keeping it up to date in the SedEdu has been made to be painless, thanks to `git submodule` support. 
+However, for the sake of brevity in this document, a complete description of the process of getting a module into SedEdu is described in [contributing a module](https://github.com/amoodie/sededu/blob/develop/docs/contributing_module.md).
+
+This type of contribution usually requires the author to have a working knowledge of Python and git. 
+If help is needed with the `git` workflow, open an issue in SedEdu and we can work out a way to get the module into SedEdu.
+
+
+### Writing an activity for existing modules
+
+
+### Features and bug-fixes for existing modules
+
+
+### Features and bug-fixes for SedEdu
+
+#### Hot-fixes
+
+
+### Writing documentation for SedEdu
+
+
+
+## SedEdu `git` workflow
+
+SedEdu maintains three major branches in the repository: `release` and `develop`.
+
+* `release` is the "public" repository that updates to PyPi are made from for release
+* `develop` is the "internal" repository that any development should occur off
+* `hotfix` is only for necessary bug fixes in the current release version
+
+You can get the latest version of SedEdu (ready for development) from GitHub:
+```
+git clone https://github.com/amoodie/sededu.git
+```
+
+You should do _almost_ all development work for SedEdu off the latest `develop` branch of the repository:
+
+```
+git checkout -b <name-of-working-branch> develop
+```
+
+Only if you are working on a fix for a significant bug in the release version, should you branch from the `release` branch.
+
 
 
 ## Pull Request Process
 
-1. All Pull Requests (PR) should be made against the `develop` branch of the repository.
-1. Increase the version numbers in the README.md to the new version that this Pull Request would represent. See [versioning](#versioning) below
-1. You may merge the Pull Request in once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
+1. Merge (or rebase) the latest version of the `develop` branch into your branch.
+1. Add yourself to the authorship as appropriate in accordance with the SedEdu authorship policy (see [authorship](#authorship) below).
+1. Increase the version numbers in the `README.md` to the new version that this Pull Request would represent according to the SedEdu versioning scheme (see [versioning](#versioning) below).
+1. Push your work to a new branch on your GitHub fork.
+1. Open a new pull requests on GitHub against the `develop` branch of the main SedEdu repository.
+1. You may merge the pull request into `develop` once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
-## Contributing a module
-need to explain the file structure and necessary info in `about.json` here.
+__Note:__ hot-fixes should pull request against the release version
+
+
 
 ## Versioning
+
+SedEdu uses a `major.minor.maintenance` versioning scheme, which is intended to work as follows:
+
+* `major`: should be incremented for significant changes to the SedEdu codebase that affect the interaction of components and generally break backwards compatibility of components.
+* `major`:
+
+
+
+## Authorship
+add yourself to the Authors list on the main SedEdu project README.md
