@@ -58,10 +58,10 @@ Importantly, it also makes it easy for the SedEdu authors to deploy updates and 
 
 For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Package+for+deployment+on+Pypi%22)), SedEdu must be installed by cloning the GitHub git repository. 
 
-You can clone the git repository to get the latest version with:
+You can clone the git repository to get the latest release version with:
 
 ```
-git clone https://github.com/amoodie/sededu.git
+git clone -b release https://git@github.com/amoodie/sededu.git
 ```
 
 and SedEdu is then run with:
@@ -71,10 +71,18 @@ python3 sededu/run_sededu.py
 ```
 
 
+**Developers:** you should get the entire repository and work off of the `develop` branch:
+
+```
+git clone https://github.com/amoodie/sededu.git
+git checkout develop
+```
+
+<!-- 
 #### Windows instructions
 #### Mac OSX instructions
 #### Linux instructions
-
+-->
 
 
 ## Contributing to SedEdu
