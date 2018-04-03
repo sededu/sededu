@@ -69,13 +69,14 @@ class AboutPageWidget(QWidget):
             LogoBox = self.LogoBoxWidget()
 
             supportedText = gui.InfoLabel("SedEdu is supported by:")
-            nsfLogo = self.logoPixmap(os.path.join(privatePath, "nsf.gif"))
-            riceLogo = self.logoPixmap(os.path.join(privatePath, "rice.png"))
+            nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, "nsf.gif"))
+            riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, "rice.png"))
             
             self.layout().addWidget(supportedText)
-            self.layout().addWidget(nsfLogo)
-            self.layout().addWidget(riceLogo)
-            self.layout().addStretch(100)
+            self.layout().addWidget(LogoBox)
+            LogoBox.layout().addWidget(nsfLogo)
+            LogoBox.layout().addWidget(riceLogo)
+            LogoBox.layout().addStretch(1)
 
 
         class LogoBoxWidget(QGroupBox):
@@ -83,9 +84,10 @@ class AboutPageWidget(QWidget):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QHBoxLayout())
                 self.layout().setContentsMargins(0, 0, 0, 0)
+                self.setAlignment(QtCore.Qt.AlignLeft)
 
 
-        def logoPixmap(self, path):
+        def LogoPixmapWidget(self, path):
             logo = QLabel()
             logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
             return logo

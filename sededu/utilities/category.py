@@ -184,7 +184,7 @@ class CategoryPageWidget(QWidget):
                 optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
                 readmeButton = QPushButton("open README")
                 readmeButton.setFixedSize(QtCore.QSize(200,25))
-                readmeButton.clicked.connect(lambda: open_file(os.path.join(modDirPath, *data["projreadme"])))
+                readmeButton.clicked.connect(lambda: gui.open_file(os.path.join(modDirPath, *data["projreadme"])))
                 optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
 
             infoLayout.addWidget(optGroup)

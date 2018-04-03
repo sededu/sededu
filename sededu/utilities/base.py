@@ -19,6 +19,9 @@ class MainSideBarWidget(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.setLayout(QVBoxLayout())
+        self.setSizePolicy(QSizePolicy(
+                   QSizePolicy.Maximum,
+                   QSizePolicy.Preferred))
 
         self.SideBarHeader = self._SideBarHeaderWidget(self)
         self.SideBarButtons = self._SideBarButtonsWidget(self)
@@ -83,6 +86,6 @@ class MainPageStackWidget(QStackedWidget):
     def __init__(self, parent=None):
         QStackedWidget.__init__(self, parent)
 
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.MinimumExpanding,
-                           QSizePolicy.Preferred))
+        # self.setSizePolicy(QSizePolicy(
+        #                    QSizePolicy.MinimumExpanding,
+        #                    QSizePolicy.Preferred))
