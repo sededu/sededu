@@ -18,7 +18,7 @@ See [Contributing to SedEdu](#contributing-to-sededu) for information on becomin
 ### Installing dependencies
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
-Modules included in SedEdu rely on scipy, matplotlib, Tkinter, Pygame, and Shapely. 
+Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
 You can check your Python version by running: 
 
 ```
@@ -118,6 +118,7 @@ See also the list of [contributors](https://github.com/amoodie/sededu/graphs/con
 
 This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/master/LICENSE.md) file for details.
 It is provided without warranty or guaranteed support.
+Each submodule may be licensed under a different license, please see the relevant module's license file, README, or project homepage for more information.
 
 
 

@@ -22,8 +22,8 @@ Please note that we have a code of conduct ([CODEOFCONDUCT.md](https://github.co
 Contributing a module and keeping it up to date in the SedEdu has been made to be painless, thanks to `git submodule` support. 
 However, for the sake of brevity in this document, a complete description of the process of getting a module into SedEdu is described in [contributing a module](https://github.com/amoodie/sededu/blob/develop/docs/contributing_module.md).
 
-This type of contribution usually requires the author to have a working knowledge of Python and git. 
-If help is needed with the `git` workflow, open an issue in SedEdu and we can work out a way to get the module into SedEdu.
+This type of contribution usually requires the author to have a working knowledge of Python and `git`. 
+If help is needed with the SedEdu `git` workflow, open an issue in SedEdu and we can work out a way to get the module into SedEdu.
 
 
 ### Writing an activity for existing modules
@@ -38,6 +38,16 @@ If help is needed with the `git` workflow, open an issue in SedEdu and we can wo
 
 
 ### Writing documentation for SedEdu
+
+There are currently "barebones" versions of the following documents that need to worked out further.
+These documents help everyone from end-users to contributors navigate through SedEdu.
+
+* using sededu
+* example module `readme`, `worksheet.md` 
+* contributing a module
+* writing the `about.json` file
+* pull request checklist
+* writing activities help sheet
 
 
 
