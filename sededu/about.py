@@ -18,16 +18,16 @@ class AboutPageWidget(QWidget):
         readmeText = self._ReadmeFileData(self.parent().thisPath)
         
         # construct the header
-        categoryLabelText = utls.InfoLabel("About the SedEdu project:", utls.titleFont())
+        categoryLabelText = utls.OneLineInfoLabel("About the SedEdu project:", utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = utls.MultilineInfoLabel(readmeText.summary)
+        descLabel = utls.ParagraphInfoLabel(readmeText.summary)
 
         # construct the contributors box
         contribBox = self._ContributorWidget(readmeText)
 
         # construct the more information text
-        completeInfoLabel = utls.InfoLabel('For complete information visit \
+        completeInfoLabel = utls.ShortInfoLabel('For complete information visit \
             the [SedEdu project page](https://github.com/amoodie/sededu).', utls.titleFont())
 
         # construct the supported by box
@@ -36,7 +36,7 @@ class AboutPageWidget(QWidget):
         # add widgets in specific vertical order
         self.layout().addWidget(categoryLabelText)
         self.layout().addWidget(descLabel)
-        self.layout().addWidget(utls.InfoLabel(readmeText.license))
+        self.layout().addWidget(utls.ShortInfoLabel(readmeText.license))
         
         self.layout().addStretch(1)
         self.layout().addWidget(contribBox)
@@ -54,10 +54,10 @@ class AboutPageWidget(QWidget):
             self.setLayout(QVBoxLayout())
             self.setContentsMargins(0, 0, 0, 0)
 
-            self.layout().addWidget(utls.InfoLabel("Contributors:"))
+            self.layout().addWidget(utls.OneLineInfoLabel("Contributors:"))
 
             for c in readmeText.contributors:
-                contrib = utls.InfoLabel(c)
+                contrib = utls.ShortInfoLabel(c)
                 contrib.setContentsMargins(10, 0, 0, 0)
                 self.layout().addWidget(contrib)
 
@@ -69,7 +69,7 @@ class AboutPageWidget(QWidget):
 
             LogoBox = self.LogoBoxWidget()
 
-            supportedText = utls.InfoLabel("SedEdu is supported by:")
+            supportedText = utls.OneLineInfoLabel("SedEdu is supported by:")
             nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, "nsf.gif"))
             riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, "rice.png"))
             
