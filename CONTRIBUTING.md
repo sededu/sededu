@@ -83,16 +83,24 @@ Only if you are working on a fix for a significant bug in the release version, s
 1. Open a new pull requests on GitHub against the `develop` branch of the main SedEdu repository.
 1. You may merge the pull request into `develop` once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
-__Note:__ hot-fixes should pull request against the release version
+__Note:__ hot-fixes should pull request against the release version.
 
 
 
 ## Versioning
 
-SedEdu uses a `major.minor.maintenance` versioning scheme, which is intended to work as follows:
+SedEdu uses a `major.minor.maint` semantic versioning scheme, which is intended to work as follows:
 
-* `major`: should be incremented for significant changes to the SedEdu codebase that affect the interaction of components and generally break backwards compatibility of components.
-* `major`:
+* `major`: should be incremented for significant changes to the SedEdu codebase that affect the interaction of components and generally break backwards compatibility of components. From [semver.org](https://semver.org/): increment a major version "when you make incompatible API changes."
+* `minor`: should be incremented for changes to the SedEdu codebase that do not disrupt the interaction of components (e.g., feature additions). Incorporating an _entirely new_ module into SedEdu should increment a minor version. From [semver.org](https://semver.org/): increment a minor version "when you add functionality in a backwards-compatible manner."
+* `maint`: a.k.a., patch, should be for bug-fixes and _updating submodules_. This level will include hot-fixes to release versions. From [semver.org](https://semver.org/): increment a maintenance version "when you make backwards-compatible bug fixes."
+
+And importantly, "once a versioned package has been released, the contents of that version _must not_ be modified. Any modifications _must_ be released as a new version" ([semver.org](https://semver.org/)).
+Please take care to increment version number correctly when [opening a pull request](https://github.com/amoodie/sededu/blob/feat_documentation/docs/pull_request_checklist.md).
+
+Finally, this semantic versioning scheme is the recommended scheme for your submodule.
+Please ensure you are properly incrementing the version number in your `about.json` file when updating.
+This will be checked before merging an updated module into the latest SedEdu release.
 
 
 
