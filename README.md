@@ -7,7 +7,7 @@ Modules included in SedEdu are built by researchers at the cutting edge of their
 
 ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu")
 
-_version 0.9.0_
+_version 0.9.1_
 
 ## Getting Started
 
@@ -34,7 +34,7 @@ Anaconda can be downloaded at https://www.anaconda.com/download/ for Windows, ma
 Please follow the instruction provided in the website as to how to install and setup Python on your computer.
 
 If you want a more flexible and lightweight Python distribution, you can use whatever your favorite package manager is distributing (e.g., `homebrew` or `apt`), check the [Windows downloads here](https://www.python.org/downloads/windows/), or compile [from source](https://www.python.org/downloads/source/). 
-If you go this route, you will need to also install pip3, PyQt5 (`python3-pyqt5`), and the dependency python packages listed below. 
+If you go this route, you will need to also install `pip3`, PyQt5 (`python3-pyqt5`), and the dependency python packages listed below. 
 
 It is recommended you install the needed dependencies through `pip3`.
 

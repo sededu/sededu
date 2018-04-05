@@ -105,4 +105,5 @@ This will be checked before merging an updated module into the latest SedEdu rel
 
 
 ## Authorship
-add yourself to the Authors list on the main SedEdu project README.md
+If you contribute to SedEdu, please add yourself to the Authors list on the main SedEdu project `README.md`, and include this change with with whatever other changes you make in your [pull request](https://github.com/amoodie/sededu/blob/feat_documentation/docs/pull_request_checklist.md). 
+Optionally, add a terse note next to your name describing your contribution (e.g., 1 module, documentation, bug fix).
