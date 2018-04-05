@@ -13,3 +13,9 @@
 [submodule "sededu/modules/stratigraphy/stratigraphic_filter"]
 	path = sededu/modules/stratigraphy/stratigraphic_filter
 	url = https://github.com/amoodie/stratigraphic_filter_toy
+[submodule "docs/example-module"]
+	path = docs/example-module
+	url = https://github.com/amoodie/example-module_sededu.git
+[submodule "docs/template-module"]
+	path = docs/template-module
+	url = https://github.com/amoodie/template-module_sededu.git
