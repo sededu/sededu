@@ -21,7 +21,7 @@ class CategoryPageWidget(QWidget):
         self.ModuleList = self._ModuleListWidget(self)
         self.ModulePageStack = self._ModulePageStackWidget(self)
         self.ModuleDocStack = QStackedWidget()
-        self.categoryLabelText = utls.InfoLabel(utls.cutTitle(category + " modules:"),
+        self.categoryLabelText = utls.OneLineInfoLabel(utls.cutTitle(category + " modules:"),
                                                utls.titleFont())
 
         self.layout().addWidget(self.categoryLabelText, 0, 0)
@@ -145,9 +145,9 @@ class CategoryPageWidget(QWidget):
             data = self.validateData(data, modDirPath)
             
             # handle required module fields
-            titleLabel = utls.InfoLabel(utls.cutTitle(data["title"]), utls.titleFont())
+            titleLabel = utls.ShortInfoLabel(utls.cutTitle(data["title"]), utls.titleFont())
             infoLayout.addWidget(titleLabel)
-            versionLabel = utls.InfoLabel("version " + data["version"], utls.versionFont())
+            versionLabel = utls.OneLineInfoLabel("version " + data["version"], utls.versionFont())
             infoLayout.addWidget(versionLabel)
 
             previewLabel = QLabel()
@@ -167,17 +167,17 @@ class CategoryPageWidget(QWidget):
 
             # handle optional module fields (replace with for loop with dict of keys?)
             optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.InfoLabel(data["author"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.ShortInfoLabel(data["author"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.InfoLabel(data["shortdesc"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.ShortInfoLabel(data["shortdesc"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             # optLayoutInc = optLayoutInc + 1
             if 'projurl' in data:
                 optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-                projurlLabel = utls.InfoLabel(data["projurl"])
+                projurlLabel = utls.ShortInfoLabel(data["projurl"])
                 optLayout.addWidget(projurlLabel, optLayoutInc, 1)
                 optLayoutInc = optLayoutInc + 1
 

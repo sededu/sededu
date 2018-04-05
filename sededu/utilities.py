@@ -40,11 +40,17 @@ class NoImageFiller(QGroupBox):
 
 
 
-class MultilineInfoLabel(QLabel):
-    def __init__(self, parent=None):
+class ParagraphInfoLabel(QLabel):
+    defaultFont = QtGui.QFont()
+    def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
         
+        labelText = self.url_checker(labelText)
+        self.setText(labelText)
+
         self.setWordWrap(True)
+        self.setFont(theFont)
+        self.setOpenExternalLinks(True)
 
 
     def url_checker(self, labelText):
@@ -59,20 +65,25 @@ class MultilineInfoLabel(QLabel):
 
 
 
-class InfoLabel(MultilineInfoLabel):
+class ShortInfoLabel(ParagraphInfoLabel):
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
-        MultilineInfoLabel.__init__(self, parent)
+        ParagraphInfoLabel.__init__(self, labelText, theFont, parent)
         
-        labelText = self.url_checker(labelText)
-        self.setText(labelText)
-        self.setWordWrap(True)
-        self.setFont(theFont)
         self.setSizePolicy(QSizePolicy(
                            QSizePolicy.MinimumExpanding,
                            QSizePolicy.Maximum))
         self.setAlignment(QtCore.Qt.AlignTop)
-        self.setOpenExternalLinks(True)
+
+
+
+class OneLineInfoLabel(ShortInfoLabel):
+    defaultFont = QtGui.QFont()
+    def __init__(self, labelText='', theFont=defaultFont, parent=None):
+        ShortInfoLabel.__init__(self, labelText, theFont, parent)
+
+        self.setWordWrap(False)
+
 
 
 class GenericLargePushButton(QPushButton):
