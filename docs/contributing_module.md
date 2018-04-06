@@ -1,8 +1,13 @@
 # Contributing a module
 
-If you want to contribute a module, this file will guide you through the necessary steps --  whether your module exists already, or you only have an idea!
+If you want to contribute a module, this file will guide you through the necessary steps --- whether your module exists already, or you only have an idea!
 
 Let this document serve as a roadmap to writing your module, but be patient as this roadmap will send you off on scenic tours to other documents which help provide complete information about SedEdu and contributing a module.
+
+A "module" (the term used throughout the documentation) is a self-contained codebase that provides 1) an interactive interface, 2) demonstrates a sediment-related concept through interaction with that interface, and 3) has some worksheet/activities that accompany the interface to guide the user along. 
+So, your module is actually really able to stand on its own and only gets incorporated into SedEdu later (which is really easy!).
+The logical structure of this document follows that workflow of first writing the module, then incorporating it into the SedEdu suite.
+
 
 A _thoroughly documented complete working module_ has been included with the SedEdu distribution to provide an example a module could be based off of.
 Find the complete module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu)
@@ -30,6 +35,11 @@ Table of contents of this document:
 
 You can view a [literal tree of an example module here](https://github.com/amoodie/example-module_sededu#folder-and-file-organization), but the purpose of this section is to describe more conceptually how a module needs to be structured internally, and then how exactly this module gets incorporated into the structure of SedEdu.
 
+
+
+
+
+To make your module "SedEdu ready" really all you need is 1) a specific `about.json` file which documents your module and 2) a licen
 
 
 The `about.json` file just contains some simple information which gets displayed/used within SedEdu; see [Contributing a Module](https://github.com/amoodie/sededu/blob/feat_documentation/docs/contributing_module.md) and [Writing about.json](https://github.com/amoodie/sededu/blob/feat_documentation/docs/writing_aboutjson.md) for more information about this file's contents.
