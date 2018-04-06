@@ -53,7 +53,7 @@ class MainSideBarWidget(QWidget):
 
 
         def make_Desc(self):
-            Desc = utls.InfoLabel("a sediment-related educational activity suite", 
+            Desc = utls.ShortInfoLabel("a sediment-related educational activity suite", 
                                  utls.titleFont())
             return Desc
 
