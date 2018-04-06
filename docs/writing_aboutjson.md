@@ -11,6 +11,27 @@ A sample `about.json` file can be found in the `sample_module` folder [(link to 
 
  Note that the order of the fields in your `about.json` file does not matter. 
 
+```
+{
+    "title": "An example module for SedEdu",
+    "author": "Andrew J. Moodie",
+    "version": "1.0",
+    "shortdesc": "A simple model implementation to demonstrate a module in SedEdu",
+    "license": "MIT",
+    "difficulty": 1,
+    "projurl": "https://github.com/amoodie/example-module_sededu.git",
+    "projreadme": ["README.md"],
+    "preview": ["private", "example-module_demo.png"],
+    "exec": ["src", "example-module.py"],
+    "docloc": ["docs"],
+    "doclist": {
+        "theory.md": "Theory behind the model framework", 
+        "worksheet.md": "Worksheet"
+    }
+}
+
+```
+__NOTE:__ the _blank line_ at the end of the document and that there are _no comments_!
 
 ## where to put the about.json file
 in the root of the module. see sample_module.

@@ -2,10 +2,38 @@
 
 If you want to contribute a module, this file will guide you through the necessary steps --  whether your module exists already, or you only have an idea!
 
+Let this document serve as a roadmap to writing your module, but be patient as this roadmap will send you off on scenic tours to other documents which help provide complete information about SedEdu and contributing a module.
+
+A _thoroughly documented complete working module_ has been included with the SedEdu distribution to provide an example a module could be based off of.
+Find the complete module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu)
+Some of the text below is borrowed from there.
+
+There is also a "template" module for your use in developing, it provides an empty shell of what could become a module.
+Basically, the files and folders are all there, they're just empty.
+
+Links to other documentation:
+
+* 
+* 
+* 
+* 
+
+Table of contents of this document:
+
+* [File structure of module](#file-structure-of-module)
+* 
+* 
+* 
 
 
 ## File structure of module
 
+You can view a [literal tree of an example module here](https://github.com/amoodie/example-module_sededu#folder-and-file-organization), but the purpose of this section is to describe more conceptually how a module needs to be structured internally, and then how exactly this module gets incorporated into the structure of SedEdu.
+
+
+
+The `about.json` file just contains some simple information which gets displayed/used within SedEdu; see [Contributing a Module](https://github.com/amoodie/sededu/blob/feat_documentation/docs/contributing_module.md) and [Writing about.json](https://github.com/amoodie/sededu/blob/feat_documentation/docs/writing_aboutjson.md) for more information about this file's contents.
+The `.gitignore` file is a GitHub related file that tells your local repository which files to sync with the remote GitHub repository (you don't need to worry about this right now)
 
 
 ## Writing the module (supported package use)
@@ -20,6 +48,14 @@ see the additional document for more details
 
 
 ### Module Licensing
+
+You will need to add a license to your module and GitHub repository before it will be incorporated into SedEdu.
+At the very least, your module needs to be licensed to allow the module to be incorporated into larger software projects (e.g., SedEdu).
+
+We recommend the [MIT license](https://choosealicense.com/licenses/mit/) first, and then the [GNU GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/).
+Simply create a file called `LICENSE.txt` and copy-paste the contents of the license into that file.
+
+For more help choosing a license see [GitHub on licenses](https://help.github.com/articles/licensing-a-repository/) or [choosealicense.com](https://choosealicense.com/)
 
 
 ## Adding your module to SedEdu

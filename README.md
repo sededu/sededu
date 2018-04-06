@@ -61,7 +61,7 @@ For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3A
 You can clone the git repository to get the latest release version with:
 
 ```
-git clone -b release https://git@github.com/amoodie/sededu.git
+git clone --recurse-submodules -b release https://git@github.com/amoodie/sededu.git
 ```
 
 and SedEdu is then run with:
@@ -70,12 +70,26 @@ and SedEdu is then run with:
 python3 sededu/run_sededu.py
 ```
 
+#### Troubleshooting
+
+* SedEdu won't launch
+You're probably missing some Python or PyQt dependencies. 
+
+* There are no modules in SedEdu
+Try to run `git submodule update --init --recursive` inside the cloned repository.
+
 
 **Developers:** you should get the entire repository and work off of the `develop` branch:
 
 ```
-git clone https://github.com/amoodie/sededu.git
+git clone --recurse-submodules https://github.com/amoodie/sededu.git
 git checkout -b <name-of-working-branch> develop
+```
+
+If you have already `git clone`d and need to pull the submodules now try:
+
+```
+git submodule update --init --recursive
 ```
 
 See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
