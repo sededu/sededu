@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='SedEdu',
-    version='0.9.1',
+    version='0.9.3',
     author='Andrew J. Moodie other contributors',
     author_email='amoodie@rice.edu',
     packages=['sededu'],
