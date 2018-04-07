@@ -17,8 +17,15 @@ Some opportunities for contributions are listed below (in no particular order):
 
 Please note that we have a code of conduct ([CODEOFCONDUCT.md](https://github.com/amoodie/sededu/blob/master/CODEOFCONDUCT.md)), please follow it in all your interactions with the project.
 
+__If you have any questions please don't hesitate to ask!!__
+[Open an issue on SedEdu](https://github.com/amoodie/sededu/issues) with your question and we'll get right to it!
+We are a community seeking collaboration from anyone and everyone.
+In particular, if you want to help but the "technology barrier" is scaring you, please just ask the developers.
+Our goal is to make contributing easy and rewarding.
+
 
 ### Writing a standalone module
+
 Contributing a module and keeping it up to date in the SedEdu has been made to be painless, thanks to `git submodule` support. 
 However, for the sake of brevity in this document, a complete description of the process of getting a module into SedEdu is described in [contributing a module](https://github.com/amoodie/sededu/blob/develop/docs/contributing_module.md).
 
@@ -28,13 +35,35 @@ If help is needed with the SedEdu `git` workflow, open an issue in SedEdu and we
 
 ### Writing an activity for existing modules
 
+We really need help writing the activities for SedEdu. 
+If you would like to help, please just go ahead and write up an activity (using your favorite word processor).
+Once you have completed it, try to get in contact with the module author and have them incorporate it into the module on GitHub so it can get pulled into SedEdu on the next update.
+For a significant addition of activities, we would also consider an earlier version release to SedEdu.
+Alternatively, you can pull request your activity into the module repository.
+
 
 ### Features and bug-fixes for existing modules
+
+Modules maintain their own project structure and workflows, please visit the project page of the module you wish to contribute to.
+A good rule-of-thumb though would be to open an issue in the repository to discuss your change with other developers. 
+Then assuming you agree on a change, make the change and pull request against the modules main repository.
 
 
 ### Features and bug-fixes for SedEdu
 
+We welcome any contributions to features and bug-fixes to SedEdu!
+Please first [open an issue](https://github.com/amoodie/sededu/issues) to discuss your idea or concern with the developers. 
+This helps to ensure everyone is working together towards the same goals. 
+
+Development should occur off of the latest `develop` branch and you should [pull request](https://github.com/amoodie/sededu/blob/develop/docs/pull_request_checklist.md) against this repository with your code contributions. 
+See [Development Workflow](#sededu-development-workflow) below.
+
 #### Hot-fixes
+
+Hot-fixes fix critical issues in the production version of SedEdu (i.e., the current release).
+If you detect a critical issue, please [open an issue](https://github.com/amoodie/sededu/issues) immediately to alert the developers.
+If you want to work on the issue yourself, you should pull request against `release` with your patch.
+Hot-fixes will be merged and released ASAP.
 
 
 ### Writing documentation for SedEdu
@@ -43,11 +72,12 @@ There are currently "barebones" versions of the following documents that need to
 These documents help everyone from end-users to contributors navigate through SedEdu.
 
 * using sededu
-* example module `readme`, `worksheet.md` 
-* contributing a module
-* writing the `about.json` file
+* example module: `worksheet.md` 
 * pull request checklist
 * writing activities help sheet
+
+If you want to help, you can write the documentation and pull request.
+Alternatively, you can write the documentation and open an issue to share it with developers as raw text; we'll take care of the rest!
 
 
 
@@ -88,10 +118,11 @@ git submodule foreach git pull
 1. Add yourself to the authorship as appropriate in accordance with the SedEdu authorship policy (see [authorship](#authorship) below).
 1. Increase the version numbers in the `README.md` and `setup.py` to the new version that this Pull Request would represent according to the SedEdu versioning scheme (see [versioning](#versioning) below).
 1. Push your work to a new branch on your GitHub fork.
+1. Check the [pull request checklist](https://github.com/amoodie/sededu/blob/develop/docs/pull_request_checklist.md) one more time
 1. Open a new pull requests on GitHub against the `develop` branch of the main SedEdu repository.
 1. You may merge the pull request into `develop` once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
 
-__Note:__ hot-fixes should pull request against the release version.
+__Note:__ hot-fixes should pull request against the `release` version.
 
 
 

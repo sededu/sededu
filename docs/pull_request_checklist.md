@@ -1,18 +1,22 @@
 # Pull Request checklist
 
 
-## Hot-fixes, bug-fixes, and features in SedEdu
 
-1.
-1.
-1.
+## Bug-fixes and features in SedEdu
+
+1. 
+1. authorship list
+1. increment version numbers
+1. check branch to pull against (should be develop, unless a hot-fix)
+
 
 
 ## Adding a submodule to SedEdu
 
-1. determine stability of submodule and [assign a version number](https://github.com/amoodie/sededu/blob/feat_documentation/CONTRIBUTING.md#versioning)
+1. determine stability of submodule and [assign a version number](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md#versioning)
 1. license file
-1. increment version number
+1. increment version number (minor if new)
+1. check branch to pull against (should be develop, unless a hot-fix)
 
 
 
