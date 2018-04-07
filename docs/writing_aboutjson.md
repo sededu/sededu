@@ -29,7 +29,7 @@ The `about.json` from the complete example module is listed below:
     "shortdesc": "A simple model implementation to demonstrate a module in SedEdu",
     "license": "MIT",
     "difficulty": 1,
-    "projurl": "https://github.com/amoodie/example-module_sededu.git",
+    "projurl": "[hosted on GitHub](https://github.com/amoodie/example-module_sededu/)",
     "projreadme": ["README.md"],
     "preview": ["private", "example-module_demo.png"],
     "exec": ["src", "example-module.py"],
@@ -42,7 +42,7 @@ The `about.json` from the complete example module is listed below:
 
 ```
 
-__NOTE:__ the _blank line_ at the end of the document and that there are _no comments_!
+__NOTE:__ that each JSON entry is ended with a comma, the final _blank line_ at the end of the document and that there are _no comments_.
 
 
 
@@ -69,51 +69,84 @@ Available fields are listed below, fields listed in __bold__ are mandatory. More
 * docloc
 * doclist
 
-### title
-will be trimmed to ?? length
-
-### author
-
-
-### longdesc
-
-
-### preview
-
 
 ### title
 
+_string_, the module title. Supports UTF-8 characters.
+
+
 ### author
 
-A string, the author(s) of the module. Can be multiple people, will be printed exactly as written. UTF support?
+_string_, the author(s) of the module. Can be multiple people, will be printed exactly as written. Supports UTF-8 characters.
+
 
 ### version
 
+_string_, the version number of the module. Will be printed exactly as written.
+
+Examples:
+
+"version": "1.0",
+
+"version": "0.9.1",
+
+
 ### shortdesc
+
+_string_, a short description of what the module is about and what happens with it. Keep to < 70 characters. Will be printed exactly as written.
+
 
 ### license
 
+_string_, the licensing of the module. Use abbreviation if possible. Will be printed exactly as written.
+
+Examples:
+
+"license": "MIT",
+
+"license": "GNU GPL v3",
+
+
 ### difficulty
-An integer, a measure of the difficulty of the science covered by the module. 
+_integer_, a measure of the difficulty of the science covered by the module. 
 Should be ranked between 1 and 10 (inclusive). 
 Intention is to use this number to sort the modules on the CategoryPage.
 
 _Currently does nothing and is not used._
 
+
 ### longdesc
-A string, a paragraph length description of the module. Currently does nothing and is not used. Intention is to have this field mapped into a scrollable text box of specific height on the ModuleInfoPage. No support for linebreaks in the `about.json` file -- should be read from an auxiliary file?
+_string_, a paragraph length description of the module. Supports UTF-8 characters. Currently does nothing and is not used. Intention is to have this field mapped into a scrollable text box of specific height on the ModuleInfoPage. No support for linebreaks in the `about.json` file -- should be read from an auxiliary file?
 
 _Currently does nothing and is not used._
 
+
 ### projurl
+_string_, the home page of the module. Will parse out Markdown formatted link, allowing for "link shortening" behind the scenes.
+<!-- If Markdown is not detected, input will be printed exactly as written as a link. -->
+
+Examples:
+
+"projurl": "[hosted on GitHub](https://github.com/amoodie/example-module_sededu/)"
+
+"projurl": "https://github.com/amoodie/example-module_sededu/"
+
 
 ### projreadme
+_list of strings_, _string_, the README for the module. If a list of strings is given, a relative path is generated with respect to the module root. If a string is given, it is converted to a url link.
+
 
 ### preview
 The preview will be scaled to 250 pixels in height, and then cropped to the center of the image at a 4:3 aspect ratio (W:H).
 
+
+
 ### exec
 
+
+
 ### docloc
+
+
 
 ### doclist
