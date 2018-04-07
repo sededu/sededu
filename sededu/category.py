@@ -87,6 +87,7 @@ class CategoryPageWidget(QWidget):
     class _ModuleListWidget(QListWidget):
         def __init__(self, parent=None):
             QListWidget.__init__(self, parent)
+            
             self.itemClicked.connect(self.parent().setModulePage)
 
 
@@ -104,6 +105,7 @@ class CategoryPageWidget(QWidget):
     class _ModulePageStackWidget(QStackedWidget):
         def __init__(self, parent=None):
             QStackedWidget.__init__(self, parent)
+
             self.setSizePolicy(QSizePolicy(
                                QSizePolicy.MinimumExpanding,
                                QSizePolicy.Preferred))
@@ -112,6 +114,7 @@ class CategoryPageWidget(QWidget):
     class _ModuleListItemWidget(QListWidgetItem):
         def __init__(self, idx, data):
             QListWidgetItem.__init__(self)
+
             self.setText(data["title"])
             self.idx = idx
             self.setSizeHint(QtCore.QSize(100,30))
@@ -121,6 +124,7 @@ class CategoryPageWidget(QWidget):
     class _ModuleDocumentPage(QWidget):
         def __init__(self, parent=None):
             QWidget.__init__(self, parent)
+
             self.setLayout(QVBoxLayout())
             self.layout().setContentsMargins(0, 0, 0, 0)
             self.layout().addWidget(QLabel("Activities/worksheets available:"))
@@ -129,6 +133,7 @@ class CategoryPageWidget(QWidget):
     class _ModuleInformationPage(QWidget):
         def __init__(self, modDirPath, data, parent=None):
             QWidget.__init__(self, parent)
+
             infoLayout = QVBoxLayout()
             infoLayout.setContentsMargins(10, 0, 0, 0)
             optGroup = QGroupBox()
