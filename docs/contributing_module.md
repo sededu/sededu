@@ -84,6 +84,10 @@ Furthermore, all of the modules included in SedEdu are open source, so you can v
 
 ### The `about.json` file
 Integrating your module into SedEdu requires a special file describing the module, called `about.json`.
+There are a number of required and optional fields in the file that provide information about your module to SedEdu to display to the user.
+__It is really important this file is configured properly.__
+
+A separate file about [Writing about.json](https://github.com/amoodie/sededu/blob/develop/docs/writing_aboutjson.md) exists to describe the `about.json` file in detail.
 
 
 
@@ -107,35 +111,51 @@ Simply create a file called `LICENSE.txt` and copy-paste the contents of the lic
 For more help choosing a license see [GitHub on licenses](https://help.github.com/articles/licensing-a-repository/) or [choosealicense.com](https://choosealicense.com/)
 
 
-## Adding your module to SedEdu
-submodules?
+### Putting your module on GitHub
 
-cd into the git repository and use git submodule add to add your module to the SedEdu repository:
+The [method that SedEdu uses](#adding-your-module-to-sededu) to incorporate modules requires that your project be hosted on GitHub in a repository.
+This is easy and there are _tons_ of resources available to help guide you.
+Therefore, the entire process isn't repeated here, but a brief description is below.
+
+1. create an account or login to GitHub. [[link to login]](https://github.com/login).
+1. create a new repository. [[link to instructions]](https://help.github.com/articles/creating-a-new-repository/)
+1. install `git` on your machine. [[link to instructions]](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+1. initialize the repository locally, commit everything, push to GitHub. [[link to instructions]](https://help.github.com/articles/adding-a-file-to-a-repository-using-the-command-line/)
+
+
+
+## Adding your module to SedEdu
+
+Modules are incorporated into SedEdu through the use of `git submodule`s.
+This allows SedEdu to easily incorporate upstream changes in your module without having to maintain project history for each module. 
+This is important, because it simplifies the workflow for keeping SedEdu up to date.
+However, it requires developers to have some familiarity with `git` and GitHub.
+By this point your project should be on GitHub (see [Putting your module on GitHub](#putting-your-module-on-github)).
+You should also have a development copy of the SedEdu project repository, for development (see [SedEdu development workflow](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md#sededu-development-workflow))
+
+Follow the (OS agnostic) instructions below to add your module to SedEdu.
+
+1. Using a terminal (or git bash on windows), change working directory to the root of your development SedEdu repository.
+1. create a new branch from development: `git checkout -b module_<module-name> develop` where `<module-name>` is a short name of your module.
+1. Visit the webpage of your repository and click on the green "Clone or download" button and copy the link to your clipboard.
+1. add your new `git submodule` with: `git submodule add <the-https-link-to-github-repository-you-just-copied> sededu/modules/<category>/<module-name>` where `<the-https-link-to-github-repository-you-just-copied>` is the link you copied to your module's GitHub repository, `<category>` is the category you think your module best fits in, and `<module-name>` is some unique short name for your module. See the example below!
+1. add yourself to the author list on `README.md` (see [Authorship](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md#authorship))
+1. increment the minor version number in SedEdu `README.md` and `setup.py`
+1. add the new module and text changes to your commit: `git add .` and `git commit -m "added new submodule <name-of-your-module> in <category>"`
+1. push your changes to a branch on your GitHub SedEdu fork: `git push origin module_<module-name>`
+1. ensure you have done everything on the [Pull Request Checklist](https://github.com/amoodie/sededu/blob/develop/docs/pull_request_checklist.md) and open a pull request to have your module addition reviewed and incorporated into SedEdu!
+
+For an example of adding a submodule command, the "Rivers to Stratigraphy" module was added to SedEdu by issuing the command:
 ```
 git submodule add https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
 ```
 
-IT IS REALLY IMPORTANT TO KEEP YOUR DEFAULT BRANCH STABLE!!!!
-
+__IMPORTANT NOTE FOR MODULE DEVELOPERS:__ it is really important that whatever your default GitHub repository branch is when you add the module to SedEdu remain stable. 
+Periodically (every 6 months) all submodules are checked for updates and changes are automatically incorporated into the next SedEdu release version.
+If the branch you maintain changes, the changes will not be incorporated into SedEdu unless you update the `.gitmodules` file.
+If the module becomes broken or unstable, these changes will be incorporated into SedEdu! 
+Prevent this from happening by maintaining a stable branch!
 https://gist.github.com/gitaarik/8735255
-
-how to update the submodules periodically:
-```
-git submodule foreach git pull
-```
-
-
-
-## Updating SedEdu metadata
-https://semver.org/
-
-
-
-## Open a pull request
-TEST TEST TEST! Please make sure you have stable module.
-Open PR to stable
-http://nvie.com/posts/a-successful-git-branching-model/
-http://nvie.com/files/Git-branching-model.pdf
 
 
 

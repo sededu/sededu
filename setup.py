@@ -10,9 +10,10 @@ setup(
     license='LICENSE.txt',
     description='sediment-related educational activity suite',
     long_description=open('README.md').read(),
-	# install_requires=[
-		# "scipy",
-		# "python3-tk", <-- requires an apt install on ubuntu
-		# "matplotlib"
-#    ],
+	install_requires=[
+		"scipy",
+        "numpy",
+		"matplotlib",
+        "shapely",
+        "pygame"]
 )

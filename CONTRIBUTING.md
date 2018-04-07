@@ -51,12 +51,12 @@ These documents help everyone from end-users to contributors navigate through Se
 
 
 
-## SedEdu `git` workflow
+## SedEdu development workflow
 
 SedEdu maintains three major branches in the repository: `release` and `develop`.
 
 * `release` is the "public" repository that updates to PyPi are made from for release
-* `develop` is the "internal" repository that any development should occur off
+* `develop` is the "internal" repository that any development should occur off, including bug-fixes
 * `hotfix` is only for necessary bug fixes in the current release version
 
 You can get the latest version of SedEdu (ready for development) from GitHub:
@@ -72,13 +72,21 @@ git checkout -b <name-of-working-branch> develop
 
 Only if you are working on a fix for a significant bug in the release version, should you branch from the `release` branch.
 
+If you must get the latest versions of submodules in your SedEdu branch, you can execute the following command. 
+However, you should do this only in a separate branch, so that you do not muddy your topic branch with submodule updates (leave this to the SedEdu maintainers).
+To get the latest versions of submodules:
+
+```
+git submodule foreach git pull
+```
+
 
 
 ## Pull Request Process
 
 1. Merge (or rebase) the latest version of the `develop` branch into your branch.
 1. Add yourself to the authorship as appropriate in accordance with the SedEdu authorship policy (see [authorship](#authorship) below).
-1. Increase the version numbers in the `README.md` to the new version that this Pull Request would represent according to the SedEdu versioning scheme (see [versioning](#versioning) below).
+1. Increase the version numbers in the `README.md` and `setup.py` to the new version that this Pull Request would represent according to the SedEdu versioning scheme (see [versioning](#versioning) below).
 1. Push your work to a new branch on your GitHub fork.
 1. Open a new pull requests on GitHub against the `develop` branch of the main SedEdu repository.
 1. You may merge the pull request into `develop` once you have the sign-off of one other developer, or if you do not have permission to do that, you may request the reviewer to merge it for you.
