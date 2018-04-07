@@ -85,11 +85,10 @@ _string_, the author(s) of the module. Can be multiple people, will be printed e
 _string_, the version number of the module. Will be printed exactly as written.
 
 Examples:
-
+```
 "version": "1.0",
-
 "version": "0.9.1",
-
+```
 
 ### shortdesc
 
@@ -101,11 +100,10 @@ _string_, a short description of what the module is about and what happens with 
 _string_, the licensing of the module. Use abbreviation if possible. Will be printed exactly as written.
 
 Examples:
-
+```
 "license": "MIT",
-
 "license": "GNU GPL v3",
-
+```
 
 ### difficulty
 _integer_, a measure of the difficulty of the science covered by the module. 
@@ -126,27 +124,56 @@ _string_, the home page of the module. Will parse out Markdown formatted link, a
 <!-- If Markdown is not detected, input will be printed exactly as written as a link. -->
 
 Examples:
-
-"projurl": "[hosted on GitHub](https://github.com/amoodie/example-module_sededu/)"
-
-"projurl": "https://github.com/amoodie/example-module_sededu/"
-
+```
+"projurl": "[hosted on GitHub](https://github.com/amoodie/example-module_sededu/)",
+"projurl": "https://github.com/amoodie/example-module_sededu/",
+```
 
 ### projreadme
-_list of strings_, _string_, the README for the module. If a list of strings is given, a relative path is generated with respect to the module root. If a string is given, it is converted to a url link.
+_list of strings_, _string_, the README for the module. If a list of strings is given, a relative path is generated with respect to the module root. 
+<!-- If a string is given, it is converted to a url link. -->
 
-
+Examples:
+```
+"projreadme": ["README.md"],
+"projreadme": "https://github.com/amoodie/example-module_sededu/README.md",
+``` 
+    
 ### preview
 The preview will be scaled to 250 pixels in height, and then cropped to the center of the image at a 4:3 aspect ratio (W:H).
 
-
+Examples:
+```
+"preview": ["private", "example-module_demo.png"],
+```
 
 ### exec
 
-
+Examples:
+```
+"exec": ["src", "example-module.py"],
+```
 
 ### docloc
 
-
+Examples:
+```
+"docloc": ["docs"],
+```
 
 ### doclist
+
+Examples:
+```
+"doclist": {
+    "theory.md": "Theory behind the model framework", 
+    "worksheet.md": "Worksheet"
+},
+```
+
+
+## Developers
+
+If you propose to make any changes to the interaction with `about.json` files you __must__ maintain backwards compatibility.
+You can use aliases to do so.
+
