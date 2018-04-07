@@ -6,40 +6,6 @@ from PyQt5 import QtGui, QtCore
 
 
 
-class NoFileMessageBox(QMessageBox):
-    # warning nofile mesage box, path is a required arg.
-    # custom text can be passed as string mainText
-    default = 'There was no file found at the specified path.\n\n'
-
-    def __init__(self, givenPath, mainText=default, 
-                 informText=False, parent=None):
-        QMessageBox.__init__(self, parent)
-        self.setIcon(QMessageBox.Critical)
-        self.setText(mainText)
-        if informText:
-            self.setInformativeText(informText)
-        self.setDetailedText(' '.join(['Path given:\n\n', givenPath]))
-        self.setWindowTitle("Error")
-        self.setStandardButtons(QMessageBox.Ok)
-
-
-
-class NoImageFiller(QGroupBox):
-    # filler image, takes text for label
-    def __init__(self, labelText, previewHeight, parent=None):
-        QGroupBox.__init__(self, parent)
-        label = QLabel(labelText)
-        label.setAlignment(QtCore.Qt.AlignCenter)
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        self.setLayout(layout)
-        self.setMinimumHeight(previewHeight)
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.Preferred,
-                           QSizePolicy.Fixed))
-
-
-
 class ParagraphInfoLabel(QLabel):
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
@@ -93,6 +59,40 @@ class GenericLargePushButton(QPushButton):
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))
         backBtn.setFont(gui.subtitleFont())
+
+
+
+class NoFileMessageBox(QMessageBox):
+    # warning nofile mesage box, path is a required arg.
+    # custom text can be passed as string mainText
+    default = 'There was no file found at the specified path.\n\n'
+
+    def __init__(self, givenPath, mainText=default, 
+                 informText=False, parent=None):
+        QMessageBox.__init__(self, parent)
+        self.setIcon(QMessageBox.Critical)
+        self.setText(mainText)
+        if informText:
+            self.setInformativeText(informText)
+        self.setDetailedText(' '.join(['Path given:\n\n', givenPath]))
+        self.setWindowTitle("Error")
+        self.setStandardButtons(QMessageBox.Ok)
+
+
+
+class NoImageFiller(QGroupBox):
+    # filler image, takes text for label
+    def __init__(self, labelText, previewHeight, parent=None):
+        QGroupBox.__init__(self, parent)
+        label = QLabel(labelText)
+        label.setAlignment(QtCore.Qt.AlignCenter)
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        self.setLayout(layout)
+        self.setMinimumHeight(previewHeight)
+        self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.Preferred,
+                           QSizePolicy.Fixed))
 
 
 
@@ -150,6 +150,7 @@ def filesList(d):
 
 ## font definitions / text modifiers
 def versionFont():
+    # a smaller, italics font for a version number
     font = QtGui.QFont()
     font.setBold(False)
     font.setItalic(True)
@@ -159,6 +160,7 @@ def versionFont():
 
 
 def titleFont():
+    # a larger bold font for titles
     font = QtGui.QFont()
     font.setBold(True)
     font.setItalic(False)
@@ -168,6 +170,7 @@ def titleFont():
 
 
 def subtitleFont():
+    # a medium sized font for a subtitle
     font = QtGui.QFont()
     font.setBold(False)
     font.setItalic(False)
@@ -177,11 +180,7 @@ def subtitleFont():
 
 
 def cutTitle(text0):
-    # Use QFontMetrics to get measurements, 
-    # e.g. the pixel length of a string using QFontMetrics.width().
-    # cut the titles down to textextext... for the list widgets
-
-    # also removes word module from end of string if two present
+    # removes word module from end of string if two present
     splt_t0 = text0.split()
     spltend_t0 = splt_t0[-2:]
     nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()] 
