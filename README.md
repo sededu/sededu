@@ -9,6 +9,8 @@ Modules included in SedEdu are built by researchers at the cutting edge of their
 
 _version 0.9.1_
 
+
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for use in the classroom. 
@@ -45,8 +47,15 @@ sudo apt install python3
 ```
 
 Install the needed python3 packages:
+
 ```
 pip3 install pyqt5 scipy numpy matplotlib pygame shapely
+```
+
+Install PyQt5:
+
+```
+sudo apt install python3-pyqt5
 ```
 
 
@@ -70,16 +79,21 @@ and SedEdu is then run with:
 python3 sededu/run_sededu.py
 ```
 
+<!-- 
+#### Windows instructions
+#### Mac OSX instructions
+#### Linux instructions
+-->
+
 #### Troubleshooting
 
-* SedEdu won't launch
-You're probably missing some Python or PyQt dependencies. 
+* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. 
 
-* There are no modules in SedEdu
-Try to run `git submodule update --init --recursive` inside the cloned repository.
+* __There are no modules in SedEdu:__ you probably didn't get the submodules when you `git clone`d. Try `git submodule update --init --recursive` inside the cloned repository.
 
+#### Developers
 
-**Developers:** you should get the entire repository and work off of the `develop` branch:
+You should get the entire repository and work off of the `develop` branch:
 
 ```
 git clone --recurse-submodules https://github.com/amoodie/sededu.git
@@ -94,11 +108,6 @@ git submodule update --init --recursive
 
 See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
 
-<!-- 
-#### Windows instructions
-#### Mac OSX instructions
-#### Linux instructions
--->
 
 
 ## Contributing to SedEdu
@@ -141,6 +150,7 @@ Each submodule may be licensed under a different license, please see the relevan
 The SedEdu framework was created by Andrew J. Moodie but has been built through the efforts of many authors (see Authors above).
 The authors have been supported by:
 * The US National Science Foundation under Grant Nos. 1427262 and 1450681.
+
 
 
 ## Disclaimer

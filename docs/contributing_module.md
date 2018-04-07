@@ -8,13 +8,9 @@ A "module" (the term used throughout the documentation) is a self-contained code
 So, your module is actually really able to stand on its own and only gets incorporated into SedEdu later (which is really easy!).
 The logical structure of this document follows that workflow of first writing the module, then incorporating it into the SedEdu suite.
 
-
 A _thoroughly documented complete working module_ has been included with the SedEdu distribution to provide an example a module could be based off of.
-Find the complete module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu)
-Some of the text below is borrowed from there.
-
-There is also a "template" module for your use in developing, it provides an empty shell of what could become a module.
-Basically, the files and folders are all there, they're just empty.
+Find the complete module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
+There is also a "template" module for your use in developing, it provides an empty shell of what could become a module; basically, the files and folders are all there, they're just empty.
 
 Links to other documentation:
 
@@ -33,21 +29,51 @@ Table of contents of this document:
 
 ## File structure of module
 
-You can view a [literal tree of an example module here](https://github.com/amoodie/example-module_sededu#folder-and-file-organization), but the purpose of this section is to describe more conceptually how a module needs to be structured internally, and then how exactly this module gets incorporated into the structure of SedEdu.
+As discussed above, your module is really a stand-alone application. 
+To this end, the mdoule must contain a few key files and then can have many more. 
+The _minimum required files for your module to be complete_ are: 
 
+* `README.md` -- here is a template
+* `LICENSE.txt` -- see [below](#licensing), and [Module Licensing](https://github.com/amoodie/sededu/blob/feat_documentation/docs/contributing_module.md#module-licensing)
+* executable python script
 
+Then, to incorporate into SedEdu, all you are required to add is an `about.json` file that provides SedEdu with some documentation about your module.
+A potential folder structure for your module, which separates components logically, is below: 
 
+```
+module/
+├── docs
+│   ├── activity
+│   └── activity
+├── private
+│   ├── image1
+│   ├── image2
+│   └── data1
+├── src
+│   ├── executable-code.py
+│   └── helper-functions.py
+├── about.json
+├── LICENSE.txt
+└── README.md
+```
 
+The module root is the `module` folder. 
+In the root, we have three folders to separate the source code (`src`), from the supporting data (`private`), from the activities that go along with the module (`docs`).
+This root folder is also where the `README.md`, a `LICENSE.txt` file, and the `about.json` files should be.
 
-To make your module "SedEdu ready" really all you need is 1) a specific `about.json` file which documents your module and 2) a licen
-
-
-The `about.json` file just contains some simple information which gets displayed/used within SedEdu; see [Contributing a Module](https://github.com/amoodie/sededu/blob/feat_documentation/docs/contributing_module.md) and [Writing about.json](https://github.com/amoodie/sededu/blob/feat_documentation/docs/writing_aboutjson.md) for more information about this file's contents.
-The `.gitignore` file is a GitHub related file that tells your local repository which files to sync with the remote GitHub repository (you don't need to worry about this right now)
 
 
 ## Writing the module (supported package use)
-enumerate allowed packages here, this is already in the readme?
+You should write your module to rely _only_ on Python3 and no other programming languages. 
+This is to ensure that SedEdu remains easily deployable.
+
+You are free however to use an array of Python packages within your module. 
+Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages, along with all the packages included in the [Python Standard Library (there's a ton!)](https://docs.python.org/3/library/).
+
+There is no hard cap on the maximum disk size allowable for your module, but in keeping with an easily deployable SedEdu please keep modules < 2 MB.
+
+Find a complete example module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
+This example module includes a thorough description of a working module to give a sense of how you might go about writing the module.
 
 
 ### The `about.json` file
