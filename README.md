@@ -7,7 +7,9 @@ Modules included in SedEdu are built by researchers at the cutting edge of their
 
 ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu")
 
-_version 0.9.2_
+_version 0.9.3_
+
+
 
 ## Getting Started
 
@@ -18,7 +20,7 @@ See [Contributing to SedEdu](#contributing-to-sededu) for information on becomin
 ### Installing dependencies
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
-Modules included in SedEdu rely on scipy, matplotlib, Tkinter, Pygame, and Shapely. 
+Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
 You can check your Python version by running: 
 
 ```
@@ -34,7 +36,7 @@ Anaconda can be downloaded at https://www.anaconda.com/download/ for Windows, ma
 Please follow the instruction provided in the website as to how to install and setup Python on your computer.
 
 If you want a more flexible and lightweight Python distribution, you can use whatever your favorite package manager is distributing (e.g., `homebrew` or `apt`), check the [Windows downloads here](https://www.python.org/downloads/windows/), or compile [from source](https://www.python.org/downloads/source/). 
-If you go this route, you will need to also install pip3, PyQt5 (`python3-pyqt5`), and the dependency python packages listed below. 
+If you go this route, you will need to also install `pip3`, PyQt5 (`python3-pyqt5`), and the dependency python packages listed below. 
 
 It is recommended you install the needed dependencies through `pip3`.
 
@@ -45,8 +47,15 @@ sudo apt install python3
 ```
 
 Install the needed python3 packages:
+
 ```
 pip3 install pyqt5 scipy numpy matplotlib pygame shapely
+```
+
+Install PyQt5:
+
+```
+sudo apt install python3-pyqt5
 ```
 
 
@@ -61,7 +70,7 @@ For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3A
 You can clone the git repository to get the latest release version with:
 
 ```
-git clone -b release https://git@github.com/amoodie/sededu.git
+git clone --recurse-submodules -b release https://git@github.com/amoodie/sededu.git
 ```
 
 and SedEdu is then run with:
@@ -70,21 +79,35 @@ and SedEdu is then run with:
 python3 sededu/run_sededu.py
 ```
 
-
-**Developers:** you should get the entire repository and work off of the `develop` branch:
-
-```
-git clone https://github.com/amoodie/sededu.git
-git checkout -b <name-of-working-branch> develop
-```
-
-See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
-
 <!-- 
 #### Windows instructions
 #### Mac OSX instructions
 #### Linux instructions
 -->
+
+#### Troubleshooting
+
+* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. 
+
+* __There are no modules in SedEdu:__ you probably didn't get the submodules when you `git clone`d. Try `git submodule update --init --recursive` inside the cloned repository.
+
+#### Developers
+
+You should get the entire repository and work off of the `develop` branch:
+
+```
+git clone --recurse-submodules https://github.com/amoodie/sededu.git
+git checkout -b <name-of-working-branch> develop
+```
+
+If you have already `git clone`d and need to pull the submodules now try:
+
+```
+git submodule update --init --recursive
+```
+
+See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
+
 
 
 ## Contributing to SedEdu
@@ -100,7 +123,7 @@ Some opportunities for contributions are listed below (in no particular order):
 * write (code) features and bug fixes for SedEdu
 * write documentation for SedEdu
 
-Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
+Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
 
 
 
@@ -116,8 +139,9 @@ See also the list of [contributors](https://github.com/amoodie/sededu/graphs/con
 
 ## License
 
-This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/master/LICENSE.md) file for details.
+This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/develop/LICENSE.md) file for details.
 It is provided without warranty or guaranteed support.
+Each submodule may be licensed under a different license, please see the relevant module's license file, README, or project homepage for more information.
 
 
 
@@ -126,6 +150,7 @@ It is provided without warranty or guaranteed support.
 The SedEdu framework was created by Andrew J. Moodie but has been built through the efforts of many authors (see Authors above).
 The authors have been supported by:
 * The US National Science Foundation under Grant Nos. 1427262 and 1450681.
+
 
 
 ## Disclaimer
