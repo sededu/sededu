@@ -16,7 +16,7 @@ From [JSON.org](https://www.JSON.org):
 In SedEdu we use JSON because it is easy to write for a module contributor. 
 There are several required fields, and some optional fields, in the `about.json` file. 
 Unrecognized fields will be ignored.
-Note that leaving out a required field won't cause SedEdu to fail to load your module, but will result in defaults being inserted instead.
+Note that leaving out a required field won't cause SedEdu to fail to load your module, but will result in defaults being inserted instead, and the module probably won't work correctly.
 Also note that the order of the fields in your `about.json` file does not matter. 
 
 The `about.json` from the complete example module is listed below:
@@ -42,7 +42,11 @@ The `about.json` from the complete example module is listed below:
 
 ```
 
-__NOTE:__ that each JSON entry is ended with a comma, the final _blank line_ at the end of the document and that there are _no comments_.
+__NOTE:__
+* each JSON entry is ended with a comma, 
+* use of double quotation marks
+* a final _blank line_ at the end of the document 
+* there are _no comments_.
 
 
 
@@ -53,7 +57,8 @@ The `about.json` __must__ be located in the root of the module repository. See t
 
 ## Supported fields
 
-Available fields are listed below, fields listed in __bold__ are mandatory. More information about each field is enumerated below. 
+Available fields are listed below, fields listed in __bold__ are mandatory.
+More information about each field is enumerated below. 
 
 * __title__
 * __author__
@@ -61,13 +66,17 @@ Available fields are listed below, fields listed in __bold__ are mandatory. More
 * __shortdesc__
 * __license__
 * __difficulty__
+* __exec__
 * longdesc
 * projurl
 * projreadme
 * preview
-* exec
 * docloc
 * doclist
+
+JSON calls "objects" what syntactically look like Python "dictionaries", and JSON calls "arrays" what syntactically looks like Python "lists".
+JSON also defines string and numbers.
+The [JSON nomenclature](http://www.json.org/) is used below.
 
 
 ### title
@@ -77,12 +86,15 @@ _string_, the module title. Supports UTF-8 characters.
 
 ### author
 
-_string_, the author(s) of the module. Can be multiple people, will be printed exactly as written. Supports UTF-8 characters.
+_string_, the author(s) of the module. 
+Can be multiple people, will be printed exactly as written. 
+Supports UTF-8 characters.
 
 
 ### version
 
-_string_, the version number of the module. Will be printed exactly as written.
+_string_, the version number of the module. 
+Will be printed exactly as written.
 
 Examples:
 ```
@@ -90,14 +102,19 @@ Examples:
 "version": "0.9.1",
 ```
 
+
 ### shortdesc
 
-_string_, a short description of what the module is about and what happens with it. Keep to < 70 characters. Will be printed exactly as written.
+_string_, a short description of what the module is about and what happens with it. 
+Keep to < 80 characters. 
+Will be printed exactly as written.
 
 
 ### license
 
-_string_, the licensing of the module. Use abbreviation if possible. Will be printed exactly as written.
+_string_, the licensing of the module. 
+Use abbreviation if possible. 
+Will be printed exactly as written.
 
 Examples:
 ```
@@ -105,22 +122,42 @@ Examples:
 "license": "GNU GPL v3",
 ```
 
+
 ### difficulty
-_integer_, a measure of the difficulty of the science covered by the module. 
+
+_number_, a measure of the difficulty of the science covered by the module. 
 Should be ranked between 1 and 10 (inclusive). 
 Intention is to use this number to sort the modules on the CategoryPage.
 
 _Currently does nothing and is not used._
 
 
+### exec
+
+_array of strings_, the executable "main module file" that is run from SedEdu.
+A relative path is generated with respect to the module root from the given list of strings, where each string in the list is a folder along the path to the file (the last item in list).
+
+Examples:
+```
+"exec": ["src", "example-module.py"],
+"exec": ["source", "main", "executable-file.py"],
+```
+
+
 ### longdesc
-_string_, a paragraph length description of the module. Supports UTF-8 characters. Currently does nothing and is not used. Intention is to have this field mapped into a scrollable text box of specific height on the ModuleInfoPage. No support for linebreaks in the `about.json` file -- should be read from an auxiliary file?
+
+_string_, a paragraph length description of the module.
+Supports UTF-8 characters. 
+Intention is to have this field mapped into a scrollable text box of specific height on the ModuleInformationPage. 
+No support for linebreaks in the `about.json` file.
 
 _Currently does nothing and is not used._
 
 
 ### projurl
-_string_, the home page of the module. Will parse out Markdown formatted link, allowing for "link shortening" behind the scenes.
+
+_string_, the home page of the module. 
+Will parse out Markdown formatted link, allowing for "link shortening" behind the scenes.
 <!-- If Markdown is not detected, input will be printed exactly as written as a link. -->
 
 Examples:
@@ -129,39 +166,47 @@ Examples:
 "projurl": "https://github.com/amoodie/example-module_sededu/",
 ```
 
+
 ### projreadme
-_list of strings_, _string_, the README for the module. If a list of strings is given, a relative path is generated with respect to the module root. 
-<!-- If a string is given, it is converted to a url link. -->
+
+_array of strings_, the README for the module. 
+If an array of strings is given, a relative path is generated with respect to the module root, where each string in the array is the folder along the path to the file (last item in array). 
+<!-- If a string is given, it is converted to a url link. **ADD STRING TO INPUTS ABOVE!!** -->
 
 Examples:
 ```
 "projreadme": ["README.md"],
-"projreadme": "https://github.com/amoodie/example-module_sededu/README.md",
-``` 
-    
+```
+<!-- "projreadme": "https://github.com/amoodie/example-module_sededu/README.md", --> 
+
+
 ### preview
-The preview will be scaled to 250 pixels in height, and then cropped to the center of the image at a 4:3 aspect ratio (W:H).
+
+_array of strings_, the image preview shown on the ModuleInformationPage.
+Will be scaled to 250 pixels in height, and then cropped from the left edge of the image to 334 pixels in width (i.e., at a 4:3 aspect ratio, W:H). 
+Should work with most image formats (`.png`, `.jpeg`), but does not support movie `.gif`s. 
+A relative path is generated with respect to the module root from the given array of strings, where each string in the array is a folder along the path to the file (the last item in array).
 
 Examples:
 ```
 "preview": ["private", "example-module_demo.png"],
 ```
 
-### exec
-
-Examples:
-```
-"exec": ["src", "example-module.py"],
-```
 
 ### docloc
+
+_array of strings_, the folder which contains activities/worksheets that go along with executable "main module file" that is run from SedEdu.
+A relative path is generated with respect to the module root from the given array of strings, where each string in the array is a folder along the path to the documents folder (the last item in array).
 
 Examples:
 ```
 "docloc": ["docs"],
 ```
 
+
 ### doclist
+
+_object_, key-value pairs defining the filename in "docloc" folder as key and the document title to display in SedEdu as the value. Only documents explicitly included in this list will be displayed in SedEdu.
 
 Examples:
 ```
@@ -170,6 +215,7 @@ Examples:
     "worksheet.md": "Worksheet"
 },
 ```
+
 
 
 ## Developers
