@@ -55,6 +55,7 @@ class OneLineInfoLabel(ShortInfoLabel):
 class GenericLargePushButton(QPushButton):
     def __init__(self, buttonText='', parent=None):
         QPushButton.__init__(self, parent)
+        
         backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))

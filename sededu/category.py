@@ -87,7 +87,7 @@ class CategoryPageWidget(QWidget):
     class _ModuleListWidget(QListWidget):
         def __init__(self, parent=None):
             QListWidget.__init__(self, parent)
-            
+
             self.itemClicked.connect(self.parent().setModulePage)
 
 
@@ -133,27 +133,36 @@ class CategoryPageWidget(QWidget):
     class _ModuleInformationPage(QWidget):
         def __init__(self, modDirPath, data, parent=None):
             QWidget.__init__(self, parent)
+            self.setLayout(QVBoxLayout())
 
-            infoLayout = QVBoxLayout()
-            infoLayout.setContentsMargins(10, 0, 0, 0)
+            self.layout().setContentsMargins(10, 0, 0, 0)
+            
+            # check and add data if needed
+            data = self.validateData(data, modDirPath)
+
             optGroup = QGroupBox()
             optLayout = QGridLayout()
             optGroup.setLayout(optLayout)
             optGroup.setFlat(True)
+            
             optLayout.setContentsMargins(2, 0, 2, 0)
             optLayout.setVerticalSpacing(10)
             # optLayout.setRowMinumumHeight(8)
             optLayout.setHorizontalSpacing(15)
             optLayoutInc = 0 # layout incrementer
             
-            # check and add data if needed
-            data = self.validateData(data, modDirPath)
+
             
             # handle required module fields
             titleLabel = utls.ShortInfoLabel(utls.cutTitle(data["title"]), utls.titleFont())
-            infoLayout.addWidget(titleLabel)
+            
+            titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(data["title"]))
+            self.layout().addWidget(titleLabel)
+            
+
+
             versionLabel = utls.OneLineInfoLabel("version " + data["version"], utls.versionFont())
-            infoLayout.addWidget(versionLabel)
+            self.layout().addWidget(versionLabel)
 
             previewLabel = QLabel()
             previewHeight = 250
@@ -168,7 +177,7 @@ class CategoryPageWidget(QWidget):
             else: # no preview path supplied
                 previewLabel = utls.NoImageFiller("**Preview not provided**", previewHeight)
             previewLabel.setAlignment(QtCore.Qt.AlignCenter)
-            infoLayout.addWidget(previewLabel)
+            self.layout().addWidget(previewLabel)
 
             # handle optional module fields (replace with for loop with dict of keys?)
             optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
@@ -193,7 +202,7 @@ class CategoryPageWidget(QWidget):
                 readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(modDirPath, *data["projreadme"])))
                 optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
 
-            infoLayout.addWidget(optGroup)
+            self.layout().addWidget(optGroup)
 
             launchGroup = QGroupBox()
             self.launchLayout = QGridLayout()
@@ -206,10 +215,10 @@ class CategoryPageWidget(QWidget):
             self.launchLayout.addWidget(QLabel(), 0, 0)
             self.launchLayout.addWidget(execButton, 0, 1)
 
-            infoLayout.addStretch(1)
-            infoLayout.addWidget(launchGroup)
-            self.infoLayout = infoLayout
-            self.setLayout(self.infoLayout)
+            self.layout().addStretch(1)
+            self.layout().addWidget(launchGroup)
+            # self.infoLayout = infoLayout
+            # self.setLayout(self.infoLayout)
 
 
         def validateData(self, data, modDirPath):
@@ -236,3 +245,7 @@ class CategoryPageWidget(QWidget):
                 msg = NoFileMessageBox(execPath)
                 msg.exec_()
 
+        class ModuleTitleLabel(utls.ShortInfoLabel):
+            titleFont = utls.titleFont()
+            def __init__(self, title='', theFont=titleFont, parent=None):
+                utls.ShortInfoLabel.__init__(self, title, theFont, parent)
