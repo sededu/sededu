@@ -34,7 +34,7 @@ To this end, the mdoule must contain a few key files and then can have many more
 The _minimum required files for your module to be complete_ are: 
 
 * `README.md` -- here is a template
-* `LICENSE.txt` -- see [below](#licensing), and [Module Licensing](https://github.com/amoodie/sededu/blob/feat_documentation/docs/contributing_module.md#module-licensing)
+* `LICENSE.txt` -- see [below](#licensing), and [Module Licensing](https://github.com/amoodie/sededu/blob/develop/docs/contributing_module.md#module-licensing)
 * executable python script
 
 Then, to incorporate into SedEdu, all you are required to add is an `about.json` file that provides SedEdu with some documentation about your module.
@@ -63,24 +63,37 @@ This root folder is also where the `README.md`, a `LICENSE.txt` file, and the `a
 
 
 
-## Writing the module (supported package use)
+## Writing the module
+
 You should write your module to rely _only_ on Python3 and no other programming languages. 
 This is to ensure that SedEdu remains easily deployable.
 
 You are free however to use an array of Python packages within your module. 
-Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages, along with all the packages included in the [Python Standard Library (there's a ton!)](https://docs.python.org/3/library/).
+Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages.
+All the packages included in the [Python Standard Library]](https://docs.python.org/3/library/) are also available for use in modules (there's a ton!).
 
-There is no hard cap on the maximum disk size allowable for your module, but in keeping with an easily deployable SedEdu please keep modules < 2 MB.
+There is no hard cap on the maximum disk size allowable for your module, but in keeping with an easily deployable SedEdu please keep modules < 1.5 MB.
+If including activity sheets exceeds this limit, that will be fine.
+If your module requires larger data, please consider downloading it from the web in real time, _after confirming this activity from the user first_.
 
-Find a complete example module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
-This example module includes a thorough description of a working module to give a sense of how you might go about writing the module.
+The biggest resource provided to you here for writing your module would be the example module.
+The README of this module has a thorough description of the workflow of designing a module.
+Find the complete example module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
+Furthermore, all of the modules included in SedEdu are open source, so you can view the source code for a given project for a hint on 'how-to', or inspiration for module ideas.
 
 
 ### The `about.json` file
-see the additional document for more details
+Integrating your module into SedEdu requires a special file describing the module, called `about.json`.
+
 
 
 ### Writing activities for your module
+
+Modules are cool on their own, but to really make them effective teaching tools, it is necessary to have some guiding documentation to make sure the user is getting the important points from your module.
+Writing activities for a module can be difficult, though.
+
+There is a separate article dedicated to Writing Activities for your module available with your distribution in `docs/writing_activities.md` or [on GitHub here](https://github.com/amoodie/sededu/blob/develop/docs/writing_activities.md).
+You can also look to other activities in the SedEdu suite for inspiration.
 
 
 ### Module Licensing

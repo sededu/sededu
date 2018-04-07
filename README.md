@@ -106,7 +106,7 @@ If you have already `git clone`d and need to pull the submodules now try:
 git submodule update --init --recursive
 ```
 
-See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
+See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
 
 
 
@@ -123,7 +123,7 @@ Some opportunities for contributions are listed below (in no particular order):
 * write (code) features and bug fixes for SedEdu
 * write documentation for SedEdu
 
-Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
+Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
 
 
 
@@ -139,7 +139,7 @@ See also the list of [contributors](https://github.com/amoodie/sededu/graphs/con
 
 ## License
 
-This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/master/LICENSE.md) file for details.
+This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/develop/LICENSE.md) file for details.
 It is provided without warranty or guaranteed support.
 Each submodule may be licensed under a different license, please see the relevant module's license file, README, or project homepage for more information.
 
