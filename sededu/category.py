@@ -174,7 +174,6 @@ class CategoryPageWidget(QWidget):
             optLayout.addWidget(utls.ShortInfoLabel(moduleAbout["shortdesc"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
-            # optLayoutInc = optLayoutInc + 1
             if 'projurl' in moduleAbout:
                 optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
                 projurlLabel = utls.ShortInfoLabel(moduleAbout["projurl"])
@@ -209,8 +208,6 @@ class CategoryPageWidget(QWidget):
 
             self.layout().addStretch(1)
             self.layout().addWidget(launchGroup)
-            # self.infoLayout = infoLayout
-            # self.setLayout(self.infoLayout)
 
 
         def validateData(self, moduleAbout, moduleDirectory):
@@ -253,7 +250,8 @@ class CategoryPageWidget(QWidget):
                          previewHeight=previewHeight, parent=None):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QVBoxLayout())
-                self.layout().setAlignment(QtCore.Qt.AlignCenter) 
+                # self.layout().setAlignment(QtCore.Qt.AlignCenter)
+                self.setContentsMargins(0, 0, 0, 0)
                 self.setMinimumHeight(previewHeight)
                 self.setSizePolicy(QSizePolicy(
                            QSizePolicy.Preferred,
