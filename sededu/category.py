@@ -33,8 +33,17 @@ class CategoryPageWidget(QWidget):
         # loop through all the modules
         moduleNum = 0
         for iModuleDirectory in modulePathList:
-            # get module metadata from the about.json file
-            iModuleAbout = json.load(open(os.path.join(iModuleDirectory, "about.json")))
+            # check out and prepare the about.json file
+            moduleAboutPath = os.path.join(iModuleDirectory, "about.json")
+            if os.path.isfile(moduleAboutPath):
+                # read the raw file
+                moduleAboutRawText = open(moduleAboutPath)
+
+                # get module metadata from the about.json file
+                iModuleAbout = json.load(moduleAboutRawText)
+    
+                # check and add defaults to moduleAbout if needed
+                iModuleAbout = self.validateModuleAbout(iModuleAbout, iModuleDirectory)
             
             # construct and add the item to the module list
             iModuleListItem = self._ModuleListItemWidget(moduleNum, iModuleAbout)
@@ -84,6 +93,26 @@ class CategoryPageWidget(QWidget):
         self.ModulePageStack.setCurrentIndex(item.idx)
         self.ModuleDocStack.setCurrentIndex(item.idx)
 
+    def validateModuleAbout(self, moduleAbout, moduleDirectory):
+
+        # delete any empty fields from the dictionary
+        moduleAbout = {k: v for k, v in moduleAbout.items() if v}
+
+        # in reqDict, value 'default' indicates to include key in info, otherwise print the value
+        reqDict = {'title':'**Title not defined**', 'author':'The SedEdu contributors', 
+                   'version':'1.0', 'shortdesc':'default', 'license': 'None',
+                   'difficulty':11, 'exec':['bad_path_supplied']}
+        for k, v in reqDict.items():
+            isPresent = k in moduleAbout.keys()
+            if not isPresent:
+                print("Module missing necessary information in:")
+                print(os.path.join(moduleDirectory, "about.json"))
+                print("Required field:", k, "is missing\n")
+                if v == 'default': # if default print:
+                    moduleAbout[k] = "No " + k + " supplied" # set appr filler text
+                else:
+                    moduleAbout[k] = v
+        return moduleAbout
 
     class _ModuleListWidget(QListWidget):
         def __init__(self, parent=None):
@@ -137,9 +166,6 @@ class CategoryPageWidget(QWidget):
             
             self.setLayout(QVBoxLayout())
             self.layout().setContentsMargins(10, 0, 0, 0)
-
-            # check and add defaults to moduleAbout if needed
-            moduleAbout = self.validateModuleAbout(moduleAbout, moduleDirectory)
             
             # handle required module fields
             titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(moduleAbout["title"]))
@@ -181,22 +207,7 @@ class CategoryPageWidget(QWidget):
             self.layout().addWidget(self.launchButtons)
 
 
-        def validateModuleAbout(self, moduleAbout, moduleDirectory):
-            # in reqDict, value 'default' indicates to include key in info, otherwise print the value
-            reqDict = {'title':'**Title not defined**', 'author':'The SedEdu contributors', 
-                       'version':'1.0', 'shortdesc':'default', 'license': 'None',
-                       'difficulty':11, 'exec':['bad_path_supplied']}
-            for k, v in reqDict.items():
-                isPresent = k in moduleAbout.keys()
-                if not isPresent:
-                    print("Module missing necessary information in:")
-                    print(os.path.join(moduleDirectory, "about.json"))
-                    print("Required field:", k, "is missing\n")
-                    if v == 'default': # if default print:
-                        moduleAbout[k] = "No " + k + " supplied" # set appr filler text
-                    else:
-                        moduleAbout[k] = v
-            return moduleAbout
+
 
 
         def execModule(self, execPath):
