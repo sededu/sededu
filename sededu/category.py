@@ -264,7 +264,7 @@ class CategoryPageWidget(QWidget):
                 
                 ModuleActivityButton = QLabel() # actually a blank label so it is 
                                                 # "empty" if no activity is supplied
-                self.layout().addWidget(QLabel(), 0, 0)
+                self.layout().addWidget(ModuleActivityButton, 0, 0)
 
                 ModuleExecButton = QPushButton("Run module")
                 ModuleExecPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
