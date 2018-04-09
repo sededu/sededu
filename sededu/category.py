@@ -131,14 +131,14 @@ class CategoryPageWidget(QWidget):
 
 
     class _ModuleInformationPage(QWidget):
-        def __init__(self, modDirPath, data, parent=None):
+        def __init__(self, moduleDirectory, moduleAbout, parent=None):
             QWidget.__init__(self, parent)
             
             self.setLayout(QVBoxLayout())
             self.layout().setContentsMargins(10, 0, 0, 0)
             
-            # check and add data if needed
-            data = self.validateData(data, modDirPath)
+            # check and add defaults to moduleAbout if needed
+            moduleAbout = self.validateData(moduleAbout, moduleDirectory)
 
             optGroup = QGroupBox()
             optLayout = QGridLayout()
@@ -154,55 +154,43 @@ class CategoryPageWidget(QWidget):
 
             
             # handle required module fields
-            titleLabel = utls.ShortInfoLabel(utls.cutTitle(data["title"]), utls.titleFont())
+            titleLabel = utls.ShortInfoLabel(utls.cutTitle(moduleAbout["title"]), utls.titleFont())
             
-            titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(data["title"]))
+            titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(moduleAbout["title"]))
             self.layout().addWidget(titleLabel)
 
-            versionLabel = utls.OneLineInfoLabel("version " + data["version"], utls.versionFont())
+            versionLabel = utls.OneLineInfoLabel("version " + moduleAbout["version"], utls.versionFont())
             self.layout().addWidget(versionLabel)
 
-            previewLabel = QLabel()
-            previewHeight = 250
-            if 'preview' in data:
-                previewPath = os.path.join(modDirPath, *data["preview"])
-                if os.path.isfile(previewPath): # check that pixmap exists
-                    previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
-                                           previewHeight).copy(QtCore.QRect(
-                                           0,0,previewHeight*(4/3),previewHeight)))
-                else: # preview path supplied, but no image found
-                    previewLabel = utls.NoImageFiller("**Image not found**", previewHeight)
-            else: # no preview path supplied
-                previewLabel = utls.NoImageFiller("**Preview not provided**", previewHeight)
-            previewLabel.setAlignment(QtCore.Qt.AlignCenter)
+            previewLabel = self.ModulePreviewWidget(moduleDirectory=moduleDirectory, moduleAbout=moduleAbout)
             self.layout().addWidget(previewLabel)
 
             # handle optional module fields (replace with for loop with dict of keys?)
             optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.ShortInfoLabel(data["author"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.ShortInfoLabel(moduleAbout["author"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.ShortInfoLabel(data["shortdesc"]), optLayoutInc, 1)
+            optLayout.addWidget(utls.ShortInfoLabel(moduleAbout["shortdesc"]), optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
             # optLayoutInc = optLayoutInc + 1
-            if 'projurl' in data:
+            if 'projurl' in moduleAbout:
                 optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-                projurlLabel = utls.ShortInfoLabel(data["projurl"])
+                projurlLabel = utls.ShortInfoLabel(moduleAbout["projurl"])
                 optLayout.addWidget(projurlLabel, optLayoutInc, 1)
                 optLayoutInc = optLayoutInc + 1
 
-            if 'projreadme' in data:
+            if 'projreadme' in moduleAbout:
                 optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
                 readmeButton = QPushButton("open README")
                 readmeButton.setFixedSize(QtCore.QSize(200,25))
-                readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(modDirPath, *data["projreadme"])))
+                readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(moduleDirectory, *moduleAbout["projreadme"])))
                 optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
                 optLayoutInc = optLayoutInc + 1
             
             optLayout.addWidget(QLabel("License:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            licenseLabel = utls.ShortInfoLabel(data["license"])
+            licenseLabel = utls.ShortInfoLabel(moduleAbout["license"])
             optLayout.addWidget(licenseLabel, optLayoutInc, 1)
             optLayoutInc = optLayoutInc + 1
 
@@ -214,7 +202,7 @@ class CategoryPageWidget(QWidget):
             launchGroup.setFlat(True)
             self.launchLayout.setContentsMargins(20, 0, 20, 10)
             execButton = QPushButton("Run module")
-            execPath = os.path.join(modDirPath, *data["exec"])
+            execPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
             execButton.clicked.connect(lambda: self.execModule(execPath))
             self.launchLayout.addWidget(QLabel(), 0, 0)
             self.launchLayout.addWidget(execButton, 0, 1)
@@ -225,23 +213,22 @@ class CategoryPageWidget(QWidget):
             # self.setLayout(self.infoLayout)
 
 
-        def validateData(self, data, modDirPath):
+        def validateData(self, moduleAbout, moduleDirectory):
             # in reqDict, value 'default' indicates to include key in info, otherwise print the value
-            reqDict = {'title':'default', 'version':'1.0', 
-                       'author':'The SedEdu contributors', 
-                       'license': "None", 'shortdesc':'default', 
-                       'exec':['bad_path_supplied'], 'difficulty':11}
+            reqDict = {'title':'**Title not defined**', 'author':'The SedEdu contributors', 
+                       'version':'1.0', 'shortdesc':'default', 'license': 'None',
+                       'difficulty':11, 'exec':['bad_path_supplied']}
             for k, v in reqDict.items():
-                isPresent = k in data.keys()
+                isPresent = k in moduleAbout.keys()
                 if not isPresent:
                     print("Module missing necessary information in:")
-                    print(os.path.join(modDirPath, "about.json"))
+                    print(os.path.join(moduleDirectory, "about.json"))
                     print("Required field:", k, "is missing\n")
                     if v == 'default': # if default print:
-                        data[k] = "No " + k + " supplied" # set appr filler text
+                        moduleAbout[k] = "No " + k + " supplied" # set appr filler text
                     else:
-                        data[k] = v
-            return data
+                        moduleAbout[k] = v
+            return moduleAbout
 
 
         def execModule(self, execPath):
@@ -251,7 +238,40 @@ class CategoryPageWidget(QWidget):
                 msg = NoFileMessageBox(execPath)
                 msg.exec_()
 
+
         class ModuleTitleLabel(utls.ShortInfoLabel):
             titleFont = utls.titleFont()
             def __init__(self, title='', theFont=titleFont, parent=None):
                 utls.ShortInfoLabel.__init__(self, title, theFont, parent)
+
+
+        class ModulePreviewWidget(QGroupBox):
+            
+            previewHeight = 250
+
+            def __init__(self, moduleDirectory, moduleAbout, 
+                         previewHeight=previewHeight, parent=None):
+                QGroupBox.__init__(self, parent)
+                self.setLayout(QVBoxLayout())
+                self.layout().setAlignment(QtCore.Qt.AlignCenter) 
+                self.setMinimumHeight(previewHeight)
+                self.setSizePolicy(QSizePolicy(
+                           QSizePolicy.Preferred,
+                           QSizePolicy.Fixed))
+
+                previewLabel = QLabel()
+                previewLabel.setAlignment(QtCore.Qt.AlignCenter)
+                self.layout().addWidget(previewLabel)
+
+                if 'preview' in moduleAbout:
+                    previewPath = os.path.join(moduleDirectory, *moduleAbout["preview"])
+                    if os.path.isfile(previewPath): # check that pixmap exists
+                        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
+                                               previewHeight).copy(QtCore.QRect(
+                                               0, 0, previewHeight*(4/3), previewHeight)))
+                    else: # preview path supplied, but no image found
+                        previewLabel.setText('** Image not found **')
+                else: # no preview path supplied
+                    previewLabel.setText('** Preview not provided **')
+                               
+

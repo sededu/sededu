@@ -81,22 +81,6 @@ class NoFileMessageBox(QMessageBox):
 
 
 
-class NoImageFiller(QGroupBox):
-    # filler image, takes text for label
-    def __init__(self, labelText, previewHeight, parent=None):
-        QGroupBox.__init__(self, parent)
-        label = QLabel(labelText)
-        label.setAlignment(QtCore.Qt.AlignCenter)
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        self.setLayout(layout)
-        self.setMinimumHeight(previewHeight)
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.Preferred,
-                           QSizePolicy.Fixed))
-
-
-
 def open_file(filename):
     platType = platform.system()
     if os.path.isfile(filename):
