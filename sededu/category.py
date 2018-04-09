@@ -86,7 +86,6 @@ class CategoryPageWidget(QWidget):
             if len(iModuleDocLaunchList) > 0:
                 iModuleDocLaunchButton = QPushButton("Open activity")
                 iModuleDocLaunchButton.clicked.connect(lambda x, lL=iModuleDocLaunchList: iModuleDocList.docLaunch(lL))
-                # iModuleInfoPage.launchLayout.addWidget(iModuleDocLaunchButton, 0, 0)
                 iModuleInfoPage.launchButtons.layout().addWidget(iModuleDocLaunchButton, 0, 0)
 
             # increment to next module
@@ -96,6 +95,7 @@ class CategoryPageWidget(QWidget):
     def setModulePage(self, item):
         self.ModulePageStack.setCurrentIndex(item.idx)
         self.ModuleDocStack.setCurrentIndex(item.idx)
+
 
     def validateModuleAbout(self, moduleAbout, moduleDirectory):
 
@@ -117,6 +117,7 @@ class CategoryPageWidget(QWidget):
                 else:
                     moduleAbout[k] = v
         return moduleAbout
+
 
     class _ModuleListWidget(QListWidget):
         def __init__(self, parent=None):
@@ -191,7 +192,6 @@ class CategoryPageWidget(QWidget):
             licenseLabel = self.GenericOptionalLabel('License:', moduleAbout['license'])
             self.layout().addWidget(licenseLabel)
 
-
             # handle optional fields
             if 'longdesc' in moduleAbout:
                 placeholder = 1
@@ -211,10 +211,8 @@ class CategoryPageWidget(QWidget):
             self.layout().addWidget(self.launchButtons)
 
 
-
-
-
         def execModule(self, execPath):
+            # tool to execute a python script
             if os.path.isfile(execPath):
                 subprocess.Popen(["python3", execPath])
             else:
@@ -230,6 +228,7 @@ class CategoryPageWidget(QWidget):
 
 
         class GenericOptionalLabel(QGroupBox):
+            # generic option field for module data
             def __init__(self, fieldLabel='', aboutText='', parent=None):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QHBoxLayout())
@@ -256,6 +255,7 @@ class CategoryPageWidget(QWidget):
 
 
         class ModuleLaunchButtonsWidget(QGroupBox):
+            # box for activity and module launch buttons at bottom
             def __init__(self, moduleDirectory, moduleAbout, parent=None):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QGridLayout())
