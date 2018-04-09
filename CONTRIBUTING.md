@@ -15,7 +15,7 @@ Some opportunities for contributions are listed below (in no particular order):
 * write (code) features and bug fixes for SedEdu
 * write documentation for SedEdu
 
-Please note that we have a code of conduct ([CODEOFCONDUCT.md](https://github.com/amoodie/sededu/blob/master/CODEOFCONDUCT.md)), please follow it in all your interactions with the project.
+Please note that we have a code of conduct ([CODEOFCONDUCT.md](https://github.com/amoodie/sededu/blob/master/CODE_OF_CONDUCT.md)), please follow it in all your interactions with the project.
 
 __If you have any questions please don't hesitate to ask!!__
 [Open an issue on SedEdu](https://github.com/amoodie/sededu/issues) with your question and we'll get right to it!
