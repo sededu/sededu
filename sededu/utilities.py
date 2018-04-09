@@ -11,7 +11,10 @@ class ParagraphInfoLabel(QLabel):
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
         
-        labelText = self.url_checker(labelText)
+        if isinstance(labelText, str):
+            labelText = self.url_checker(labelText)
+        if os.path.isfile(labelText):
+            labelText = self.file_checker(labelText)
         self.setText(labelText)
 
         self.setWordWrap(True)
@@ -29,6 +32,10 @@ class ParagraphInfoLabel(QLabel):
                 ''.join(('<a href=\"', s[1], '\">', s[0], '</a>')))
         return labelText
 
+
+    def file_checker(self, labelText):
+        labelText = ''.join(('<a href=\"file:///', labelText, '\">open README</a>'))
+        return labelText
 
 
 class ShortInfoLabel(ParagraphInfoLabel):

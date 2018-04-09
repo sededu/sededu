@@ -73,7 +73,8 @@ class CategoryPageWidget(QWidget):
             if len(iModuleDocLaunchList) > 0:
                 iModuleDocLaunchButton = QPushButton("Open activity")
                 iModuleDocLaunchButton.clicked.connect(lambda x, lL=iModuleDocLaunchList: iModuleDocList.docLaunch(lL))
-                iModuleInfoPage.launchLayout.addWidget(iModuleDocLaunchButton, 0, 0)
+                # iModuleInfoPage.launchLayout.addWidget(iModuleDocLaunchButton, 0, 0)
+                iModuleInfoPage.launchButtons.layout().addWidget(iModuleDocLaunchButton, 0, 0)
 
             # increment to next module
             moduleNum += 1
@@ -136,26 +137,11 @@ class CategoryPageWidget(QWidget):
             
             self.setLayout(QVBoxLayout())
             self.layout().setContentsMargins(10, 0, 0, 0)
-            
+
             # check and add defaults to moduleAbout if needed
-            moduleAbout = self.validateData(moduleAbout, moduleDirectory)
-
-            optGroup = QGroupBox()
-            optLayout = QGridLayout()
-            optGroup.setLayout(optLayout)
-            optGroup.setFlat(True)
-            
-            optLayout.setContentsMargins(2, 0, 2, 0)
-            optLayout.setVerticalSpacing(10)
-            # optLayout.setRowMinumumHeight(8)
-            optLayout.setHorizontalSpacing(15)
-            optLayoutInc = 0 # layout incrementer
-            
-
+            moduleAbout = self.validateModuleAbout(moduleAbout, moduleDirectory)
             
             # handle required module fields
-            titleLabel = utls.ShortInfoLabel(utls.cutTitle(moduleAbout["title"]), utls.titleFont())
-            
             titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(moduleAbout["title"]))
             self.layout().addWidget(titleLabel)
 
@@ -164,53 +150,38 @@ class CategoryPageWidget(QWidget):
 
             previewLabel = self.ModulePreviewWidget(moduleDirectory=moduleDirectory, moduleAbout=moduleAbout)
             self.layout().addWidget(previewLabel)
+            self.layout().addSpacing(10)
 
-            # handle optional module fields (replace with for loop with dict of keys?)
-            optLayout.addWidget(QLabel("Author(s):"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.ShortInfoLabel(moduleAbout["author"]), optLayoutInc, 1)
-            optLayoutInc = optLayoutInc + 1
+            authorLabel = self.GenericOptionalLabel('Author(s):', moduleAbout['author'])
+            self.layout().addWidget(authorLabel)
 
-            optLayout.addWidget(QLabel("Description:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            optLayout.addWidget(utls.ShortInfoLabel(moduleAbout["shortdesc"]), optLayoutInc, 1)
-            optLayoutInc = optLayoutInc + 1
+            shortDescLabel = self.GenericOptionalLabel('Description:', moduleAbout['shortdesc'])
+            self.layout().addWidget(shortDescLabel)
+
+            licenseLabel = self.GenericOptionalLabel('License:', moduleAbout['license'])
+            self.layout().addWidget(licenseLabel)
+
+
+            # handle optional fields
+            if 'longdesc' in moduleAbout:
+                placeholder = 1
 
             if 'projurl' in moduleAbout:
-                optLayout.addWidget(QLabel("Proj. website:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-                projurlLabel = utls.ShortInfoLabel(moduleAbout["projurl"])
-                optLayout.addWidget(projurlLabel, optLayoutInc, 1)
-                optLayoutInc = optLayoutInc + 1
+                projurlLabel = self.GenericOptionalLabel('Proj. website:', moduleAbout['projurl'])
+                self.layout().addWidget(projurlLabel)
 
             if 'projreadme' in moduleAbout:
-                optLayout.addWidget(QLabel("Proj. README:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-                readmeButton = QPushButton("open README")
-                readmeButton.setFixedSize(QtCore.QSize(200,25))
-                readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(moduleDirectory, *moduleAbout["projreadme"])))
-                optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
-                optLayoutInc = optLayoutInc + 1
-            
-            optLayout.addWidget(QLabel("License:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
-            licenseLabel = utls.ShortInfoLabel(moduleAbout["license"])
-            optLayout.addWidget(licenseLabel, optLayoutInc, 1)
-            optLayoutInc = optLayoutInc + 1
+                readmeLabel = self.GenericOptionalLabel('Proj. README:', os.path.join(moduleDirectory, *moduleAbout['projreadme']))
+                self.layout().addWidget(readmeLabel)
 
-            self.layout().addWidget(optGroup)
+            self.layout().addStretch(10)
 
-            launchGroup = QGroupBox()
-            self.launchLayout = QGridLayout()
-            launchGroup.setLayout(self.launchLayout)
-            launchGroup.setFlat(True)
-            self.launchLayout.setContentsMargins(20, 0, 20, 10)
-            execButton = QPushButton("Run module")
-            execPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
-            execButton.clicked.connect(lambda: self.execModule(execPath))
-            self.launchLayout.addWidget(QLabel(), 0, 0)
-            self.launchLayout.addWidget(execButton, 0, 1)
-
-            self.layout().addStretch(1)
-            self.layout().addWidget(launchGroup)
+            self.launchButtons = self.ModuleLaunchButtonsWidget(moduleDirectory=moduleDirectory, moduleAbout=moduleAbout, 
+                                                           parent=self)
+            self.layout().addWidget(self.launchButtons)
 
 
-        def validateData(self, moduleAbout, moduleDirectory):
+        def validateModuleAbout(self, moduleAbout, moduleDirectory):
             # in reqDict, value 'default' indicates to include key in info, otherwise print the value
             reqDict = {'title':'**Title not defined**', 'author':'The SedEdu contributors', 
                        'version':'1.0', 'shortdesc':'default', 'license': 'None',
@@ -237,20 +208,60 @@ class CategoryPageWidget(QWidget):
 
 
         class ModuleTitleLabel(utls.ShortInfoLabel):
+            # title widget
             titleFont = utls.titleFont()
             def __init__(self, title='', theFont=titleFont, parent=None):
                 utls.ShortInfoLabel.__init__(self, title, theFont, parent)
 
 
+        class GenericOptionalLabel(QGroupBox):
+            def __init__(self, fieldLabel='', aboutText='', parent=None):
+                QGroupBox.__init__(self, parent)
+                self.setLayout(QHBoxLayout())
+                self.setContentsMargins(0, 0, 0, 2)
+                self.layout().setContentsMargins(0, 0, 0, 0)
+
+                self.FieldLabel = utls.ShortInfoLabel(fieldLabel)
+                self.FieldLabel.setMinimumWidth(115)
+                self.FieldLabel.setSizePolicy(QSizePolicy(
+                           QSizePolicy.Fixed,
+                           QSizePolicy.Preferred))
+                self.layout().addWidget(self.FieldLabel)
+
+                self.AboutData = utls.ShortInfoLabel(aboutText)
+                self.layout().addWidget(self.AboutData)
+
+
+            def setFieldLabel(self, fieldLabel):
+                self.FieldLabel.setText(fieldLabel)
+
+
+            def setAboutText(self, aboutText):
+                self.AboutText.setText(aboutText)
+
+
+        class ModuleLaunchButtonsWidget(QGroupBox):
+            def __init__(self, moduleDirectory, moduleAbout, parent=None):
+                QGroupBox.__init__(self, parent)
+                self.setLayout(QGridLayout())
+                self.setFlat(True)
+                self.layout().setContentsMargins(20, 0, 20, 10)
+                
+                execButton = QPushButton("Run module")
+                execPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
+                execButton.clicked.connect(lambda: self.parent().execModule(execPath))
+                self.layout().addWidget(QLabel(), 0, 0)
+                self.layout().addWidget(execButton, 0, 1)
+
         class ModulePreviewWidget(QGroupBox):
-            
+            # preview widget, fills with blank if not given
             previewHeight = 250
 
             def __init__(self, moduleDirectory, moduleAbout, 
                          previewHeight=previewHeight, parent=None):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QVBoxLayout())
-                # self.layout().setAlignment(QtCore.Qt.AlignCenter)
+                self.layout().setContentsMargins(0, 0, 0, 0)
                 self.setContentsMargins(0, 0, 0, 0)
                 self.setMinimumHeight(previewHeight)
                 self.setSizePolicy(QSizePolicy(
@@ -258,7 +269,7 @@ class CategoryPageWidget(QWidget):
                            QSizePolicy.Fixed))
 
                 previewLabel = QLabel()
-                previewLabel.setAlignment(QtCore.Qt.AlignCenter)
+                previewLabel.setContentsMargins(0, 0, 0, 0)
                 self.layout().addWidget(previewLabel)
 
                 if 'preview' in moduleAbout:
@@ -266,10 +277,10 @@ class CategoryPageWidget(QWidget):
                     if os.path.isfile(previewPath): # check that pixmap exists
                         previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
                                                previewHeight).copy(QtCore.QRect(
-                                               0, 0, previewHeight*(4/3), previewHeight)))
+                                               0,0,previewHeight*(4/3),previewHeight)))
                     else: # preview path supplied, but no image found
                         previewLabel.setText('** Image not found **')
                 else: # no preview path supplied
                     previewLabel.setText('** Preview not provided **')
-                               
+                previewLabel.setAlignment(QtCore.Qt.AlignCenter)
 
