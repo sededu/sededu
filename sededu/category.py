@@ -133,8 +133,8 @@ class CategoryPageWidget(QWidget):
     class _ModuleInformationPage(QWidget):
         def __init__(self, modDirPath, data, parent=None):
             QWidget.__init__(self, parent)
+            
             self.setLayout(QVBoxLayout())
-
             self.layout().setContentsMargins(10, 0, 0, 0)
             
             # check and add data if needed
@@ -158,8 +158,6 @@ class CategoryPageWidget(QWidget):
             
             titleLabel = self.ModuleTitleLabel(title=utls.cutTitle(data["title"]))
             self.layout().addWidget(titleLabel)
-            
-
 
             versionLabel = utls.OneLineInfoLabel("version " + data["version"], utls.versionFont())
             self.layout().addWidget(versionLabel)
@@ -201,6 +199,12 @@ class CategoryPageWidget(QWidget):
                 readmeButton.setFixedSize(QtCore.QSize(200,25))
                 readmeButton.clicked.connect(lambda: utls.open_file(os.path.join(modDirPath, *data["projreadme"])))
                 optLayout.addWidget(readmeButton, optLayoutInc, 1, QtCore.Qt.AlignTop)
+                optLayoutInc = optLayoutInc + 1
+            
+            optLayout.addWidget(QLabel("License:"), optLayoutInc, 0, QtCore.Qt.AlignTop)
+            licenseLabel = utls.ShortInfoLabel(data["license"])
+            optLayout.addWidget(licenseLabel, optLayoutInc, 1)
+            optLayoutInc = optLayoutInc + 1
 
             self.layout().addWidget(optGroup)
 
@@ -223,8 +227,10 @@ class CategoryPageWidget(QWidget):
 
         def validateData(self, data, modDirPath):
             # in reqDict, value 'default' indicates to include key in info, otherwise print the value
-            reqDict = {'title':'default', 'version':'1.0', 'author':'The SedEdu contributors', 
-                       'shortdesc':'default', 'exec':['bad_path_supplied'], 'difficulty':11}
+            reqDict = {'title':'default', 'version':'1.0', 
+                       'author':'The SedEdu contributors', 
+                       'license': "None", 'shortdesc':'default', 
+                       'exec':['bad_path_supplied'], 'difficulty':11}
             for k, v in reqDict.items():
                 isPresent = k in data.keys()
                 if not isPresent:
