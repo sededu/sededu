@@ -11,7 +11,10 @@ class ParagraphInfoLabel(QLabel):
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
         
-        labelText = self.url_checker(labelText)
+        if isinstance(labelText, str):
+            labelText = self.url_checker(labelText)
+        if os.path.isfile(labelText):
+            labelText = self.file_checker(labelText)
         self.setText(labelText)
 
         self.setWordWrap(True)
@@ -29,6 +32,10 @@ class ParagraphInfoLabel(QLabel):
                 ''.join(('<a href=\"', s[1], '\">', s[0], '</a>')))
         return labelText
 
+
+    def file_checker(self, labelText):
+        labelText = ''.join(('<a href=\"file:///', labelText, '\">open README</a>'))
+        return labelText
 
 
 class ShortInfoLabel(ParagraphInfoLabel):
@@ -55,6 +62,7 @@ class OneLineInfoLabel(ShortInfoLabel):
 class GenericLargePushButton(QPushButton):
     def __init__(self, buttonText='', parent=None):
         QPushButton.__init__(self, parent)
+        
         backBtn = QPushButton("Back to Main Menu")
         backBtn.clicked.connect(self.parent().drawMain)
         backBtn.setFixedSize(QtCore.QSize(200,40))
@@ -77,22 +85,6 @@ class NoFileMessageBox(QMessageBox):
         self.setDetailedText(' '.join(['Path given:\n\n', givenPath]))
         self.setWindowTitle("Error")
         self.setStandardButtons(QMessageBox.Ok)
-
-
-
-class NoImageFiller(QGroupBox):
-    # filler image, takes text for label
-    def __init__(self, labelText, previewHeight, parent=None):
-        QGroupBox.__init__(self, parent)
-        label = QLabel(labelText)
-        label.setAlignment(QtCore.Qt.AlignCenter)
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        self.setLayout(layout)
-        self.setMinimumHeight(previewHeight)
-        self.setSizePolicy(QSizePolicy(
-                           QSizePolicy.Preferred,
-                           QSizePolicy.Fixed))
 
 
 
