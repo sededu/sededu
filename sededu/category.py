@@ -44,6 +44,10 @@ class CategoryPageWidget(QWidget):
     
                 # check and add defaults to moduleAbout if needed
                 iModuleAbout = self.validateModuleAbout(iModuleAbout, iModuleDirectory)
+            else:
+                print("No about.json file found, crash likely incoming...\n")
+                print("Alternatively, your module may just not be loaded")
+                continue
             
             # construct and add the item to the module list
             iModuleListItem = self._ModuleListItemWidget(moduleNum, iModuleAbout)
