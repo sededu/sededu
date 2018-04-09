@@ -262,11 +262,14 @@ class CategoryPageWidget(QWidget):
                 self.setFlat(True)
                 self.layout().setContentsMargins(20, 0, 20, 10)
                 
-                execButton = QPushButton("Run module")
-                execPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
-                execButton.clicked.connect(lambda: self.parent().execModule(execPath))
+                ModuleActivityButton = QLabel() # actually a blank label so it is 
+                                                # "empty" if no activity is supplied
                 self.layout().addWidget(QLabel(), 0, 0)
-                self.layout().addWidget(execButton, 0, 1)
+
+                ModuleExecButton = QPushButton("Run module")
+                ModuleExecPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
+                ModuleExecButton.clicked.connect(lambda: self.parent().execModule(ModuleExecPath))
+                self.layout().addWidget(ModuleExecButton, 0, 1)
 
         class ModulePreviewWidget(QGroupBox):
             # preview widget, fills with blank if not given
