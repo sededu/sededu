@@ -191,3 +191,9 @@ when I should have been specifying
 "docloc": ["doc"],
 ```
 
+#### README on module page is formatted as plain text
+
+If you are getting a path formatted as a plain text (i.e., not a link), triple check the path you are giving. 
+The triple check that there is actually a file there with the exact name you think it is.
+The program checks if there is a file at the path and if there is, it will convert to a link to the path.
+So if you have no link, then the path does not point to a file.

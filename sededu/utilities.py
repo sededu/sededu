@@ -7,24 +7,29 @@ from PyQt5 import QtGui, QtCore
 
 
 class ParagraphInfoLabel(QLabel):
+    # the base class of the InfoLabel classes
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
         
+        # check for links as markdown
         if isinstance(labelText, str):
             labelText = self.url_checker(labelText)
+        # check if the string is a path to a file
         if os.path.isfile(labelText):
             labelText = self.file_checker(labelText)
         self.setText(labelText)
 
+        # set to wrap, font, and open links
         self.setWordWrap(True)
         self.setFont(theFont)
         self.setOpenExternalLinks(True)
 
 
     def url_checker(self, labelText):
-        name_regex = "[^]]+"
-        url_regex = "[^)]+"
+        # check for markdown formatted urls
+        name_regex = '[^]]+'
+        url_regex = '[^)]+'
         join_url = '(\[{0}]\(\s*{1}\s*\))'.format(name_regex, url_regex)
         split_url = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
         for j, s in zip(re.findall(join_url, labelText), re.findall(split_url, labelText)):
@@ -34,11 +39,14 @@ class ParagraphInfoLabel(QLabel):
 
 
     def file_checker(self, labelText):
+        # convert string to a link
         labelText = ''.join(('<a href=\"file:///', labelText, '\">open README</a>'))
         return labelText
 
 
 class ShortInfoLabel(ParagraphInfoLabel):
+    # a shortened version of the InfoLabel
+    # made to work in the ModuleInfoPage listings
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         ParagraphInfoLabel.__init__(self, labelText, theFont, parent)
@@ -51,6 +59,7 @@ class ShortInfoLabel(ParagraphInfoLabel):
 
 
 class OneLineInfoLabel(ShortInfoLabel):
+    # shortest version of InfoLabel, no word wrapping
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         ShortInfoLabel.__init__(self, labelText, theFont, parent)
@@ -60,6 +69,7 @@ class OneLineInfoLabel(ShortInfoLabel):
 
 
 class GenericLargePushButton(QPushButton):
+    # larger than normal push button for general use
     def __init__(self, text='', height=50, parent=None):
         QPushButton.__init__(self, parent)
         
@@ -82,20 +92,21 @@ class NoFileMessageBox(QMessageBox):
         if informText:
             self.setInformativeText(informText)
         self.setDetailedText(' '.join(['Path given:\n\n', givenPath]))
-        self.setWindowTitle("Error")
+        self.setWindowTitle('Error')
         self.setStandardButtons(QMessageBox.Ok)
 
 
 
 def open_file(filename):
+    # utility for opening files
     platType = platform.system()
     if os.path.isfile(filename):
-        if platType in {"Darwin", "Linux"}:
-            subprocess.Popen(["xdg-open", filename])
-        elif platType in {"Windows"}:
-            subprocess.Popen(["open", filename])
+        if platType in {'Darwin', 'Linux'}:
+            subprocess.Popen(['xdg-open', filename])
+        elif platType in {'Windows'}:
+            subprocess.Popen(['open', filename])
         else:
-            print("unknown platform type")
+            print('unknown platform type')
     else:
         msg = NoFileMessageBox(filename)
         msg.exec_()
@@ -103,6 +114,7 @@ def open_file(filename):
 
 
 def HLine(self):
+    # horizontal line
     toto = QFrame()
     toto.setFrameShape(QFrame.HLine)
     toto.setFrameShadow(QFrame.Sunken)
@@ -111,6 +123,7 @@ def HLine(self):
 
 
 def VLine(self):
+    # vertical line
     toto = QFrame()
     toto.setFrameShape(QFrame.VLine)
     toto.setFrameShadow(QFrame.Sunken)
@@ -129,7 +142,7 @@ def category2path(c):
     # convert category name to folder name
     # this is very specific now -- any way to generalize the folders to
     # case insensitive?
-    return c.lower().replace(" ","").replace("\n","")
+    return c.lower().replace(' ','').replace('\n','')
 
 
 
@@ -178,7 +191,7 @@ def cutTitle(text0):
     nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()] 
                  for x in spltend_t0 ]
     if nospec_t0[0] == nospec_t0[1]: # if last two words are same (i.e., 'modules')
-        text = ' '.join(splt_t0[:-1]) + ":"
+        text = ' '.join(splt_t0[:-1]) + ':'
     else:
         text = text0
     return text
