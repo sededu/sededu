@@ -7,7 +7,7 @@ Modules included in SedEdu are built by researchers at the cutting edge of their
 
 ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu")
 
-_version 0.9.8_
+_version 1.0.0_
 
 
 
