@@ -62,7 +62,7 @@ See [Development Workflow](#sededu-development-workflow) below.
 
 Hot-fixes fix critical issues in the production version of SedEdu (i.e., the current release).
 If you detect a critical issue, please [open an issue](https://github.com/amoodie/sededu/issues) immediately to alert the developers.
-If you want to work on the issue yourself, you should pull request against `release` with your patch.
+If you want to work on the issue yourself, you should develop your bug-fix off of the current release version, and then pull request against `release` with your patch.
 Hot-fixes will be merged and released ASAP.
 
 
