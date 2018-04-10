@@ -60,13 +60,12 @@ class OneLineInfoLabel(ShortInfoLabel):
 
 
 class GenericLargePushButton(QPushButton):
-    def __init__(self, buttonText='', parent=None):
+    def __init__(self, text='', height=50, parent=None):
         QPushButton.__init__(self, parent)
         
-        backBtn = QPushButton("Back to Main Menu")
-        backBtn.clicked.connect(self.parent().drawMain)
-        backBtn.setFixedSize(QtCore.QSize(200,40))
-        backBtn.setFont(gui.subtitleFont())
+        self.setText(text)
+        self.setMinimumHeight(height)
+        self.setFont(subtitleFont())
 
 
 
@@ -136,7 +135,8 @@ def category2path(c):
 
 def filesList(d):
     # list files in directory
-    return [f for f in os.listdir(d) if os.path.isfile(os.path.join(d, f))]
+    return [f for f in os.listdir(d) if 
+            os.path.isfile(os.path.join(d, f))]
 
 
 

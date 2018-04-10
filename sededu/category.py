@@ -84,7 +84,8 @@ class CategoryPageWidget(QWidget):
             
             # create a document launcher button if docs
             if len(iModuleDocLaunchList) > 0:
-                iModuleDocLaunchButton = QPushButton("Open activity")
+                iModuleDocLaunchButton = utls.GenericLargePushButton(text='Open activity',
+                                                                     height=40)
                 iModuleDocLaunchButton.clicked.connect(lambda x, lL=iModuleDocLaunchList: iModuleDocList.docLaunch(lL))
                 iModuleInfoPage.launchButtons.layout().addWidget(iModuleDocLaunchButton, 0, 0)
 
@@ -98,7 +99,6 @@ class CategoryPageWidget(QWidget):
 
 
     def validateModuleAbout(self, moduleAbout, moduleDirectory):
-
         # delete any empty fields from the dictionary
         moduleAbout = {k: v for k, v in moduleAbout.items() if v}
 
@@ -266,8 +266,9 @@ class CategoryPageWidget(QWidget):
                                                 # "empty" if no activity is supplied
                 self.layout().addWidget(ModuleActivityButton, 0, 0)
 
-                ModuleExecButton = QPushButton("Run module")
-                ModuleExecPath = os.path.join(moduleDirectory, *moduleAbout["exec"])
+                ModuleExecButton = utls.GenericLargePushButton(text='Run module',
+                                                               height=40)
+                ModuleExecPath = os.path.join(moduleDirectory, *moduleAbout['exec'])
                 ModuleExecButton.clicked.connect(lambda: self.parent().execModule(ModuleExecPath))
                 self.layout().addWidget(ModuleExecButton, 0, 1)
 

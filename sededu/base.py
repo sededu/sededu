@@ -48,12 +48,12 @@ class MainSideBarWidget(QWidget):
         def make_Logo(self):
             Logo = QLabel() 
             Logo.setPixmap(QtGui.QPixmap(os.path.join(\
-                self.parent().parent().privatePath, "sededu.png")))
+                self.parent().parent().privatePath, 'sededu.png')))
             return Logo
 
 
         def make_Desc(self):
-            Desc = utls.ShortInfoLabel("a sediment-related educational activity suite", 
+            Desc = utls.ShortInfoLabel('a sediment-related educational activity suite', 
                                  utls.titleFont())
             return Desc
 
@@ -63,22 +63,22 @@ class MainSideBarWidget(QWidget):
             QGroupBox.__init__(self, parent)
             self.setLayout(QHBoxLayout())
 
-            self.Quit = QPushButton("Quit")
+            self.Quit = utls.GenericLargePushButton(text='Quit')
             self.Quit.clicked.connect(QtCore.QCoreApplication.instance().quit)
             self.layout().addWidget(self.Quit)
 
-            self.AuxButton = QPushButton("About")
+            self.AuxButton = utls.GenericLargePushButton(text='About')
             self.setAuxButtonToAbout()
             self.layout().addWidget(self.AuxButton)
             
 
         def setAuxButtonToAbout(self):
-            self.AuxButton.setText("About")
+            self.AuxButton.setText('About')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToAbout(idx=1))
 
 
         def setAuxButtonToMain(self):
-            self.AuxButton.setText("Back")
+            self.AuxButton.setText('Back')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToMain())
 
 
