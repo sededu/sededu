@@ -2,8 +2,8 @@
 
 This document provides support for writing the modules "documentation" file in the format that SedEdu requires: the `about.json` file.
 
-A sample `about.json` file can be found in the `example-module` folder in `docs/example-module/about.json` or [on GitHub](https://github.com/amoodie/example-module_sededu/blob/master/about.json), and is also listed in the next section.
-A blank template `about.json` file is available in the `template-module` folder in `docs/template-module/about.json` or [on GitHub](https://github.com/amoodie/template-module_sededu/blob/master/about.json).
+A sample `about.json` file can be found in the `example-module` folder in `docs/example-module/about.json` or [on GitHub](https://github.com/amoodie/example-module_sededu/blob/release/about.json), and is also listed in the next section.
+A blank template `about.json` file is available in the `template-module` folder in `docs/template-module/about.json` or [on GitHub](https://github.com/amoodie/template-module_sededu/blob/release/about.json).
 
 
 

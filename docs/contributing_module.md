@@ -34,7 +34,7 @@ To this end, the mdoule must contain a few key files and then can have many more
 The _minimum required files for your module to be complete_ are: 
 
 * `README.md` -- here is a template
-* `LICENSE.txt` -- see [below](#licensing), and [Module Licensing](https://github.com/amoodie/sededu/blob/develop/docs/contributing_module.md#module-licensing)
+* `LICENSE.txt` -- see [below](#licensing), and [Module Licensing](https://github.com/amoodie/sededu/blob/release/docs/contributing_module.md#module-licensing)
 * executable python script
 
 Then, to incorporate into SedEdu, all you are required to add is an `about.json` file that provides SedEdu with some documentation about your module.
@@ -87,7 +87,7 @@ Integrating your module into SedEdu requires a special file describing the modul
 There are a number of required and optional fields in the file that provide information about your module to SedEdu to display to the user.
 __It is really important this file is configured properly.__
 
-A separate file about [Writing about.json](https://github.com/amoodie/sededu/blob/develop/docs/writing_aboutjson.md) exists to describe the `about.json` file in detail.
+A separate file about [Writing about.json](https://github.com/amoodie/sededu/blob/release/docs/writing_aboutjson.md) exists to describe the `about.json` file in detail.
 
 
 
@@ -96,7 +96,7 @@ A separate file about [Writing about.json](https://github.com/amoodie/sededu/blo
 Modules are cool on their own, but to really make them effective teaching tools, it is necessary to have some guiding documentation to make sure the user is getting the important points from your module.
 Writing activities for a module can be difficult, though.
 
-There is a separate article dedicated to Writing Activities for your module available with your distribution in `docs/writing_activities.md` or [on GitHub here](https://github.com/amoodie/sededu/blob/develop/docs/writing_activities.md).
+There is a separate article dedicated to Writing Activities for your module available with your distribution in `docs/writing_activities.md` or [on GitHub here](https://github.com/amoodie/sededu/blob/release/docs/writing_activities.md).
 You can also look to other activities in the SedEdu suite for inspiration.
 
 
@@ -131,7 +131,7 @@ This allows SedEdu to easily incorporate upstream changes in your module without
 This is important, because it simplifies the workflow for keeping SedEdu up to date.
 However, it requires developers to have some familiarity with `git` and GitHub.
 By this point your project should be on GitHub (see [Putting your module on GitHub](#putting-your-module-on-github)).
-You should also have a development copy of the SedEdu project repository, for development (see [SedEdu development workflow](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md#sededu-development-workflow))
+You should also have a development copy of the SedEdu project repository, for development (see [SedEdu development workflow](https://github.com/amoodie/sededu/blob/release/CONTRIBUTING.md#sededu-development-workflow))
 
 Follow the (OS agnostic) instructions below to add your module to SedEdu.
 
@@ -139,11 +139,11 @@ Follow the (OS agnostic) instructions below to add your module to SedEdu.
 1. create a new branch from development: `git checkout -b module_<module-name> develop` where `<module-name>` is a short name of your module.
 1. Visit the webpage of your repository and click on the green "Clone or download" button and copy the link to your clipboard.
 1. add your new `git submodule` with: `git submodule add <the-https-link-to-github-repository-you-just-copied> sededu/modules/<category>/<module-name>` where `<the-https-link-to-github-repository-you-just-copied>` is the link you copied to your module's GitHub repository, `<category>` is the category you think your module best fits in, and `<module-name>` is some unique short name for your module. See the example below!
-1. add yourself to the author list on `README.md` (see [Authorship](https://github.com/amoodie/sededu/blob/develop/CONTRIBUTING.md#authorship))
+1. add yourself to the author list on `README.md` (see [Authorship](https://github.com/amoodie/sededu/blob/release/CONTRIBUTING.md#authorship))
 1. increment the minor version number in SedEdu `README.md` and `setup.py`
 1. add the new module and text changes to your commit: `git add .` and `git commit -m "added new submodule <name-of-your-module> in <category>"`
 1. push your changes to a branch on your GitHub SedEdu fork: `git push origin module_<module-name>`
-1. ensure you have done everything on the [Pull Request Checklist](https://github.com/amoodie/sededu/blob/develop/docs/pull_request_checklist.md) and open a pull request to have your module addition reviewed and incorporated into SedEdu!
+1. ensure you have done everything on the [Pull Request Checklist](https://github.com/amoodie/sededu/blob/release/docs/pull_request_checklist.md) and open a pull request to have your module addition reviewed and incorporated into SedEdu!
 
 For an example of adding a submodule command, the "Rivers to Stratigraphy" module was added to SedEdu by issuing the command:
 ```
