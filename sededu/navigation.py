@@ -28,10 +28,12 @@ class NavigationPageWidget(QWidget):
 
 
     class _NavigationCategoryButtonWidget(QPushButton):
+        # the navigation buttons
         def __init__(self, category, thisPath, parent=None):
             QPushButton.__init__(self, parent)
-            iPath = os.path.join(thisPath, "sededu", "private", \
-                utls.category2path(category) + ".png")
+
+            iPath = os.path.join(thisPath, 'sededu', 'private', \
+                utls.category2path(category) + '.png')
             iIcon = QtGui.QIcon()
             iIcon.addPixmap(QtGui.QPixmap(iPath))
             self.setIcon(iIcon)

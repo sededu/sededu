@@ -12,9 +12,9 @@ setup(
     description='sediment-related educational activity suite',
     long_description=open('README.md').read(),
 	install_requires=[
-		"scipy",
-        "numpy",
-		"matplotlib",
-        "shapely",
-        "pygame"]
+		'scipy',
+        'numpy',
+		'matplotlib',
+        'shapely',
+        'pygame']
 )

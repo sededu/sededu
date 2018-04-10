@@ -13,21 +13,27 @@ class CategoryPageWidget(QWidget):
         QWidget.__init__(self, parent)
         self.setLayout(QGridLayout())
 
+        # get the path of the category folder
         self.categoryPath = os.path.join(self.parent().thisPath, 
                                           "sededu", "modules", 
                                           utls.category2path(category))
+        
+        # list all the subdirectories (i.e., the modules)
         modulePathList = utls.subDirPath(self.categoryPath)
 
+        # initialize the module list, module information page stack,
+        # module doc list stack, and category label
         self.ModuleList = self._ModuleListWidget(self)
-        self.ModulePageStack = self._ModulePageStackWidget(self)
+        self.ModuleInformationPageStack = self._ModuleInformationPageStackWidget(self)
         self.ModuleDocStack = QStackedWidget()
         self.categoryLabelText = utls.OneLineInfoLabel(utls.cutTitle(category + " modules:"),
                                                utls.titleFont())
 
+        # add the widgets to the grid
         self.layout().addWidget(self.categoryLabelText, 0, 0)
         self.layout().addWidget(self.ModuleList, 1, 0)
         self.layout().addWidget(self.ModuleDocStack, 2, 0)
-        self.layout().addWidget(self.ModulePageStack, 0, 1, 4, 1)
+        self.layout().addWidget(self.ModuleInformationPageStack, 0, 1, 4, 1)
         self.layout().setContentsMargins(15, 15, 15, 15)
         
         # loop through all the modules
@@ -56,7 +62,7 @@ class CategoryPageWidget(QWidget):
 
             # construct and add the info page to the stack
             iModuleInfoPage = self._ModuleInformationPage(iModuleDirectory, iModuleAbout)
-            self.ModulePageStack.addWidget(iModuleInfoPage)
+            self.ModuleInformationPageStack.addWidget(iModuleInfoPage)
 
             # construct and add the doc page to the stack
             iModuleDocPath = os.path.join(iModuleDirectory, *iModuleAbout["docloc"])
@@ -94,7 +100,8 @@ class CategoryPageWidget(QWidget):
 
 
     def setModulePage(self, item):
-        self.ModulePageStack.setCurrentIndex(item.idx)
+        # change the Module information page stack index based on item clicked
+        self.ModuleInformationPageStack.setCurrentIndex(item.idx)
         self.ModuleDocStack.setCurrentIndex(item.idx)
 
 
@@ -120,24 +127,15 @@ class CategoryPageWidget(QWidget):
 
 
     class _ModuleListWidget(QListWidget):
+        # module list class
         def __init__(self, parent=None):
             QListWidget.__init__(self, parent)
 
             self.itemClicked.connect(self.parent().setModulePage)
 
 
-    class _DocumentListWidget(QListWidget):
-        def __init__(self, launchList, parent=None):
-            QListWidget.__init__(self, parent)
-
-
-        def docLaunch(self, launchList):
-            launchIdx = self.currentRow()
-            filename = launchList[launchIdx]
-            utls.open_file(filename)
-
-
-    class _ModulePageStackWidget(QStackedWidget):
+    class _ModuleInformationPageStackWidget(QStackedWidget):
+        # class for the module information page
         def __init__(self, parent=None):
             QStackedWidget.__init__(self, parent)
 
@@ -147,6 +145,7 @@ class CategoryPageWidget(QWidget):
 
 
     class _ModuleListItemWidget(QListWidgetItem):
+        # item in the module list class
         def __init__(self, idx, data):
             QListWidgetItem.__init__(self)
 
@@ -157,12 +156,26 @@ class CategoryPageWidget(QWidget):
 
 
     class _ModuleDocumentPage(QWidget):
+        # the document page
         def __init__(self, parent=None):
             QWidget.__init__(self, parent)
 
             self.setLayout(QVBoxLayout())
             self.layout().setContentsMargins(0, 0, 0, 0)
             self.layout().addWidget(QLabel("Activities/worksheets available:"))
+
+
+    class _DocumentListWidget(QListWidget):
+        # document list
+        def __init__(self, launchList, parent=None):
+            QListWidget.__init__(self, parent)
+
+
+        def docLaunch(self, launchList):
+            # utility for launching the document selected
+            launchIdx = self.currentRow()
+            filename = launchList[launchIdx]
+            utls.open_file(filename)
 
 
     class _ModuleInformationPage(QWidget):
