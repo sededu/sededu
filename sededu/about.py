@@ -18,16 +18,16 @@ class AboutPageWidget(QWidget):
         readmeText = self._ReadmeFileData(self.parent().thisPath)
         
         # construct the header
-        categoryLabelText = utls.InfoLabel("About the SedEdu project:", utls.titleFont())
+        categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = utls.MultilineInfoLabel(readmeText.summary)
+        descLabel = utls.ParagraphInfoLabel(readmeText.summary)
 
         # construct the contributors box
         contribBox = self._ContributorWidget(readmeText)
 
         # construct the more information text
-        completeInfoLabel = utls.InfoLabel('For complete information visit \
+        completeInfoLabel = utls.ShortInfoLabel('For complete information visit \
             the [SedEdu project page](https://github.com/amoodie/sededu).', utls.titleFont())
 
         # construct the supported by box
@@ -36,7 +36,7 @@ class AboutPageWidget(QWidget):
         # add widgets in specific vertical order
         self.layout().addWidget(categoryLabelText)
         self.layout().addWidget(descLabel)
-        self.layout().addWidget(utls.InfoLabel(readmeText.license))
+        self.layout().addWidget(utls.ShortInfoLabel(readmeText.license))
         
         self.layout().addStretch(1)
         self.layout().addWidget(contribBox)
@@ -49,29 +49,31 @@ class AboutPageWidget(QWidget):
         
 
     class _ContributorWidget(QGroupBox):
+        # grouping box for the contributors list
         def __init__(self, readmeText, parent=None):
             QGroupBox.__init__(self, parent)
             self.setLayout(QVBoxLayout())
             self.setContentsMargins(0, 0, 0, 0)
 
-            self.layout().addWidget(utls.InfoLabel("Contributors:"))
+            self.layout().addWidget(utls.OneLineInfoLabel('Contributors:'))
 
             for c in readmeText.contributors:
-                contrib = utls.InfoLabel(c)
+                contrib = utls.ShortInfoLabel(c)
                 contrib.setContentsMargins(10, 0, 0, 0)
                 self.layout().addWidget(contrib)
 
 
     class _SupportedByWidget(QWidget):
+        # grouping for supported by logo list
         def __init__(self, privatePath, parent=None):
             QWidget.__init__(self, parent)
             self.setLayout(QVBoxLayout())
 
             LogoBox = self.LogoBoxWidget()
 
-            supportedText = utls.InfoLabel("SedEdu is supported by:")
-            nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, "nsf.gif"))
-            riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, "rice.png"))
+            supportedText = utls.OneLineInfoLabel('SedEdu is supported by:')
+            nsfLogo = self.LogoPixmapWidget(os.path.join(privatePath, 'nsf.gif'))
+            riceLogo = self.LogoPixmapWidget(os.path.join(privatePath, 'rice.png'))
             
             self.layout().addWidget(supportedText)
             self.layout().addWidget(LogoBox)
@@ -81,6 +83,7 @@ class AboutPageWidget(QWidget):
 
 
         class LogoBoxWidget(QGroupBox):
+            # grouping box for the logos
             def __init__(self, parent=None):
                 QGroupBox.__init__(self, parent)
                 self.setLayout(QHBoxLayout())
@@ -89,12 +92,14 @@ class AboutPageWidget(QWidget):
 
 
         def LogoPixmapWidget(self, path):
+            # logo objects
             logo = QLabel()
             logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
             return logo
 
 
     class _ReadmeFileData(object):
+        # parse the SedEdu readme
         def __init__(self, path):
             raw, lines = self.extract_from_file(path)
             self.summary = self.make_summary(lines)
@@ -103,6 +108,7 @@ class AboutPageWidget(QWidget):
             
 
         def extract_from_file(self, path):
+            # get the raw data into iterable lines
             readmePath = os.path.join(path, 'README.md')
             raw = open(readmePath, 'rt')
             lines = [l.replace('\n','').replace('*','') for l in raw]
@@ -110,12 +116,14 @@ class AboutPageWidget(QWidget):
 
 
         def strip_and_join(self, lines_raw):
+            # utility to remove end whitespace and cat lines
             lines_rstripped = [l.rstrip() for l in lines_raw]
             lines = ' '.join(lines_rstripped)
             return lines
 
 
         def make_summary(self, lines):
+            # the main summary text
             summaryIdx = lines.index('# SedEdu') + 2
             imageIdx = [i for i, s in enumerate(lines) 
                         if '![image of SedEdu main menu]' in s]
@@ -126,6 +134,7 @@ class AboutPageWidget(QWidget):
 
 
         def make_license(self, lines):
+            # the license text
             licenseIdx = lines.index('## License') + 2
             acknowledgeIdx = lines.index('## Acknowledgments')
             license_raw = lines[licenseIdx:acknowledgeIdx]
@@ -134,6 +143,7 @@ class AboutPageWidget(QWidget):
 
 
         def make_contributors(self, lines):
+            # the list of contributors
             contributorsIdx = lines.index('## Authors') + 2
             licenseIdx = lines.index('## License')
             contributors_raw = lines[contributorsIdx:licenseIdx]

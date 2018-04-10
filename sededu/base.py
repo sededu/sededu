@@ -9,6 +9,7 @@ import sededu.utilities as utls
 
 
 class MainBackgroundWidget(QWidget):
+    # the central blank widget that everything sits on
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
 
@@ -17,6 +18,7 @@ class MainBackgroundWidget(QWidget):
 
 
 class MainSideBarWidget(QWidget):
+    # main sidebar
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
         self.setLayout(QVBoxLayout())
@@ -33,57 +35,62 @@ class MainSideBarWidget(QWidget):
 
 
     class _SideBarHeaderWidget(QGroupBox):
+        # the sidebar header (logo and subtitle)
         def __init__(self, parent=None):
             QGroupBox.__init__(self, parent)
             self.setLayout(QVBoxLayout())
 
-            Logo = self.make_Logo()
-            Desc = self.make_Desc()
+            Logo = self.makeLogo()
+            Desc = self.makeDesc()
             
             self.layout().addWidget(Logo)
             self.layout().addWidget(Desc)
             self.setAlignment(QtCore.Qt.AlignLeft)
 
 
-        def make_Logo(self):
+        def makeLogo(self):
             Logo = QLabel() 
             Logo.setPixmap(QtGui.QPixmap(os.path.join(\
-                self.parent().parent().privatePath, "sededu.png")))
+                self.parent().parent().privatePath, 'sededu.png')))
             return Logo
 
 
-        def make_Desc(self):
-            Desc = utls.InfoLabel("a sediment-related educational activity suite", 
+        def makeDesc(self):
+            Desc = utls.ShortInfoLabel('a sediment-related educational activity suite', 
                                  utls.titleFont())
             return Desc
 
 
     class _SideBarButtonsWidget(QGroupBox):
+        # buttons at the bottom of the sidebar
         def __init__(self, parent=None):
             QGroupBox.__init__(self, parent)
             self.setLayout(QHBoxLayout())
 
-            self.Quit = QPushButton("Quit")
+            self.Quit = utls.GenericLargePushButton(text='Quit')
             self.Quit.clicked.connect(QtCore.QCoreApplication.instance().quit)
             self.layout().addWidget(self.Quit)
 
-            self.AuxButton = QPushButton("About")
+            self.AuxButton = utls.GenericLargePushButton(text='About')
             self.setAuxButtonToAbout()
             self.layout().addWidget(self.AuxButton)
             
 
         def setAuxButtonToAbout(self):
-            self.AuxButton.setText("About")
+            # switch the button to direct to about page
+            self.AuxButton.setText('About')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToAbout(idx=1))
 
 
         def setAuxButtonToMain(self):
-            self.AuxButton.setText("Back")
+            # switch the button to direct to main page
+            self.AuxButton.setText('Back')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToMain())
 
 
 
 class MainPageStackWidget(QStackedWidget):
+    # the main stack that everything else sits on
     def __init__(self, parent=None):
         QStackedWidget.__init__(self, parent)
         

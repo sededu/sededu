@@ -46,35 +46,40 @@ class RootWindow(QMainWindow):
             self.MainPageStack.addWidget(iCategoryPage)
 
         # configure the main window header and size
-        self.setWindowTitle("SedEdu")
+        self.setWindowTitle('SedEdu')
         self.setWindowIcon(QtGui.QIcon(os.path.join(self.privatePath, 
-                           "sededuicon.png")))
+                           'sededuicon.png')))
         self.setGeometry(10, 10, 300, 500)
 
 
     def findPaths(self):
+        # create paths used to locate files throughout
         thisDir = os.path.dirname(__file__)
         self.thisPath = os.path.join(thisDir,'')
-        self.privatePath = os.path.join(self.thisPath, "sededu", "private")
-        self.categoryList = ["Rivers", "Deltas", "Deserts", "Coasts", 
-            "Stratigraphy", "Behind the \nModules"] # read these from file?
+        self.privatePath = os.path.join(self.thisPath, 'sededu', 'private')
+        self.categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
+            'Stratigraphy', 'Behind the \nModules'] # read these from file?
 
 
     def _setMainPageStackIndex(self, idx):
+        # change the index of the stack to idx
         self.MainPageStack.setCurrentIndex(idx)
 
 
     def navToMain(self, idx=0):
+        # public alias to _setMainPageStackIndex, Main as default
         self._setMainPageStackIndex(idx=idx)
         self.MainSideBar.SideBarButtons.setAuxButtonToAbout()
 
 
     def navToAbout(self, idx=1):
+        # public alias to _setMainPageStackIndex, About as default
         self._setMainPageStackIndex(idx=idx)
         self.MainSideBar.SideBarButtons.setAuxButtonToMain()
 
 
     def navToCategory(self, idx):
+        # public alias to _setMainPageStackIndex, no default
         self._setMainPageStackIndex(idx=idx)
         self.MainSideBar.SideBarButtons.setAuxButtonToMain()
 

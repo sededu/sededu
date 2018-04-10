@@ -1,18 +1,20 @@
 from setuptools import setup
+from sededu
 
 setup(
     name='SedEdu',
-    version='0.1.0',
+    version='1.0.0',
     author='Andrew J. Moodie other contributors',
     author_email='amoodie@rice.edu',
     packages=['sededu'],
     url='https://github.com/amoodie/sededu',
-    license='LICENSE.md',
+    license='LICENSE.txt',
     description='sediment-related educational activity suite',
     long_description=open('README.md').read(),
-	# install_requires=[
-		# "scipy",
-		# "python3-tk", <-- requires an apt install on ubuntu
-		# "matplotlib"
-#    ],
+	install_requires=[
+		'scipy',
+        'numpy',
+		'matplotlib',
+        'shapely',
+        'pygame']
 )
