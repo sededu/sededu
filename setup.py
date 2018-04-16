@@ -3,7 +3,7 @@ from sededu
 
 setup(
     name='SedEdu',
-    version='1.0.0',
+    version='1.0.1',
     author='Andrew J. Moodie other contributors',
     author_email='amoodie@rice.edu',
     packages=['sededu'],
