@@ -5,7 +5,7 @@ import re
 # borrowed from Agile Scientific bruges tools
 verstr = 'unknown'
 VERSIONFILE = "sededu/__version__.py"
-with open(VERSIONFILE, "r")as f:
+with open(VERSIONFILE, "r") as f:
     verstrline = f.read().strip()
     pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
     mo = pattern.search(verstrline)
