@@ -1,5 +1,20 @@
 from setuptools import setup
-from sededu
+import re
+
+
+# borrowed from Agile Scientific bruges tools
+verstr = 'unknown'
+VERSIONFILE = "sededu/__version__.py"
+with open(VERSIONFILE, "r")as f:
+    verstrline = f.read().strip()
+    pattern = re.compile(r"__version__ = ['\"](.*)['\"]")
+    mo = pattern.search(verstrline)
+if mo:
+    verstr = mo.group(1)
+    print("Version "+verstr)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
+
 
 setup(
     name='SedEdu',
