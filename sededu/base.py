@@ -42,9 +42,11 @@ class MainSideBarWidget(QWidget):
 
             Logo = self.makeLogo()
             Desc = self.makeDesc()
+            Vers = self.makeVers()
             
             self.layout().addWidget(Logo)
             self.layout().addWidget(Desc)
+            self.layout().addWidget(Vers)
             self.setAlignment(QtCore.Qt.AlignLeft)
 
 
@@ -60,6 +62,14 @@ class MainSideBarWidget(QWidget):
                                  utls.titleFont())
             return Desc
 
+
+        def makeVers(self):
+            try:
+                from ._version import __version__
+            except ImportError:
+                __version__ = "unknown"
+            Vers = utls.ShortInfoLabel("version " + __version__, utls.versionFont())
+            return Vers
 
     class _SideBarButtonsWidget(QGroupBox):
         # buttons at the bottom of the sidebar
