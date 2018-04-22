@@ -2,10 +2,6 @@
 	path = sededu/modules/stratigraphy/rivers2stratigraphy
 	url = https://github.com/amoodie/rivers2stratigraphy
     branch = master
-[submodule "sededu/modules/rivers/rain-table_jeffskwang"]
-	path = sededu/modules/rivers/rain-table_jeffskwang
-	url = https://github.com/amoodie/rain-table_jeffskwang
-    branch = master
 [submodule "sededu/modules/rivers/sediment-load-calculator_kensukename2"]
 	path = sededu/modules/rivers/sediment-load-calculator_kensukename2
 	url = https://github.com/amoodie/sediment-load-calculator_kensukename2
@@ -26,3 +22,7 @@
 	path = docs/template-module
 	url = https://github.com/amoodie/template-module_sededu.git
     branch = master
+[submodule "sededu/modules/rivers/rain_table"]
+	path = sededu/modules/rivers/rain_table
+	url = https://github.com/jeffskwang/rain_table.git
+	branch = master
