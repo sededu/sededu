@@ -26,6 +26,7 @@ setup(
     license='LICENSE.txt',
     description='sediment-related educational activity suite',
     long_description=open('README.md').read(),
+    python_requires='>=3',
 	install_requires=[
 		'scipy',
         'numpy',
