@@ -7,4 +7,3 @@ recursive-exclude sededu .gitignore .git
 recursive-exclude sededu __pycache__
 prune sededu.egg-info
 global-exclude __pycache__ *.pyc 
-
