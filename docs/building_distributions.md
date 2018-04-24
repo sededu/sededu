@@ -10,10 +10,12 @@ when ready run:
 1. `python3 setup.py build`
 1. `python3 setup.py sdist`
 1. `python3 setup.py bdist_wheel`
+1. see validate naming below
 1. `twine upload dist/*`
 
 
 `twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
+`pip3 install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple sededu`
 
 
 
@@ -31,8 +33,8 @@ Following from [PEP 425](https://www.python.org/dev/peps/pep-0425/), SedEdu whee
 * `{abi tag}` - should always be `none`
 * `{platform tag}` - should always be `any`
 
-For example, version 1.0.0 was released under:
+For example, version 1.0.2 was released under:
 
 ```
-sededu-1.0.0-py3-none-any.whl
+sededu-1.0.2-py3-none-any.whl
 ```
