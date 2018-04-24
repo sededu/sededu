@@ -6,9 +6,7 @@ SedEdu is built __entirely in Python and is free and open source__ software.
 Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
 ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu")
-
-_version 1.0.1_
-
+    
 
 
 ## Getting Started

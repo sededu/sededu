@@ -78,6 +78,7 @@ Please bear these considerations in mind when deciding what topic you will teach
 
 You should write your module to rely _only_ on Python3 and no other programming languages. 
 This is to ensure that SedEdu remains easily deployable.
+It is also crucial that you design your module to be OS agnostic by using Python's `os.path` utilities for file resources.
 
 You are free however to use an array of Python packages within your module. 
 Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages.
