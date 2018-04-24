@@ -17,8 +17,8 @@ else:
 
 
 setup(
-    name='SedEdu',
-    version='1.0.2',
+    name='sededu',
+    version=verstr,
     author='Andrew J. Moodie other contributors',
     author_email='amoodie@rice.edu',
     packages=['sededu'],
@@ -26,12 +26,13 @@ setup(
     license='LICENSE.txt',
     description='sediment-related educational activity suite',
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     python_requires='>=3',
 	install_requires=[
 		'scipy',
         'numpy',
 		'matplotlib',
-        'shapely',
+        'Shapely',
         'pygame'],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -39,8 +40,7 @@ setup(
         'Intended Audience :: Education',
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Science/Research',
-        'Topic :: Education',
-        'Topic :: Education :: Computer Aided Instruction (CAI)]'],
+        'Topic :: Education'],
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/amoodie/sededu/issues',
         'Source': 'https://github.com/amoodie/sededu/',

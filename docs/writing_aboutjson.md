@@ -21,7 +21,7 @@ Also note that the order of the fields in your `about.json` file does not matter
 
 The `about.json` from the complete example module is listed below:
 
-```
+```json
 {
     "title": "An example module for SedEdu",
     "author": "Andrew J. Moodie",
