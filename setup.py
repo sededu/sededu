@@ -34,6 +34,7 @@ setup(
 		'matplotlib',
         'Shapely',
         'pygame'],
+    include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
@@ -41,7 +42,7 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'Intended Audience :: Science/Research',
         'Topic :: Education'],
-    project_urls={  # Optional
+    project_urls={
         'Bug Reports': 'https://github.com/amoodie/sededu/issues',
         'Source': 'https://github.com/amoodie/sededu/',
     },
