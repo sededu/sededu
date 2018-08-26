@@ -1,0 +1,10 @@
+language: python
+os:
+- linux
+- osx
+sudo: false
+filter_secrets: false
+# before_install:
+install:
+script:
+- conda install -c amoodie rivers2stratigraphy
