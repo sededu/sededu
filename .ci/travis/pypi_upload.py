@@ -13,10 +13,11 @@ pypi_pass = os.environ.get('PYPI_PASS', 'NOT_A_PASS')
 
 if is_pull_request == 'false':
     is_pull_request = False
-elif is_pull_request == 'true':
+elif is_pull_request.isdigit():
     is_pull_request = True
 else:
-    raise RuntimeError('{val} defined for "is_pull_request"'.format(name=val))
+    raise RuntimeError('{val} defined for "is_pull_request"'.format(val=is_pull_request))
+    sys.exit(1)
 
 if tag_name and tag_name.startswith('v') and repo_branch == 'release':
     print('Tag made for release:')
@@ -41,6 +42,7 @@ if _upload:
     except subprocess.CalledProcessError:
         print('\n\tDeploy to PyPi failed.\n\n')
         # traceback.print_exc()
+        sys.exit(1)
 else:
     print('No indicators made to deploy to Pypi:')
     print('Not Deploying.......')

@@ -13,10 +13,11 @@ is_pull_request = os.environ.get('TRAVIS_PULL_REQUEST', 'false')
 
 if is_pull_request == 'false':
     is_pull_request = False
-elif is_pull_request == 'true':
+elif is_pull_request.isdigit():
     is_pull_request = True
 else:
-    raise RuntimeError('{val} defined for "is_pull_request"'.format(name=val))
+    raise RuntimeError('{val} defined for "is_pull_request"'.format(val=is_pull_request))
+    sys.exit(1)
 
 
 print("ENVIRONMENTAL VARIABLES:")
@@ -64,6 +65,7 @@ if _upload:
         print('Upload succeeded to {channel} for file:\n\t{file}'.format(channel=channel,file=binary_path))
     except subprocess.CalledProcessError:
         traceback.print_exc()
+        sys.exit(1)
 else:
     print('No indicators made to upload:')
     print('Not uploading.......')
