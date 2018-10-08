@@ -22,7 +22,7 @@ before_install:
       rm -rf $(brew --cache)
     fi
   - |
-    if [[ "$TRAVIS_TAG" -eq v* ]]; then
+    if [[ "$TRAVIS_TAG" == v* ]]; then
       DEPLOY=1
       RELEASE=1
     fi
@@ -66,13 +66,15 @@ script:
   - pytest --mpl --mpl-results-path=tests/results
 
 after_success:
-- |
-  if [[ "$DEPLOY" == "1" ]]; then
-    echo "DEPLOY = TRUE; building and uploading to Anaconda Cloud and Pypi"
-    conda install -q conda-build anaconda-client
-    pip install twine wheel
-    python .ci/travis/anaconda_build.py
-    python .ci/travis/anaconda_upload.py
-    python .ci/travis/pypi_build.py
-    python .ci/travis/pypi_upload.py
-  fi
+  - echo DEPLOY = $DEPLOY
+  - echo RELEASE = $RELEASE
+  - |
+    if [[ "$DEPLOY" == "1" ]]; then
+      echo "DEPLOY = TRUE; building and uploading to Anaconda Cloud and Pypi"
+      conda install -q conda-build anaconda-client
+      pip install twine wheel
+      python .ci/travis/anaconda_build.py
+      python .ci/travis/anaconda_upload.py
+      python .ci/travis/pypi_build.py
+      python .ci/travis/pypi_upload.py
+    fi
