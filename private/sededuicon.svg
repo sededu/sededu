@@ -11,14 +11,14 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.3 (unknown)"
    width="100"
    height="100"
    viewBox="0 0 100 100"
    sodipodi:docname="sededuicon.svg"
-   inkscape:export-filename="/home/andrew/Dropbox/git_repos/SedEdu/sededu/private/sededuicon.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-filename="/home/andrew/Dropbox/git_repos/sededu/private/sededuicon.png"
+   inkscape:export-xdpi="90.239998"
+   inkscape:export-ydpi="90.239998">
   <metadata
      id="metadata8">
     <rdf:RDF>
@@ -27,7 +27,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -43,7 +43,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1311"
-     inkscape:window-height="747"
+     inkscape:window-height="713"
      id="namedview4"
      showgrid="false"
      fit-margin-top="0"
@@ -51,22 +51,22 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="2.9266363"
-     inkscape:cx="77.944619"
+     inkscape:cx="18.661544"
      inkscape:cy="32.994006"
-     inkscape:window-x="1975"
-     inkscape:window-y="21"
+     inkscape:window-x="55"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2" />
   <text
-     sodipodi:linespacing="100%"
      id="text3357"
-     y="56.528404"
-     x="-0.16315424"
-     style="font-style:normal;font-weight:normal;font-size:16.9141922px;line-height:100%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1"
-     xml:space="preserve"><tspan
+     y="56.637154"
+     x="-1.0862842"
+     style="font-style:normal;font-weight:normal;font-size:11.60195923px;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke-width:0.96682996"
+     xml:space="preserve"
+     transform="scale(1.0200832,0.98031219)"><tspan
        id="tspan3361"
-       style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.3712883px;line-height:100%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Oblique';letter-spacing:-1.26856446px;fill:#000000"
-       y="56.528404"
-       x="-0.16315424"
+       style="font-style:oblique;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24.52972221px;line-height:100%;font-family:'DejaVu Sans';-inkscape-font-specification:'DejaVu Sans Oblique';letter-spacing:-1.22648609px;fill:#000000;stroke-width:0.96682996"
+       y="56.637154"
+       x="-1.0862842"
        sodipodi:role="line">SedEdu</tspan></text>
 </svg>

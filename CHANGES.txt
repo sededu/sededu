@@ -1,2 +1,2 @@
 v0.0.1, 01.07.18 -- Initial development.
-v0.1.0, <date> -- Initial release.
+v1.0.0, 04.16.18 -- Initial release.

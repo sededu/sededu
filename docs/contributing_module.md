@@ -12,19 +12,20 @@ A _thoroughly documented complete working module_ has been included with the Sed
 Find the complete module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
 There is also a "template" module for your use in developing, it provides an empty shell of what could become a module; basically, the files and folders are all there, they're just empty.
 
-Links to other documentation:
-
-* 
-* 
-* 
-* 
-
 Table of contents of this document:
 
 * [File structure of module](#file-structure-of-module)
-* 
-* 
-* 
+* [Writing the module](#writing-the-module)
+* [Adding your module to SedEdu](#adding-your-module-to-sededu)
+* [Common challenges along the way](#common-challenges-along-the-way)
+
+
+Quick-links to other documentation:
+
+* an example module with basic slider functionality ([`example-module`](https://github.com/amoodie/example-module_sededu))
+* [writing the `about.json` file](https://github.com/amoodie/sededu/blob/develop/docs/writing_aboutjson.md)
+* [pull request checklist](https://github.com/amoodie/sededu/blob/develop/docs/pull_request_checklist.md)
+
 
 
 ## File structure of module
@@ -65,8 +66,19 @@ This root folder is also where the `README.md`, a `LICENSE.txt` file, and the `a
 
 ## Writing the module
 
+
+### Module philosophy
+
+The objective of SedEdu is to offer an array of tools that educators can use throughout their curriculum, in whatever way they see fit.
+To this end, it is important that SedEdu offer a __spectrum of module difficulties__, and each module __cover a single topic__.
+Please bear these considerations in mind when deciding what topic you will teach through your module.
+
+
+### Some technical notes
+
 You should write your module to rely _only_ on Python3 and no other programming languages. 
 This is to ensure that SedEdu remains easily deployable.
+It is also crucial that you design your module to be OS agnostic by using Python's `os.path` utilities for file resources.
 
 You are free however to use an array of Python packages within your module. 
 Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages.
@@ -138,7 +150,7 @@ Follow the (OS agnostic) instructions below to add your module to SedEdu.
 1. Using a terminal (or git bash on windows), change working directory to the root of your development SedEdu repository.
 1. create a new branch from development: `git checkout -b module_<module-name> develop` where `<module-name>` is a short name of your module.
 1. Visit the webpage of your repository and click on the green "Clone or download" button and copy the link to your clipboard.
-1. add your new `git submodule` with: `git submodule add <the-https-link-to-github-repository-you-just-copied> sededu/modules/<category>/<module-name>` where `<the-https-link-to-github-repository-you-just-copied>` is the link you copied to your module's GitHub repository, `<category>` is the category you think your module best fits in, and `<module-name>` is some unique short name for your module. See the example below!
+1. add your new `git submodule` with: `git submodule add -b <branch-name> <the-https-link-to-github-repository-you-just-copied> sededu/modules/<category>/<module-name>` where `<the-https-link-to-github-repository-you-just-copied>` is the link you copied to your module's GitHub repository, `<category>` is the category you think your module best fits in, `<branch-name>` is the name of your __stable__ branch (see below), and `<module-name>` is some unique short name for your module. See the example below!
 1. add yourself to the author list on `README.md` (see [Authorship](https://github.com/amoodie/sededu/blob/release/CONTRIBUTING.md#authorship))
 1. increment the minor version number in SedEdu `README.md` and `setup.py`
 1. add the new module and text changes to your commit: `git add .` and `git commit -m "added new submodule <name-of-your-module> in <category>"`
@@ -147,7 +159,7 @@ Follow the (OS agnostic) instructions below to add your module to SedEdu.
 
 For an example of adding a submodule command, the "Rivers to Stratigraphy" module was added to SedEdu by issuing the command:
 ```
-git submodule add https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
+git submodule add -b master https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
 ```
 
 __IMPORTANT NOTE FOR MODULE DEVELOPERS:__ it is really important that whatever your default GitHub repository branch is when you add the module to SedEdu remain stable. 
@@ -159,7 +171,7 @@ https://gist.github.com/gitaarik/8735255
 
 
 
-## Common challenges
+## Common challenges along the way
 
 Below are challenges that have been encountered in the past by developers trying to add modules to SedEdu.
 This list is dynamic, [open an issue](https://github.com/amoodie/sededu/issues) if you thing something should be added. 

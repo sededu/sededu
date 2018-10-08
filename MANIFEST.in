@@ -1,2 +1,9 @@
-include *.txt
-recursive-include docs *.txt
+include *.txt *.md
+recursive-include docs *
+recursive-exclude docs .gitignore .git
+graft sededu
+recursive-exclude sededu/private *.svg
+recursive-exclude sededu .gitignore .git
+recursive-exclude sededu __pycache__
+prune sededu.egg-info
+global-exclude __pycache__ *.pyc 

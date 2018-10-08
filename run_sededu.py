@@ -33,5 +33,5 @@ import os
 ## initialize the GUI
 thisDir = os.path.dirname(__file__)
 thisPath = os.path.join(thisDir,'')
-execFile = os.path.join(thisPath, "sededu", "sededuGUI.py")
+execFile = os.path.join(thisPath, "sededu", "root.py")
 exec(open(execFile).read())
