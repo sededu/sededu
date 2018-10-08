@@ -19,7 +19,7 @@ else:
     raise RuntimeError('{val} defined for "is_pull_request"'.format(val=is_pull_request))
     sys.exit(1)
 
-if tag_name and tag_name.startswith('v') and repo_branch == 'release':
+if tag_name and tag_name.startswith('v'):
     print('Tag made for release:')
     print('Uploading to Pypi')
     _upload = True

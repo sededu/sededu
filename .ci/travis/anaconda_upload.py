@@ -26,7 +26,7 @@ print("\t$TRAVIS_BRANCH = ", repo_branch)
 print("\t$TRAVIS_PULL_REQUEST = ", is_pull_request)
 
 
-if tag_name and tag_name.startswith('v') and repo_branch == 'release':
+if tag_name and tag_name.startswith('v'):
     print('Tag made for release:')
     print('Uploading for "main" channel......')
     _upload = True
