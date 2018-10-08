@@ -12,6 +12,7 @@ requirements:
     - numpy >=1.11
     - matplotlib
     - shapely
+    - pytest
 
   run:
     - python

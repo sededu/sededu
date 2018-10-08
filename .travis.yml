@@ -47,7 +47,8 @@ install:
   # Create new env and install deps
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
-  - conda install -q numpy scipy matplotlib shapely pygame pytest pyqt
+  - conda install -q numpy scipy matplotlib shapely pytest pyqt
+  - conda install -c cogsci pygame 
   - conda install -q -c conda-forge pytest-mpl pytest-qt
   - hash -r
 
@@ -59,7 +60,7 @@ before_script:
   - sleep 5 # give xvfb some time to start
 
 script:
-  - pytest
+  - pytest --mpl --mpl-results-path=tests/results
 
 after_success:
 - |

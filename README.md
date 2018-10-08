@@ -19,52 +19,84 @@ See [Contributing to SedEdu](#contributing-to-sededu) for information on becomin
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
 Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
-You can check your Python version by running: 
 
-```
-python3 -V
-```
+You can check your Python version by running: `python3 -V` in a terminal. 
+Note that you may need to specify the path to your Python executable on some systems.
+If you do not have Python 3 installed, you will need to do so to use SedEdu. 
+This will not disrupt an existing Python 2.x installation, if you rely on that for other uses.
 
-in a terminal. Note that you may need to specify the path to your Python executable on some systems.
-If you do not have Python 3 installed, you will need to do so to use SedEdu. This will not disrupt an existing Python 2.x installation, if you rely on that for other uses.
-
-It is recommended that you install Anaconda, which is an open source distribution of Python. 
-It comes with many basic scientific libraries, some of which are used in the module. 
+If you are new to Python, __it is strongly recommended that you install Anaconda Python__, which is an open source distribution of Python which includes many basic scientific libraries, some of which are used in the module. 
 Anaconda can be downloaded at https://www.anaconda.com/download/ for Windows, macOS, and Linux. 
-Please follow the instruction provided in the website as to how to install and setup Python on your computer.
+If you do not have storage space on your machine for Anaconda or wish to install a smaller version of Python for another reason, see below on options for Miniconda or vanilla Python.
+
+1. Visit the website for Anaconda https://www.anaconda.com/download/ and select the installer for your operating system.
+__Be sure to select the Python 3.x installation.__
+2. Start the installer.
+3. If prompted, select to "install just for me", unless you know what you are doing.
+4. When prompted to add Anaconda to the path during installation, select _yes_ if you __know__ you do not have any other Python installed on your computer; otherwise select _no_.
+5. If you received no errors, proceed to installing below.
+
 
 If you want a more flexible and lightweight Python distribution, you can use whatever your favorite package manager is distributing (e.g., `homebrew` or `apt`), check the [Windows downloads here](https://www.python.org/downloads/windows/), or compile [from source](https://www.python.org/downloads/source/). 
 If you go this route, you will need to also install `pip3`, PyQt5 (`python3-pyqt5`), and the dependency python packages listed below. 
 
-It is recommended you install the needed dependencies through `pip3`.
-
-Install the needed python3 system libraries:
-
-```
-sudo apt install python3 
-```
-
-Install the needed python3 packages:
-
-```
-pip3 install pyqt5 scipy numpy matplotlib pygame shapely
-```
-
+Note that on Linux, users may need to specify an installation of `pyqt` and/or `tkinter` directly from `apt`:
 Install PyQt5:
 
 ```
-sudo apt install python3-pyqt5
+sudo apt install python3-pyqt5 python3-tk
 ```
 
 
 ### Installing SedEdu
 
-Eventually SedEdu will be packaged and deployed on [PyPi the Python Package Index](https://pypi.python.org/pypi) and can be installed seamlessly through `pip`.
-This will allow a launcher/executable to be added to the host OS, making launching the application very easy.
-Importantly, it also makes it easy for the SedEdu authors to deploy updates and bug fixes to your SedEdu installation.
+If you installed Anaconda Python or Miniconda, you can follow the instructions below for your operating system. 
+Otherwise see the instructions for PyPi installation below.
 
-For now though (see [milestone](https://github.com/amoodie/sededu/issues?q=is%3Aopen+is%3Aissue+milestone%3A%22Package+for+deployment+on+Pypi%22)), SedEdu must be installed by cloning the GitHub git repository.
+__Please__ [open an issue](https://github.com/sededu/rivers2stratigraphy/issues) if you encounter any troubles installing or any error messages along the way! 
+Please include 1) operating system, 2) installation method, and 3) copy-paste the error.
 
+#### Windows users
+
+1. Open your "start menu" and search for the "Anaconda prompt"; start this application.
+
+2. Install with the module type the following command and hit "enter":
+```
+conda install -c cogsci pygame
+conda install -c sededu sededu
+```
+If asked to proceed at either step, type `Y` and press "enter" to continue installation. 
+3. This process may take a few minutes as the necessary source code is downloaded.
+If the installation succeeds, proceed below to the "Run the module" section.
+
+__Note on permissions:__ you may need to run as administrator on Windows.
+
+
+#### Mac OSX and Linux users
+
+1. Install the module by opening a terminal and typing the following command.
+```
+conda install -c cogsci pygame
+conda install -c sededu sededu
+```
+If asked to proceed at either step, type `Y` and press enter to continue installation.
+2. This process may take a few minutes as the necessary source code is downloaded.
+If the installation succeeds, proceed below to the "Run the module" section.
+
+__Note on permissions:__ you may need to use `sudo` on OSX and Linux.
+
+
+#### Advanced user installations
+__Install with pip__
+To install with `pip` from Pypi use (not recommended for entry-level users):
+```
+pip3 install pyqt sededu
+```
+See below instructions for downloading the source code if you wish to be able to modify the source code for development or for exploration.
+
+
+__Install by cloning the repository__
+_Developers see below:_
 You can clone the git repository to get the latest release version with:
 
 ```
@@ -72,22 +104,16 @@ git clone --recurse-submodules -b release https://git@github.com/amoodie/sededu.
 ```
 
 and SedEdu is then run with:
-
 ```
 python3 sededu/run_sededu.py
 ```
-
-<!-- 
-#### Windows instructions
-#### Mac OSX instructions
-#### Linux instructions
--->
 
 #### Troubleshooting
 
 * __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. 
 
 * __There are no modules in SedEdu:__ you probably didn't get the submodules when you `git clone`d. Try `git submodule update --init --recursive` inside the cloned repository.
+
 
 #### Developers
 
