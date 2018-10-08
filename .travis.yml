@@ -1,38 +1,74 @@
-language: python
-python:
-  # We don't actually use the Travis Python, but this keeps it organized.
-  - "3.5"
-  - "3.6"
-install:
-  - sudo apt-get update
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+env:
+  matrix:
+  - TRAVIS_PYTHON_VERSION="3.5"
+  - TRAVIS_PYTHON_VERSION="3.6"
+  - TRAVIS_PYTHON_VERSION="3.7"
+  global:
+  - CONDA_PREFIX=$HOME/miniconda
+  - MINICONDA_URL_BASE="https://repo.continuum.io/miniconda/Miniconda3-latest"
+
+os:
+  - linux
+  - osx
+
+before_install:
+  - |
+    if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+      brew remove --force $(brew list)
+      brew cleanup -s
+      rm -rf $(brew --cache)
     fi
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
+  - |
+    if [ [ "$TRAVIS_TAG" -eq v* ] && [ "$TRAVIS_BRANCH" -eq "release" ] ]; then
+      DEPLOY=1
+      RELEASE=1
+    fi
+  - |
+    if [[ "$TRAVIS_BRANCH" == "develop" ]]; then
+      DEPLOY=1
+    fi
+
+install:
+  - echo "Build on $TRAVIS_OS_NAME for Python $TRAVIS_PYTHON_VERSION"
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      OS="MacOSX-x86_64"
+    else
+      OS="Linux-x86_64"
+    fi
+  - curl $MINICONDA_URL_BASE-$OS.sh > $HOME/minconda.sh
+  - bash $HOME/minconda.sh -b -p $CONDA_PREFIX
+  - export PATH="$CONDA_PREFIX/bin:$PATH"
   - hash -r
-  - conda config --set always_yes yes --set changeps1 no
+  - conda config --set always_yes yes --set changeps1 no --set anaconda_upload no
   - conda update -q conda
-  # Useful for debugging any issues with conda
   - conda info -a
 
-  # Replace dep1 dep2 ... with your dependencies
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib shapely
+  # Create new env and install deps
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
-  - python setup.py install
+  - conda install -q numpy scipy matplotlib shapely pytest pyqt
+  - conda install -q -c conda-forge pytest-mpl pytest-qt
+  - hash -r
+
+before_script:
+  # configure a headless display to test plot generation
+  - "export DISPLAY=:99.0"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
+  - sleep 5 # give xvfb some time to start
 
 script:
-  
-  # Your test script goes here
+  - pytest
 
-sudo: false
-filter_secrets: false
-# before_install:
-install:
-
-script:
-# - conda install -c amoodie rivers2stratigraphy
+after_success:
+- |
+  if [[ "$DEPLOY" == "1" ]]; then
+    echo "DEPLOY = TRUE; building and uploading to Anaconda Cloud and Pypi"
+    conda install -q conda-build anaconda-client
+    pip install twine wheel
+    python .ci/travis/anaconda_build.py
+    python .ci/travis/anaconda_upload.py
+    python .ci/travis/pypi_build.py
+    python .ci/travis/pypi_upload.py
+  fi
