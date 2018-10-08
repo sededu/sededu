@@ -12,6 +12,9 @@ os:
   - osx
 
 before_install:
+  - echo TRAVIS_BRANCH = $TRAVIS_BRANCH
+  - echo TRAVIS_TAG = $TRAVIS_TAG
+  - echo TRAVIS_PULL_REQUEST = $TRAVIS_PULL_REQUEST
   - |
     if [[ $TRAVIS_OS_NAME == "osx" ]]; then
       brew remove --force $(brew list)
@@ -19,12 +22,12 @@ before_install:
       rm -rf $(brew --cache)
     fi
   - |
-    if [ [ "$TRAVIS_TAG" -eq v* ] && [ "$TRAVIS_BRANCH" -eq "release" ] ]; then
+    if [ [ "$TRAVIS_TAG" -eq v* ] && [ "$TRAVIS_BRANCH" -eq release ] ]; then
       DEPLOY=1
       RELEASE=1
     fi
   - |
-    if [[ "$TRAVIS_BRANCH" == "develop" ]]; then
+    if [[ "$TRAVIS_BRANCH" == develop ]]; then
       DEPLOY=1
     fi
 
