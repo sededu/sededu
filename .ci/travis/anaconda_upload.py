@@ -50,11 +50,12 @@ if _upload:
     expected_path = os.path.join('.ci', 'conda-build', '**',
                                  'sededu*bz2')
     binary_path = glob.glob(expected_path)
-    binary_path = binary_path[0]
-    if os.path.isfile(binary_path):
-        print('File to upload located at:\n\t', binary_path)
+    if os.path.isfile(binary_path[0]):
+        print('File to upload located at:\n\t', binary_path[0])
     else:
-        raise RuntimeError('{name}: not a file'.format(name=binary_path))
+        raise RuntimeError('{name}: not a file'.format(name=binary_path[0]))
+    binary_path = binary_path[0]
+    
 
     cmd = ' '.join(['anaconda', '-t', token, 'upload', '--force',
                     '--user', 'sededu', '--channel', channel,

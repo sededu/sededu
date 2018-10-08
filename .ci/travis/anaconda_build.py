@@ -27,13 +27,13 @@ print("\t$TRAVIS_REPO_SLUG = ", repo_slug)
 print("\t$TRAVIS_PULL_REQUEST = ", is_pull_request)
 
 
-if tag_name and tag_name.startswith('v') and repo_slug == 'sededu/release':
+if tag_name and tag_name.startswith('v'):
     print('Tag made for release:')
     print('Building for "main" channel......')
     _build = True
     channel = 'main'
     # os.environ['BUILD_STR'] = ''
-elif repo_slug == 'sededu/develop' and not is_pull_request:
+elif repo_branch == 'develop' and not is_pull_request:
     print('Commit made to "develop", and not PR:')
     print('Building for "dev" channel......')
     _build = True
