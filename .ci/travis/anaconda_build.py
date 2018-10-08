@@ -9,6 +9,7 @@ print('Using python: {prefix}'.format(prefix=sys.prefix))
 tag_name = os.environ.get('TRAVIS_TAG', 'false')
 token = os.environ.get('CONDA_TOKEN', 'NOT_A_TOKEN')
 repo_branch = os.environ.get('TRAVIS_BRANCH', '')
+repo_slug = os.environ.get('TRAVIS_REPO_SLUG', '')
 is_pull_request = os.environ.get('TRAVIS_PULL_REQUEST', 'false')
 
 if is_pull_request == 'false':
@@ -22,16 +23,17 @@ else:
 print("ENVIRONMENTAL VARIABLES:")
 print("\t$TRAVIS_TAG = ", tag_name)
 print("\t$TRAVIS_BRANCH = ", repo_branch)
+print("\t$TRAVIS_REPO_SLUG = ", repo_slug)
 print("\t$TRAVIS_PULL_REQUEST = ", is_pull_request)
 
 
-if tag_name and tag_name.startswith('v') and repo_branch == 'release':
+if tag_name and tag_name.startswith('v') and repo_slug == 'sededu/release':
     print('Tag made for release:')
     print('Building for "main" channel......')
     _build = True
     channel = 'main'
     # os.environ['BUILD_STR'] = ''
-elif repo_branch == 'develop' and not is_pull_request:
+elif repo_slug == 'sededu/develop' and not is_pull_request:
     print('Commit made to "develop", and not PR:')
     print('Building for "dev" channel......')
     _build = True
