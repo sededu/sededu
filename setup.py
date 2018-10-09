@@ -33,8 +33,7 @@ setup(
         'numpy',
 		'matplotlib',
         'shapely',
-        'pygame',
-        'pyqt'],
+        'pygame'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
