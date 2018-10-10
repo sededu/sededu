@@ -1,5 +1,11 @@
 # SedEdu
 
+[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=develop)](https://travis-ci.org/sededu/sededu)
+[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k?svg=true)](https://ci.appveyor.com/project/amoodie/sededu)
+[![Anaconda-Server Badge](https://anaconda.org/sededu/sededu/badges/version.svg)](https://anaconda.org/sededu/sededu)
+[![PyPI version](https://badge.fury.io/py/sededu.svg)](https://badge.fury.io/py/sededu)
+
+
 SedEdu is a suite of educational activities related to geomorphology and sedimentology. 
 The suite is targeted at grade school educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. 
 SedEdu is built __entirely in Python and is free and open source__ software. 
