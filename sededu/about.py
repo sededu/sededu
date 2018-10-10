@@ -124,7 +124,7 @@ class AboutPageWidget(QWidget):
 
         def make_summary(self, lines):
             # the main summary text
-            summaryIdx = lines.index('# SedEdu') + 2
+            summaryIdx = lines.index('# SedEdu') + 10
             imageIdx = [i for i, s in enumerate(lines) 
                         if '![image of SedEdu main menu]' in s]
             imageIdx = imageIdx[0]
