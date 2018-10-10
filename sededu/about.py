@@ -4,7 +4,7 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
-import sededu.utilities as utls
+from . import utilities as utls
 
 
 
@@ -15,7 +15,7 @@ class AboutPageWidget(QWidget):
         self.setLayout(QVBoxLayout())
         
         # construct readme data to parse out into fields
-        readmeText = self._ReadmeFileData(self.parent().thisPath)
+        readmeText = self._ReadmeFileData(self.parent().rootPath)
         
         # construct the header
         categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
