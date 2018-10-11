@@ -1,4 +1,5 @@
-![SedEdu logo](./private/sededuicon.svg "SedEdu logo")
+<!-- ![SedEdu logo](./private/sededuicon.svg "SedEdu logo") -->
+<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededuicon.svg" width="200">
 
 [![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
 [![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/amoodie/sededu/)
@@ -14,7 +15,8 @@ The suite is targeted at grade school educators who want to bring engaging, inte
 SedEdu is built __entirely in Python and is free and open source__ software. 
 Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
-![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu")
+<!-- ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu") -->
+<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededu_demo.png" width="400">
     
 
 
