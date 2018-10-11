@@ -124,9 +124,9 @@ class AboutPageWidget(QWidget):
 
         def make_summary(self, lines):
             # the main summary text
-            summaryIdx = lines.index('# SedEdu') + 10
+            summaryIdx = lines.index('<!-- # SedEdu -->') + 10
             imageIdx = [i for i, s in enumerate(lines) 
-                        if '![image of SedEdu main menu]' in s]
+                        if 'sededu_demo.png' in s]
             imageIdx = imageIdx[0]
             summary_raw = lines[summaryIdx:imageIdx]
             summary = self.strip_and_join(summary_raw)
@@ -135,8 +135,8 @@ class AboutPageWidget(QWidget):
 
         def make_license(self, lines):
             # the license text
-            licenseIdx = lines.index('## License') + 2
-            acknowledgeIdx = lines.index('## Acknowledgments')
+            licenseIdx = lines.index('# License') + 2
+            acknowledgeIdx = lines.index('# Acknowledgments')
             license_raw = lines[licenseIdx:acknowledgeIdx]
             license = self.strip_and_join(license_raw)
             return license
@@ -144,8 +144,8 @@ class AboutPageWidget(QWidget):
 
         def make_contributors(self, lines):
             # the list of contributors
-            contributorsIdx = lines.index('## Authors') + 2
-            licenseIdx = lines.index('## License')
+            contributorsIdx = lines.index('# Authors') + 2
+            licenseIdx = lines.index('# License')
             contributors_raw = lines[contributorsIdx:licenseIdx]
             contributors = contributors_raw
             return contributors
