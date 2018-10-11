@@ -4,7 +4,7 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
-import sededu.utilities as utls
+from . import utilities as utls
 
 
 

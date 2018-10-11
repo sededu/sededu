@@ -18,20 +18,8 @@
 
 
 
-import os
+import sededu
 
-## setup script
+print('launching sededu...\n')
 
-
-## check dependencies
-
-
-
-## import additional packages
-
-
-## initialize the GUI
-thisDir = os.path.dirname(__file__)
-thisPath = os.path.join(thisDir,'')
-execFile = os.path.join(thisPath, "sededu", "root.py")
-exec(open(execFile).read())
+sededu.run()
