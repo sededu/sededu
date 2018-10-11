@@ -15,13 +15,16 @@ class AboutPageWidget(QWidget):
         self.setLayout(QVBoxLayout())
         
         # construct readme data to parse out into fields
-        readmeText = self._ReadmeFileData(self.parent().rootPath)
+        readmeJSONPath = os.path.join(self.parent().thisPath, '_readme.json')
+        readmeText = self._readmeJSON(readmeJSONPath)
         
+        print(readmeText)
+
         # construct the header
         categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = utls.ParagraphInfoLabel(readmeText.summary)
+        descLabel = utls.ParagraphInfoLabel(readmeText['summary'])
 
         # construct the contributors box
         contribBox = self._ContributorWidget(readmeText)
@@ -36,7 +39,7 @@ class AboutPageWidget(QWidget):
         # add widgets in specific vertical order
         self.layout().addWidget(categoryLabelText)
         self.layout().addWidget(descLabel)
-        self.layout().addWidget(utls.ShortInfoLabel(readmeText.license))
+        self.layout().addWidget(utls.ShortInfoLabel(readmeText['license']))
         
         self.layout().addStretch(1)
         self.layout().addWidget(contribBox)
@@ -46,6 +49,13 @@ class AboutPageWidget(QWidget):
 
         self.layout().addStretch(10)
         self.layout().addWidget(SupportedBy)
+
+    def _readmeJSON(self, readmeJSONPath):
+        # read json to dictionary
+        with open(readmeJSONPath) as f:
+            data = json.load(f)
+
+            return data
         
 
     class _ContributorWidget(QGroupBox):
@@ -57,7 +67,7 @@ class AboutPageWidget(QWidget):
 
             self.layout().addWidget(utls.OneLineInfoLabel('Contributors:'))
 
-            for c in readmeText.contributors:
+            for c in readmeText['contributors']:
                 contrib = utls.ShortInfoLabel(c)
                 contrib.setContentsMargins(10, 0, 0, 0)
                 self.layout().addWidget(contrib)
@@ -96,56 +106,3 @@ class AboutPageWidget(QWidget):
             logo = QLabel()
             logo.setPixmap(QtGui.QPixmap(path).scaledToHeight(100))
             return logo
-
-
-    class _ReadmeFileData(object):
-        # parse the SedEdu readme
-        def __init__(self, path):
-            raw, lines = self.extract_from_file(path)
-            self.summary = self.make_summary(lines)
-            self.license = self.make_license(lines)
-            self.contributors = self.make_contributors(lines)
-            
-
-        def extract_from_file(self, path):
-            # get the raw data into iterable lines
-            readmePath = os.path.join(path, 'README.md')
-            raw = open(readmePath, 'rt')
-            lines = [l.replace('\n','').replace('*','') for l in raw]
-            return raw, lines
-
-
-        def strip_and_join(self, lines_raw):
-            # utility to remove end whitespace and cat lines
-            lines_rstripped = [l.rstrip() for l in lines_raw]
-            lines = ' '.join(lines_rstripped)
-            return lines
-
-
-        def make_summary(self, lines):
-            # the main summary text
-            summaryIdx = lines.index('<!-- # SedEdu -->') + 10
-            imageIdx = [i for i, s in enumerate(lines) 
-                        if 'sededu_demo.png' in s]
-            imageIdx = imageIdx[0]
-            summary_raw = lines[summaryIdx:imageIdx]
-            summary = self.strip_and_join(summary_raw)
-            return summary
-
-
-        def make_license(self, lines):
-            # the license text
-            licenseIdx = lines.index('# License') + 2
-            acknowledgeIdx = lines.index('# Acknowledgments')
-            license_raw = lines[licenseIdx:acknowledgeIdx]
-            license = self.strip_and_join(license_raw)
-            return license
-
-
-        def make_contributors(self, lines):
-            # the list of contributors
-            contributorsIdx = lines.index('# Authors') + 2
-            licenseIdx = lines.index('# License')
-            contributors_raw = lines[contributorsIdx:licenseIdx]
-            contributors = contributors_raw
-            return contributors
