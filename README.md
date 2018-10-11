@@ -1,12 +1,12 @@
-# SedEdu
+![SedEdu logo](./private/sededuicon.svg "SedEdu logo")
 
-[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=develop)](https://travis-ci.org/sededu/sededu)
-[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k?svg=true)](https://ci.appveyor.com/project/amoodie/sededu)
+[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
+[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/amoodie/sededu/)
 
 [![Anaconda-Server Badge](https://anaconda.org/sededu/sededu/badges/version.svg)](https://anaconda.org/sededu/sededu)
 [![PyPI version](https://badge.fury.io/py/sededu.svg)](https://badge.fury.io/py/sededu)
 
-[![Anaconda-Server Badge](https://anaconda.org/sededu/sededu/badges/platforms.svg)](https://anaconda.org/sededu/sededu)
+<!-- [![Anaconda-Server Badge](https://anaconda.org/sededu/sededu/badges/platforms.svg)](https://anaconda.org/sededu/sededu) -->
 
 
 SedEdu is a suite of educational activities related to geomorphology and sedimentology. 
@@ -18,13 +18,13 @@ Modules included in SedEdu are built by researchers at the cutting edge of their
     
 
 
-## Getting Started
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for use in the classroom. 
 See [Contributing to SedEdu](#contributing-to-sededu) for information on becoming a part of the SedEdu project.
 
 
-### Installing dependencies
+## Installing dependencies
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
 Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
@@ -57,7 +57,7 @@ sudo apt install python3-pyqt5 python3-tk
 ```
 
 
-### Installing SedEdu
+## Installing SedEdu
 
 If you installed Anaconda Python or Miniconda, you can follow the instructions below for your operating system. 
 Otherwise see the instructions for PyPi installation below.
@@ -65,7 +65,7 @@ Otherwise see the instructions for PyPi installation below.
 __Please__ [open an issue](https://github.com/sededu/rivers2stratigraphy/issues) if you encounter any troubles installing or any error messages along the way! 
 Please include 1) operating system, 2) installation method, and 3) copy-paste the error.
 
-#### Windows users
+### Windows users
 
 1. Open your "start menu" and search for the "Anaconda prompt"; start this application.
 
@@ -78,10 +78,10 @@ If asked to proceed at either step, type `Y` and press "enter" to continue insta
 3. This process may take a few minutes as the necessary source code is downloaded.
 If the installation succeeds, proceed below to the "Run the module" section.
 
-__Note on permissions:__ you may need to run as administrator on Windows.
+__Note on permissions:__ you may need to run the Anaconda prompy "as administrator" on Windows.
 
 
-#### Mac OSX and Linux users
+### Mac OSX and Linux users
 
 1. Install the module by opening a terminal and typing the following command.
 ```
@@ -95,7 +95,8 @@ If the installation succeeds, proceed below to the "Run the module" section.
 __Note on permissions:__ you may need to use `sudo` on OSX and Linux.
 
 
-#### Advanced user installations
+### Advanced user installations
+
 __Install with pip__
 To install with `pip` from Pypi use (not recommended for entry-level users):
 ```
@@ -105,45 +106,48 @@ See below instructions for downloading the source code if you wish to be able to
 
 
 __Install by cloning the repository__
+
 _Developers see below:_
 You can clone the git repository to get the latest release version with:
-
 ```
-git clone --recurse-submodules -b release https://git@github.com/amoodie/sededu.git
+git clone --recurse-submodules -b release https://git@github.com/sededu/sededu.git
 ```
-
 and SedEdu is then run with:
 ```
 python3 sededu/run_sededu.py
 ```
 
-#### Troubleshooting
+### Running SedEdu
 
-* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. 
+1. Open a Python shell by typing `python` (or `python3`) at the terminal (OSX and Linux users) or at the Anaconda / Command Prompt (Windows users).
+2. Run the module from the Python shell with:
+```
+import sededu
+```
+Instructions will indicate to use the following command to then run the module:
+```
+sededu.run()
+```
+
+
+Alternatively, run the module with provided script:
+```
+python3 <path-to-installation>run_sededu.py
+```
+
+Please [open an issue](https://github.com/sededu/sededu/issues) if you encounter any additional error messages! 
+Please include 1) operating system, 2) installation method, and 3) copy-paste the error.
+
+
+### Troubleshooting
+
+* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. If you `pip install`ed, did you install `pyqt`? Linuz users: try `apt install python3-qt`.
 
 * __There are no modules in SedEdu:__ you probably didn't get the submodules when you `git clone`d. Try `git submodule update --init --recursive` inside the cloned repository.
 
 
-#### Developers
 
-You should get the entire repository and work off of the `develop` branch:
-
-```
-git clone --recurse-submodules https://github.com/amoodie/sededu.git
-git checkout -b <name-of-working-branch> develop
-```
-
-If you have already `git clone`d and need to pull the submodules now try:
-
-```
-git submodule update --init --recursive
-```
-
-See [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/release/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
-
-
-
-## Contributing to SedEdu
+# Contributing to SedEdu
 
 The SedEdu project needs contributions from the community to be successful.
 However, there are __many different ways you can contribute!__
@@ -156,29 +160,52 @@ Some opportunities for contributions are listed below (in no particular order):
 * write (code) features and bug fixes for SedEdu
 * write documentation for SedEdu
 
-Please read [CONTRIBUTING.md](https://github.com/amoodie/sededu/blob/release/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
+Please read [CONTRIBUTING.md](https://github.com/sededu/sededu/blob/release/CONTRIBUTING.md) for details on our code of conduct, and the process for contributing to SedEdu (which includes any pull request).
 
 
 
-## Authors
+### Developer installation
+
+Dev channel stats:
+[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
+[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/sededu/sededu/)
+
+You should get the entire repository and work off of the `develop` branch:
+
+```
+git clone --recurse-submodules https://github.com/sededu/sededu.git
+git checkout -b <name-of-working-branch> develop
+```
+
+If you have already `git clone`d and need to pull the submodules now try:
+
+```
+git submodule update --init --recursive
+```
+
+See [CONTRIBUTING.md](https://github.com/sededu/sededu/blob/release/CONTRIBUTING.md) for more information on the preferred `git` workflow for SedEdu, including a note on hot-fixes.
+
+
+
+# Authors
 
 * **Andrew J. Moodie** - *3 modules* - [github.com/amoodie](https://github.com/amoodie)
 * **Kensuke Naito** - *1 module* - [github.com/kensukename2](https://github.com/kensukename2)
 * **Jeffrey Kwang** - *1 module* - [github.com/jeffskwang](https://github.com/jeffskwang)
 
-See also the list of [contributors](https://github.com/amoodie/sededu/graphs/contributors) who have participated in this project in other ways.
+See also the list of [contributors](https://github.com/sededu/sededu/graphs/contributors) who have participated in this project in other ways.
 
 
 
-## License
+# License
 
-This project is licensed under the GNU GPL License - see the [full license](https://github.com/amoodie/sededu/blob/release/LICENSE.md) file for details.
+This project is licensed under the GNU GPL License - see the [full license](https://github.com/sededu/sededu/blob/release/LICENSE.md) file for details.
 It is provided without warranty or guaranteed support.
 Each submodule may be licensed under a different license, please see the relevant module's license file, README, or project homepage for more information.
 
 
 
-## Acknowledgments
+# Acknowledgments
 
 The SedEdu framework was created by Andrew J. Moodie but has been built through the efforts of many authors (see Authors above).
 The authors have been supported by:
@@ -186,6 +213,6 @@ The authors have been supported by:
 
 
 
-## Disclaimer
+# Disclaimer
 
 Any opinion, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of any funding agency.
