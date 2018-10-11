@@ -17,8 +17,6 @@ class AboutPageWidget(QWidget):
         # construct readme data to parse out into fields
         readmeJSONPath = os.path.join(self.parent().thisPath, '_readme.json')
         readmeText = self._readmeJSON(readmeJSONPath)
-        
-        print(readmeText)
 
         # construct the header
         categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
