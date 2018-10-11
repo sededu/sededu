@@ -1,10 +1,8 @@
-# from sededu.root import RootWindow
-# import sys
-# from PyQt5.QtWidgets import *
-# from PyQt5 import QtGui, QtCore
+print('\n\n    SedEdu -- sediment related activity suite')
 
-# print("imported SedEdu!")
-# app = QApplication(sys.argv)
-# root = RootWindow()
-# root.show()
-# sys.exit(app.exec_())
+print('\n\nTo run the activity use command:\n')
+print('sededu.run()\n')
+
+def run():
+    from . import root
+    root.Runner()

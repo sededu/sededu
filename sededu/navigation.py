@@ -4,7 +4,7 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
-import sededu.utilities as utls
+from . import utilities as utls
 
 
 class NavigationPageWidget(QWidget):
@@ -22,17 +22,19 @@ class NavigationPageWidget(QWidget):
         rPos = [0, 0, 1, 1, 2, 2] # this needs to be figured out how to make in numpy...
         navLayout = QGridLayout()
         for i in range(nList):
-            iButton = self._NavigationCategoryButtonWidget(mainList[i], self.parent().thisPath)
+            iButton = self._NavigationCategoryButtonWidget(mainList[i], self.parent().privatePath)
             iButton.clicked.connect(lambda x, i=i: self.parent().parent().parent().navToCategory(i+2))
             self.layout().addWidget(iButton, rPos[i], cPos[i])
 
 
     class _NavigationCategoryButtonWidget(QPushButton):
         # the navigation buttons
-        def __init__(self, category, thisPath, parent=None):
+        def __init__(self, category, privatePath, parent=None):
             QPushButton.__init__(self, parent)
 
-            iPath = os.path.join(thisPath, 'sededu', 'private', \
+            # iPath = os.path.join(thisPath, 'sededu', 'private', \
+                # utls.category2path(category) + '.png')
+            iPath = os.path.join(privatePath, \
                 utls.category2path(category) + '.png')
             iIcon = QtGui.QIcon()
             iIcon.addPixmap(QtGui.QPixmap(iPath))
