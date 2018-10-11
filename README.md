@@ -1,5 +1,5 @@
 <!-- ![SedEdu logo](./private/sededuicon.svg "SedEdu logo") -->
-<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededu_demo.png" width="250">
+<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededuicon_hires.png" width="250">
 
 [![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
 [![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/amoodie/sededu/)
@@ -16,7 +16,7 @@ SedEdu is built __entirely in Python and is free and open source__ software.
 Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
 <!-- ![image of SedEdu main menu](./private/sededu_demo.png "image of SedEdu main menu") -->
-<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededu_demo.png" width="600">
+<img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededu_demo.png" width="600" align="center">
     
 
 
