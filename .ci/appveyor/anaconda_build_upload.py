@@ -5,7 +5,7 @@ import traceback
 import glob
 
 
-print('\n\n\t ANACONDA UPLOAD AND DEPLOY \n\n')
+print('\n\n\t ANACONDA BUILD AND DEPLOY \n\n')
 
 
 print('Using python: {prefix}\n'.format(prefix=sys.prefix))
