@@ -12,29 +12,37 @@ print('Using python: {prefix}\n'.format(prefix=sys.prefix))
 
 
 # grab the environment variables for use in the script
-repo_tag = os.environ.get('APPVEYOR_REPO_TAG', 'false')
-tag_name = os.environ.get('APPVEYOR_REPO_TAG_NAME', '')
+tag_name = os.environ.get('TRAVIS_TAG', 'false')
 token = os.environ.get('CONDA_TOKEN', 'NOT_A_TOKEN')
-repo_branch = os.environ.get('APPVEYOR_REPO_BRANCH', '')
-pull_request_num = os.environ.get('APPVEYOR_PULL_REQUEST_NUMBER', '')
+repo_branch = os.environ.get('TRAVIS_BRANCH', '')
+repo_slug = os.environ.get('TRAVIS_REPO_SLUG', '')
+is_pull_request = os.environ.get('TRAVIS_PULL_REQUEST', 'false')
+
+# process them to python bools
+if is_pull_request == 'false':
+    is_pull_request = False
+elif is_pull_request.isdigit():
+    is_pull_request = True
+else:
+    raise RuntimeError('{val} defined for "is_pull_request"'.format(val=is_pull_request))
+    sys.exit(1)
 
 # print for debugging
 print("ENVIRONMENTAL VARIABLES:")
-print("\t$APPVEYOR_REPO_TAG = ", repo_tag)
-print("\t$APPVEYOR_REPO_TAG_NAME = ", tag_name)
-print("\t$APPVEYOR_REPO_BRANCH = ", repo_branch)
-print("\t$APPVEYOR_PULL_REQUEST_NUMBER = ", pull_request_num)
+print("\t$TRAVIS_TAG = ", tag_name)
+print("\t$TRAVIS_BRANCH = ", repo_branch)
+print("\t$TRAVIS_PULL_REQUEST = ", is_pull_request)
 
 
 # determine flags for upload and build based on 
-if repo_tag == 'true' and tag_name.startswith('v'):
+if tag_name and tag_name.startswith('v'):
     # if tag exists and name begins with a 'v' it is for release to main
     print('\nTag made for release: {tag}'.format(tag=tag_name))
     print('Building and deploying to "main" and "dev" labels.')
     _build = True
     _upload = True
     labels = ['main', 'dev']
-elif repo_branch == 'develop' and not pull_request_num:
+elif repo_branch == 'develop' and not is_pull_request:
     # if the branch is develop and it's been merged (i.e., not a PR),
     # deploy it to dev channel only
     print('\nCommit made to develop, and not PR.')
@@ -42,7 +50,7 @@ elif repo_branch == 'develop' and not pull_request_num:
     _build = True
     _upload = True
     labels = ['dev']
-elif pull_request_num:
+elif is_pull_request:
     # don't do anything if this is a pull request
     print('\nTrigger is a PR.')
     print('Not building or deploying.')
@@ -56,6 +64,7 @@ else:
     _build = False
     _upload = False
     labels = []
+
 
 # if _build, build it
 if _build:
@@ -73,7 +82,6 @@ if _build:
         sys.exit(1)
 
 
-
 # if _build AND _upload, upload it
 if _build and _upload:
     
@@ -89,7 +97,7 @@ if _build and _upload:
         raise RuntimeError('{name}: not a file'.format(name=binary_path))
         sys.exit(1)
 
-    # for each label add a label flag
+    # for each label add a label flag and create a simple list string
     label_args = ''
     labels_str = ''
     for label in iter(labels):
