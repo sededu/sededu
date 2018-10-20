@@ -23,12 +23,12 @@ before_install:
     fi
   - |
     if [[ "$TRAVIS_TAG" == v* ]]; then
-      DEPLOY=1
-      RELEASE=1
+      CIBUILD=1
+      CIRELEASE=1
     fi
   - |
     if [[ "$TRAVIS_BRANCH" == develop ]]; then
-      DEPLOY=1
+      CIBUILD=1
     fi
 
 install:
@@ -66,16 +66,14 @@ script:
   - pytest --mpl --mpl-results-path=tests/results
 
 after_success:
-  - echo DEPLOY = $DEPLOY
-  - echo RELEASE = $RELEASE
+  - echo CIBUILD = $CIBUILD
+  - echo CIRELEASE = $CIRELEASE
   - |
-    if [[ "$DEPLOY" == "1" ]]; then
-      echo "DEPLOY = TRUE; building and uploading to Anaconda Cloud and Pypi"
+    if [[ "$CIBUILD" == "1" ]]; then
+      echo "CIBUILD = TRUE; building and uploading to Anaconda Cloud and Pypi"
       conda install -q conda-build anaconda-client
       pip install twine wheel
-      python .ci/conda-recipe/parse_README.py
-      python .ci/travis/anaconda_build.py
-      python .ci/travis/anaconda_upload.py
-      python .ci/travis/pypi_build.py
-      python .ci/travis/pypi_upload.py
     fi
+  - python .ci/conda-recipe/parse_README.py
+  - python .ci/travis/anaconda_build_upload.py
+  - python .ci/travis/pypi_build_upload.py
