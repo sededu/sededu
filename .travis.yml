@@ -52,7 +52,7 @@ install:
   - source activate test-environment
   - conda install -q numpy scipy matplotlib shapely pytest pyqt
   # - conda install -q -c cogsci pygame 
-  - pip install pygame 
+  - pip install setuptools pygame 
   - conda install -q -c conda-forge pytest-mpl pytest-qt
   - hash -r
 
