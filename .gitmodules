@@ -22,3 +22,7 @@
 	path = docs/template-module
 	url = https://github.com/sededu/template-module_sededu.git
     branch = master
+[submodule "sededu/modules/rivers/rain_table"]
+	path = sededu/modules/rivers/rain_table
+	url = https://github.com/sededu/rain_table.git
+	branch = master
