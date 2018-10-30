@@ -27,7 +27,7 @@ See [Contributing to SedEdu](#contributing-to-sededu) for information on becomin
 ## Installing dependencies
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
-Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
+Modules included in SedEdu rely on `scipy`, `matplotlib`, `pillow`, and `shapely`. 
 
 You can check your Python version by running: `python3 -V` in a terminal. 
 Note that you may need to specify the path to your Python executable on some systems.

@@ -52,7 +52,7 @@ install:
   - cmd: conda update -q conda
   - cmd: conda create -q -n test-environment python=%PYTHON_VERSION%
   - cmd: activate test-environment
-  - cmd: conda install -q numpy scipy matplotlib shapely pytest
+  - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest
   # - cmd: conda install -q -c cogsci pygame 
   - cmd: pip install pygame
   - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
