@@ -67,7 +67,7 @@ if _build:
         print('\nBuild succeeded.')
     except subprocess.CalledProcessError:
         print('\nBuild failed.')
-        traceback.print_exc()
+        # traceback.print_exc()
         raise RuntimeError('Building for anaconda failed with command:'
                            '\n\t{cmd}'.format(cmd=cmd))
         sys.exit(1)
