@@ -23,12 +23,12 @@ before_install:
     fi
   - |
     if [[ "$TRAVIS_TAG" == v* ]]; then
-      DEPLOY=1
-      RELEASE=1
+      CIBUILD=1
+      CIRELEASE=1
     fi
   - |
     if [[ "$TRAVIS_BRANCH" == develop ]]; then
-      DEPLOY=1
+      CIBUILD=1
     fi
 
 install:
@@ -50,8 +50,9 @@ install:
   # Create new env and install deps
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
-  - conda install -q numpy scipy matplotlib shapely pytest pyqt
-  - conda install -q -c cogsci pygame 
+  - conda install -q numpy scipy matplotlib shapely pillow pytest pyqt
+  # - conda install -q -c cogsci pygame 
+  # - pip install setuptools pygame 
   - conda install -q -c conda-forge pytest-mpl pytest-qt
   - hash -r
 
@@ -66,16 +67,14 @@ script:
   - pytest --mpl --mpl-results-path=tests/results
 
 after_success:
-  - echo DEPLOY = $DEPLOY
-  - echo RELEASE = $RELEASE
+  - echo CIBUILD = $CIBUILD
+  - echo CIRELEASE = $CIRELEASE
   - |
-    if [[ "$DEPLOY" == "1" ]]; then
-      echo "DEPLOY = TRUE; building and uploading to Anaconda Cloud and Pypi"
+    if [[ "$CIBUILD" == "1" ]]; then
+      echo "CIBUILD = TRUE; building and uploading to Anaconda Cloud and Pypi"
       conda install -q conda-build anaconda-client
       pip install twine wheel
-      python .ci/conda-recipe/parse_README.py
-      python .ci/travis/anaconda_build.py
-      python .ci/travis/anaconda_upload.py
-      python .ci/travis/pypi_build.py
-      python .ci/travis/pypi_upload.py
     fi
+  - python .ci/conda-recipe/parse_README.py
+  - python .ci/travis/anaconda_build_upload.py
+  - python .ci/travis/pypi_build_upload.py

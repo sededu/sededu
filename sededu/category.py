@@ -228,7 +228,7 @@ class CategoryPageWidget(QWidget):
             if os.path.isfile(execPath):
                 subprocess.Popen(["python3", execPath])
             else:
-                msg = NoFileMessageBox(execPath)
+                msg = utls.NoFileMessageBox(execPath)
                 msg.exec_()
 
 

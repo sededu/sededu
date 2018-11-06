@@ -1,4 +1,6 @@
 environment:
+  CONDA_TOKEN:
+    secure: 2mW1BhmZUy8KenrXZLNJMr+r3Uq7P0aI9I4E3ihwjoEoNVJnSrRwYLgW9gUBVpHp
 
   matrix:
     - TARGET_ARCH: x86
@@ -52,8 +54,9 @@ install:
   - cmd: conda update -q conda
   - cmd: conda create -q -n test-environment python=%PYTHON_VERSION%
   - cmd: activate test-environment
-  - cmd: conda install -q numpy scipy matplotlib shapely pytest
-  - cmd: conda install -q -c cogsci pygame 
+  - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest
+  # - cmd: conda install -q -c cogsci pygame 
+  - cmd: pip install pygame
   - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
   - cmd: conda list
 
@@ -82,8 +85,8 @@ on_success:
   - cmd: pip install twine
   - cmd: conda install conda-build anaconda-client
   - python .ci\conda-recipe\parse_README.py
-  - python .ci\appveyor\anaconda_build.py
-  - python .ci\appveyor\anaconda_upload.py
+  - python .ci\appveyor\anaconda_build_upload.py
+  # - python .ci\appveyor\anaconda_upload.py
   # no need since sdist
   # - python .ci\appveyor\pypi_build.py 
   # - python .ci\appveyor\pypi_upload.py

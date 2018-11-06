@@ -27,7 +27,7 @@ See [Contributing to SedEdu](#contributing-to-sededu) for information on becomin
 ## Installing dependencies
 
 SedEdu runs in Python 3 and utilizes PyQt5 for rendering the graphical user interface. 
-Modules included in SedEdu rely on `scipy`, `matplotlib`, `pygame`, and `shapely`. 
+Modules included in SedEdu rely on `scipy`, `matplotlib`, `pillow`, and `shapely`. 
 
 You can check your Python version by running: `python3 -V` in a terminal. 
 Note that you may need to specify the path to your Python executable on some systems.
@@ -129,6 +129,12 @@ Instructions will indicate to use the following command to then run the module:
 sededu.run()
 ```
 
+Alternatively, you can do this in one line from the standard terminal with:
+```
+python -c "import sededu; sededu.run()"
+```
+
+
 
 Alternatively, run the module with provided script:
 ```
@@ -141,7 +147,7 @@ Please include 1) operating system, 2) installation method, and 3) copy-paste th
 
 ### Troubleshooting
 
-* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. If you `pip install`ed, did you install `pyqt`? Linuz users: try `apt install python3-qt`.
+* __SedEdu won't launch:__ you're probably missing some Python or PyQt dependencies. If you `pip install`ed, did you install `pyqt`? Linuz users: try `sudo apt install python3-pyqt5`.
 
 * __There are no modules in SedEdu:__ you probably didn't get the submodules when you `git clone`d. Try `git submodule update --init --recursive` inside the cloned repository.
 
