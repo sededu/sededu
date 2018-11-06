@@ -111,5 +111,5 @@ if _build and _upload:
         raise RuntimeError('Upload failed to {channel}'
                            ' for file:\n\t{file}'.format(channel=labels_str, 
                                                          file=binary_path))
-        traceback.print_exc()
+        # traceback.print_exc()
         sys.exit(1)
