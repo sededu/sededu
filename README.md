@@ -71,7 +71,6 @@ Please include 1) operating system, 2) installation method, and 3) copy-paste th
 
 2. Install with the module type the following command and hit "enter":
 ```
-conda install -c cogsci pygame
 conda install -c sededu sededu
 ```
 If asked to proceed at either step, type `Y` and press "enter" to continue installation. 
@@ -85,7 +84,6 @@ __Note on permissions:__ you may need to run the Anaconda prompy "as administrat
 
 1. Install the module by opening a terminal and typing the following command.
 ```
-conda install -c cogsci pygame
 conda install -c sededu sededu
 ```
 If asked to proceed at either step, type `Y` and press enter to continue installation.
