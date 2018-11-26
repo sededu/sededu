@@ -11,7 +11,7 @@ class ParagraphInfoLabel(QLabel):
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         QLabel.__init__(self, parent)
-        
+
         # check for links as markdown
         if isinstance(labelText, str):
             labelText = self.url_checker(labelText)
@@ -33,7 +33,7 @@ class ParagraphInfoLabel(QLabel):
         join_url = '(\[{0}]\(\s*{1}\s*\))'.format(name_regex, url_regex)
         split_url = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
         for j, s in zip(re.findall(join_url, labelText), re.findall(split_url, labelText)):
-            labelText = labelText.replace(j, 
+            labelText = labelText.replace(j,
                 ''.join(('<a href=\"', s[1], '\">', s[0], '</a>')))
         return labelText
 
@@ -50,7 +50,7 @@ class ShortInfoLabel(ParagraphInfoLabel):
     defaultFont = QtGui.QFont()
     def __init__(self, labelText='', theFont=defaultFont, parent=None):
         ParagraphInfoLabel.__init__(self, labelText, theFont, parent)
-        
+
         self.setSizePolicy(QSizePolicy(
                            QSizePolicy.MinimumExpanding,
                            QSizePolicy.Maximum))
@@ -72,7 +72,7 @@ class GenericLargePushButton(QPushButton):
     # larger than normal push button for general use
     def __init__(self, text='', height=50, parent=None):
         QPushButton.__init__(self, parent)
-        
+
         self.setText(text)
         self.setMinimumHeight(height)
         self.setFont(subtitleFont())
@@ -84,7 +84,7 @@ class NoFileMessageBox(QMessageBox):
     # custom text can be passed as string mainText
     default = 'There was no file found at the specified path.\n\n'
 
-    def __init__(self, givenPath, mainText=default, 
+    def __init__(self, givenPath, mainText=default,
                  informText=False, parent=None):
         QMessageBox.__init__(self, parent)
         self.setIcon(QMessageBox.Critical)
@@ -101,9 +101,9 @@ def open_file(filename):
     # utility for opening files
     platType = platform.system()
     if os.path.isfile(filename):
-        if platType in {'Darwin', 'Linux'}:
+        if platType in {'Linux'}:
             subprocess.Popen(['xdg-open', filename])
-        elif platType in {'Windows'}:
+        elif platType in {'Darwin', 'Windows'}:
             subprocess.Popen(['open', filename])
         else:
             print('unknown platform type')
@@ -148,7 +148,7 @@ def category2path(c):
 
 def filesList(d):
     # list files in directory
-    return [f for f in os.listdir(d) if 
+    return [f for f in os.listdir(d) if
             os.path.isfile(os.path.join(d, f))]
 
 
@@ -188,7 +188,7 @@ def cutTitle(text0):
     # removes word module from end of string if two present
     splt_t0 = text0.split()
     spltend_t0 = splt_t0[-2:]
-    nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()] 
+    nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()]
                  for x in spltend_t0 ]
     if nospec_t0[0] == nospec_t0[1]: # if last two words are same (i.e., 'modules')
         text = ' '.join(splt_t0[:-1]) + ':'
