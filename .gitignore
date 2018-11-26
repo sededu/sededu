@@ -114,4 +114,4 @@ venv.bak/
 # svg files in private
 /sededu/private/*.svg
 
-
+.DS_Store
