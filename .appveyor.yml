@@ -62,9 +62,8 @@ install:
 build: false
 
 test_script:
-  # - py.test
-  - py.test --mpl --mpl-results-path=tests/results
-  # - cmd: echo "passing without tests"
+  # we only test sededu here, NOT submodules
+  - py.test --ignore=sededu\modules\
 
 after_test:
   # - cmd: conda build .ci\conda-recipe

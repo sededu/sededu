@@ -62,7 +62,9 @@ before_script:
   - sleep 5 # give xvfb some time to start
 
 script:
-  - pytest --mpl --mpl-results-path=tests/results
+  # we only test sededu here (NOT submodules), but we do test _opening_ submodules from sededu
+  # - pytest --ignore=sededu/modules/
+  - pytest --ignore=sededu/modules/
 
 after_success:
   - echo CIBUILD = $CIBUILD
