@@ -55,8 +55,8 @@ install:
   - cmd: conda create -q -n test-environment python=%CONDA_PY%
   - cmd: activate test-environment
   - cmd: conda install -q numpy scipy matplotlib shapely pytest=3.6
-  - cmd: pip install Pillow
-  - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
+  # - cmd: pip install Pillow
+  # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
   - cmd: conda list
 
 build: false
