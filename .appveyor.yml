@@ -6,32 +6,32 @@ environment:
     - TARGET_ARCH: x86
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda35
-      CONDA_PY: 35
+      CONDA_PY: 3.5
 
     - TARGET_ARCH: x64
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda35-x64
-      CONDA_PY: 35
+      CONDA_PY: 3.5
 
     - TARGET_ARCH: x86
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda36
-      CONDA_PY: 36
+      CONDA_PY: 3.6
 
     - TARGET_ARCH: x64
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda36-x64
-      CONDA_PY: 36
+      CONDA_PY: 3.6
 
     - TARGET_ARCH: x86
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda37
-      CONDA_PY: 37
+      CONDA_PY: 3.7
 
     - TARGET_ARCH: x64
       CONDA_NPY: 115
       CONDA_INSTALL_LOCN: C:\\Miniconda37-x64
-      CONDA_PY: 37
+      CONDA_PY: 3.7
 
 platform:
   - x64
@@ -52,10 +52,9 @@ install:
   - cmd: conda info
   - cmd: conda config --set always_yes yes --set anaconda_upload no
   - cmd: conda update -q conda
-  - cmd: conda create -q -n test-environment python=%PYTHON_VERSION%
+  - cmd: conda create -q -n test-environment python=%CONDA_PY%
   - cmd: activate test-environment
   - cmd: conda install -q numpy scipy matplotlib shapely pytest
-  # - cmd: pip install pygame
   - cmd: pip install Pillow
   - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
   - cmd: conda list
