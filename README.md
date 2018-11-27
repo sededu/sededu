@@ -100,6 +100,11 @@ To install with `pip` from Pypi use (not recommended for entry-level users):
 ```
 pip3 install pyqt sededu
 ```
+or in the event of a failed install, try:
+```
+pip3 install pyqt5 sededu
+```
+
 See below instructions for downloading the source code if you wish to be able to modify the source code for development or for exploration.
 
 
