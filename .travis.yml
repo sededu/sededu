@@ -50,7 +50,7 @@ install:
   # Create new env and install deps
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - source activate test-environment
-  - conda install -q numpy scipy matplotlib shapely pillow pytest=3.6 pyqt
+  - conda install -q numpy scipy matplotlib shapely pillow pytest pyqt
   - conda install -q -c conda-forge pytest-mpl pytest-qt
   - hash -r
 
