@@ -37,7 +37,7 @@ platform:
   - x64
 
 os: 
-  - Visual Studio 2015
+  # - Visual Studio 2015
   - Visual Studio 2017
 
 init:
@@ -53,7 +53,7 @@ install:
   - cmd: conda config --set always_yes yes --set anaconda_upload no
   - cmd: conda config --append channels conda-forge
   - cmd: conda update -q conda
-  - cmd: conda create -q -n test-environment python=%CONDA_PY% numpy scipy matplotlib shapely pytest=3.8.1 pytest-mpl pytest-qt
+  - cmd: conda create -q -n test-environment python=%CONDA_PY% numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
   - cmd: activate test-environment
   # - cmd: conda install -q numpy scipy matplotlib shapely pytest=3.8.1
   # - cmd: pip install Pillow
