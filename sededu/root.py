@@ -4,11 +4,11 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
-import sededu.utilities as utls
-from sededu.base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
-from sededu.navigation import NavigationPageWidget
-from sededu.about import AboutPageWidget
-from sededu.category import CategoryPageWidget
+from . import utilities as utls
+from .base import MainBackgroundWidget, MainSideBarWidget, MainPageStackWidget
+from .navigation import NavigationPageWidget
+from .about import AboutPageWidget
+from .category import CategoryPageWidget
 
 
 
@@ -17,7 +17,7 @@ class RootWindow(QMainWindow):
         QMainWindow.__init__(self)
 
         # find the local path and folder information
-        self.findPaths()
+        self._findPaths()
 
         # construct the central widget of the gui
         MainBackground = MainBackgroundWidget(self)
@@ -52,11 +52,12 @@ class RootWindow(QMainWindow):
         self.setGeometry(10, 10, 300, 500)
 
 
-    def findPaths(self):
+    def _findPaths(self):
         # create paths used to locate files throughout
-        thisDir = os.path.dirname(__file__)
-        self.thisPath = os.path.join(thisDir,'')
-        self.privatePath = os.path.join(self.thisPath, 'sededu', 'private')
+        fileDir = os.path.dirname(__file__)
+        self.thisPath = os.path.join(fileDir,'')
+        self.rootPath = os.path.join(fileDir, os.pardir,'')
+        self.privatePath = os.path.join(self.thisPath, 'private')
         self.categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
             'Stratigraphy', 'Behind the \nModules'] # read these from file?
 
@@ -85,10 +86,16 @@ class RootWindow(QMainWindow):
 
 
 
+class Runner(object):
+    def __init__(self):
+
+        app = QApplication(sys.argv)
+        root = RootWindow()
+        root.show()
+        sys.exit(app.exec_())
+
+
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    root = RootWindow()
-    root.show()
-    sys.exit(app.exec_())
+    runner = Runner()

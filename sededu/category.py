@@ -4,7 +4,7 @@ import json
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui, QtCore
 
-import sededu.utilities as utls
+from . import utilities as utls
 
 
 class CategoryPageWidget(QWidget):
@@ -14,8 +14,7 @@ class CategoryPageWidget(QWidget):
         self.setLayout(QGridLayout())
 
         # get the path of the category folder
-        self.categoryPath = os.path.join(self.parent().thisPath, 
-                                          "sededu", "modules", 
+        self.categoryPath = os.path.join(self.parent().thisPath, 'modules', 
                                           utls.category2path(category))
         
         # list all the subdirectories (i.e., the modules)
@@ -26,7 +25,7 @@ class CategoryPageWidget(QWidget):
         self.ModuleList = self._ModuleListWidget(self)
         self.ModuleInformationPageStack = self._ModuleInformationPageStackWidget(self)
         self.ModuleDocStack = QStackedWidget()
-        self.categoryLabelText = utls.OneLineInfoLabel(utls.cutTitle(category + " modules:"),
+        self.categoryLabelText = utls.OneLineInfoLabel(utls.cutTitle(category + ' modules:'),
                                                utls.titleFont())
 
         # add the widgets to the grid
@@ -40,7 +39,7 @@ class CategoryPageWidget(QWidget):
         moduleNum = 0
         for iModuleDirectory in modulePathList:
             # check out and prepare the about.json file
-            moduleAboutPath = os.path.join(iModuleDirectory, "about.json")
+            moduleAboutPath = os.path.join(iModuleDirectory, 'about.json')
             if os.path.isfile(moduleAboutPath):
                 # read the raw file
                 moduleAboutRawText = open(moduleAboutPath)
@@ -51,8 +50,8 @@ class CategoryPageWidget(QWidget):
                 # check and add defaults to moduleAbout if needed
                 iModuleAbout = self.validateModuleAbout(iModuleAbout, iModuleDirectory)
             else:
-                print("No about.json file found, crash likely incoming...\n")
-                print("Alternatively, your module may just not be loaded")
+                print('No about.json file found, crash likely incoming...\n')
+                print('Alternatively, your module may just not be loaded')
                 continue
             
             # construct and add the item to the module list
@@ -229,7 +228,7 @@ class CategoryPageWidget(QWidget):
             if os.path.isfile(execPath):
                 subprocess.Popen(["python3", execPath])
             else:
-                msg = NoFileMessageBox(execPath)
+                msg = utls.NoFileMessageBox(execPath)
                 msg.exec_()
 
 

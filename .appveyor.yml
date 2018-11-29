@@ -1,0 +1,91 @@
+environment:
+  CONDA_TOKEN:
+    secure: 2mW1BhmZUy8KenrXZLNJMr+r3Uq7P0aI9I4E3ihwjoEoNVJnSrRwYLgW9gUBVpHp
+
+  matrix:
+    - TARGET_ARCH: x86
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda35
+      CONDA_PY: 3.5
+
+    - TARGET_ARCH: x64
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda35-x64
+      CONDA_PY: 3.5
+
+    - TARGET_ARCH: x86
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda36
+      CONDA_PY: 3.6
+
+    - TARGET_ARCH: x64
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda36-x64
+      CONDA_PY: 3.6
+
+    - TARGET_ARCH: x86
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda37
+      CONDA_PY: 3.7
+
+    - TARGET_ARCH: x64
+      CONDA_NPY: 115
+      CONDA_INSTALL_LOCN: C:\\Miniconda37-x64
+      CONDA_PY: 3.7
+
+platform:
+  - x64
+
+os: 
+  # - Visual Studio 2015
+  - Visual Studio 2017
+
+init:
+  - "ECHO %CONDA_INSTALL_LOCN% %CONDA_PY% %HOME% %PLATFORM%"
+  - "ECHO %APPVEYOR_REPO_BRANCH%"
+
+install:
+  - cmd: git submodule update --init --recursive
+  - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
+  - cmd: conda update --yes --quiet conda
+  - cmd: set PYTHONUNBUFFERED=1
+  - cmd: conda info
+  - cmd: conda config --set always_yes yes --set anaconda_upload no
+  - cmd: conda config --append channels conda-forge
+  - cmd: conda update -q conda
+  - cmd: conda create -q -n test-environment python=%CONDA_PY% numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
+  - cmd: activate test-environment
+  # - cmd: conda install -q numpy scipy matplotlib shapely pytest=3.8.1
+  # - cmd: pip install Pillow
+  # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
+  - cmd: conda list
+
+build: false
+
+test_script:
+  # we only test sededu here, NOT submodules
+  - py.test --ignore=sededu\modules\
+
+after_test:
+  # - cmd: conda build .ci\conda-recipe
+  # - cmd: python setup.py sdist bdist_wheel
+
+  # Move the conda package into the current directory, to register it
+  # as an "artifact" for Appveyor.
+  # - python .ci\appveyor\move-conda-package.py .ci\conda-recipe
+
+artifacts:
+  # Archive the generated conda package in the ci.appveyor.com build report.
+  # - path: '*.tar.bz2'
+
+on_success:
+  # Upload built binaries to Anaconda Cloud and PyPi. 
+  # Python scripts handle check on tags
+  - cmd: pip install twine
+  - cmd: conda install conda-build anaconda-client
+  - python .ci\conda-recipe\parse_README.py
+  - python .ci\appveyor\anaconda_build_upload.py
+  # - python .ci\appveyor\anaconda_upload.py
+  # no need since sdist
+  # - python .ci\appveyor\pypi_build.py 
+  # - python .ci\appveyor\pypi_upload.py
