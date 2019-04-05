@@ -91,10 +91,10 @@ class MainSideBarWidget(QWidget):
             self.AuxButton.setText('About')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToAbout(idx=1))
 
-
         def setAuxButtonToMain(self):
             # switch the button to direct to main page
             self.AuxButton.setText('Back')
+            self.AuxButton.clicked.disconnect() # disconnect the link to other pages (this is CRITICAL!)
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToMain())
 
 
