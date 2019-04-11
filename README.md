@@ -158,6 +158,8 @@ Please include 1) operating system, 2) installation method, and 3) copy-paste th
 
 # Contributing to SedEdu
 
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 The SedEdu project needs contributions from the community to be successful.
 However, there are __many different ways you can contribute!__
 You do not even need to write code to contribute to SedEdu.
