@@ -10,7 +10,7 @@
 
 <!-- # SedEdu -->
 SedEdu is a suite of educational activities related to geomorphology and sedimentology. 
-The suite is targeted at grade school educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. 
+The suite is targeted at educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. 
 SedEdu is built __entirely in Python and is free and open source__ software. 
 Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
