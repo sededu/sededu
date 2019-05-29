@@ -61,7 +61,7 @@ install:
   # - cmd: conda update -q conda
   - cmd: conda install python=%CONDA_PY%
   - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
-  - cmd: conda install --quiet jinja2 conda-build=2 anaconda-client ruamel.yaml
+  - cmd: conda install --quiet conda-build anaconda-client
   # - cmd: pip install Pillow
   # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
   - cmd: conda list
