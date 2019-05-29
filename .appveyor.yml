@@ -60,6 +60,7 @@ install:
   - cmd: activate test-environment
   # - cmd: conda update -q conda
   - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
+  - cmd: conda install --quiet jinja2 conda-build=2 anaconda-client ruamel.yaml
   # - cmd: pip install Pillow
   # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
   - cmd: conda list
@@ -83,7 +84,7 @@ on_success:
   # Python scripts handle check on tags
   # - cmd: activate
   # - cmd: conda clean --packages
-  - cmd: conda install conda-build anaconda-client
+  # - cmd: conda install conda-build anaconda-client
   - cmd: pip install twine
   - python .ci\conda-recipe\parse_README.py
   - python .ci\appveyor\anaconda_build_upload.py
