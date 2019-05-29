@@ -82,6 +82,7 @@ on_success:
   # Upload built binaries to Anaconda Cloud and PyPi. 
   # Python scripts handle check on tags
   - cmd: activate
+  - cmd: conda clean --all --yes
   - cmd: pip install twine
   - cmd: conda install conda-build anaconda-client
   - python .ci\conda-recipe\parse_README.py
