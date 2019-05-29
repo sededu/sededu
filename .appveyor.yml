@@ -52,18 +52,9 @@ install:
   - cmd: conda info
   - cmd: conda config --set always_yes yes --set anaconda_upload no
   - cmd: conda config --append channels conda-forge
-  # - cmd: rmdir /S C:\Miniconda3
-  # - cmd: rmdir /S C:\Miniconda3-x64
-  # - cmd: mklink /J C:\Miniconda3 %CONDA_INSTALL_LOCN%
-  # - cmd: mklink /J C:\Miniconda3-x64 %CONDA_INSTALL_LOCN% 
-  # - cmd: conda create -q -n test-environment python=%CONDA_PY%
-  # - cmd: activate test-environment
-  # - cmd: conda update -q conda
-  - cmd: conda install python=%CONDA_PY%
+  - cmd: conda install -q python=%CONDA_PY%
   - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
-  - cmd: conda install --quiet conda-build anaconda-client
-  # - cmd: pip install Pillow
-  # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
+  - cmd: conda install -q conda-build anaconda-client
   - cmd: conda list
 
 build: false
@@ -83,9 +74,6 @@ artifacts:
 on_success:
   # Upload built binaries to Anaconda Cloud and PyPi. 
   # Python scripts handle check on tags
-  # - cmd: activate
-  # - cmd: conda clean --packages
-  # - cmd: conda install conda-build anaconda-client
   - cmd: pip install twine
   - python .ci\conda-recipe\parse_README.py
   - python .ci\appveyor\anaconda_build_upload.py
