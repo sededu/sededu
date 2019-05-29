@@ -56,9 +56,10 @@ install:
   # - cmd: rmdir /S C:\Miniconda3-x64
   # - cmd: mklink /J C:\Miniconda3 %CONDA_INSTALL_LOCN%
   # - cmd: mklink /J C:\Miniconda3-x64 %CONDA_INSTALL_LOCN% 
-  - cmd: conda create -q -n test-environment python=%CONDA_PY%
-  - cmd: activate test-environment
+  # - cmd: conda create -q -n test-environment python=%CONDA_PY%
+  # - cmd: activate test-environment
   # - cmd: conda update -q conda
+  - cmd: conda install python=%CONDA_PY%
   - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
   - cmd: conda install --quiet jinja2 conda-build=2 anaconda-client ruamel.yaml
   # - cmd: pip install Pillow
