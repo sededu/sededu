@@ -40,10 +40,15 @@ class RootWindow(QMainWindow):
         self.MainPageStack.addWidget(NavigationPage)
         self.MainPageStack.addWidget(AboutPage)
 
+        self.MainPageStack.NavigationPage = NavigationPage
+        self.MainPageStack.AboutPage = AboutPage
+
         # construct and add the category pages
+        self.MainPageStack.categoryPageList = []
         for i in self.categoryList:
             iCategoryPage = CategoryPageWidget(i, self)
             self.MainPageStack.addWidget(iCategoryPage)
+            self.MainPageStack.categoryPageList.append(iCategoryPage)
 
         # configure the main window header and size
         self.setWindowTitle('SedEdu')

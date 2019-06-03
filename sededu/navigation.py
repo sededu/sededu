@@ -14,6 +14,7 @@ class NavigationPageWidget(QWidget):
         self.setLayout(QGridLayout())
 
         mainList = self.parent().categoryList
+        self.buttonList = []
         
         nList = len(mainList)
         gridSize = [3, 2]
@@ -25,6 +26,7 @@ class NavigationPageWidget(QWidget):
             iButton = self._NavigationCategoryButtonWidget(mainList[i], self.parent().privatePath)
             iButton.clicked.connect(lambda x, i=i: self.parent().parent().parent().navToCategory(i+2))
             self.layout().addWidget(iButton, rPos[i], cPos[i])
+            self.buttonList.append(iButton)
 
 
     class _NavigationCategoryButtonWidget(QPushButton):
@@ -34,6 +36,7 @@ class NavigationPageWidget(QWidget):
 
             # iPath = os.path.join(thisPath, 'sededu', 'private', \
                 # utls.category2path(category) + '.png')
+            self.category_name = category
             iPath = os.path.join(privatePath, \
                 utls.category2path(category) + '.png')
             iIcon = QtGui.QIcon()
