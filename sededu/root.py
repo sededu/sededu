@@ -45,8 +45,8 @@ class RootWindow(QMainWindow):
 
         # construct and add the category pages
         self.MainPageStack.categoryPageList = []
-        for i in self.categoryList:
-            iCategoryPage = CategoryPageWidget(i, self)
+        for iCategory in self.categoryList:
+            iCategoryPage = CategoryPageWidget(iCategory, self)
             self.MainPageStack.addWidget(iCategoryPage)
             self.MainPageStack.categoryPageList.append(iCategoryPage)
 
