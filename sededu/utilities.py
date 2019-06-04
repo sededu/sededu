@@ -14,11 +14,16 @@ class ParagraphInfoLabel(QLabel):
 
         # check for links as markdown
         if isinstance(labelText, str):
-            labelText = self.url_checker(labelText)
+            self._labelText, self.isurl = self.url_checker(labelText)
+        
         # check if the string is a path to a file
         if os.path.isfile(labelText):
-            labelText = self.file_checker(labelText)
-        self.setText(labelText)
+            self._labelText = self.file_checker(labelText)
+            self.isfile = True
+        else:
+            self.isfile = False
+        
+        self.setText(self._labelText)
 
         # set to wrap, font, and open links
         self.setWordWrap(True)
@@ -32,16 +37,19 @@ class ParagraphInfoLabel(QLabel):
         url_regex = '[^)]+'
         join_url = '(\[{0}]\(\s*{1}\s*\))'.format(name_regex, url_regex)
         split_url = '\[({0})]\(\s*({1})\s*\)'.format(name_regex, url_regex)
+        isurl = False # false by default
         for j, s in zip(re.findall(join_url, labelText), re.findall(split_url, labelText)):
             labelText = labelText.replace(j,
                 ''.join(('<a href=\"', s[1], '\">', s[0], '</a>')))
-        return labelText
+            isurl = True # changed to true if into the loop
+        return labelText, isurl
 
 
     def file_checker(self, labelText):
         # convert string to a link
         labelText = ''.join(('<a href=\"file:///', labelText, '\">open README</a>'))
         return labelText
+
 
 
 class ShortInfoLabel(ParagraphInfoLabel):
