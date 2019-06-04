@@ -113,7 +113,7 @@ def open_file(filename):
 
 
 
-def HLine(self):
+def HLine():
     # horizontal line
     toto = QFrame()
     toto.setFrameShape(QFrame.HLine)
@@ -122,7 +122,7 @@ def HLine(self):
 
 
 
-def VLine(self):
+def VLine():
     # vertical line
     toto = QFrame()
     toto.setFrameShape(QFrame.VLine)

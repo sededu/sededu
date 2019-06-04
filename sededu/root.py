@@ -33,7 +33,7 @@ class RootWindow(QMainWindow):
 
         # add the side bar and page stack to the central widget
         MainBackground.layout().addWidget(self.MainSideBar)
-        MainBackground.layout().addWidget(utls.VLine(self))
+        MainBackground.layout().addWidget(utls.VLine())
         MainBackground.layout().addWidget(self.MainPageStack)
 
         # add the navigation and about page
