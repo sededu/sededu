@@ -11,9 +11,12 @@ from sededu.root import RootWindow
 
 def test_navigation_to_about_page_by_function(qtbot):
     root = RootWindow()
+    qtbot.addWidget(root)
+    
     root.navToAbout()
 
     assert root.MainPageStack.currentIndex() == 1
+
 
 def test_navigation_to_about_page_by_button(qtbot):
     root = RootWindow()
@@ -25,6 +28,7 @@ def test_navigation_to_about_page_by_button(qtbot):
     assert root.MainSideBar.SideBarButtons.AuxButton.text() == 'Back'
     assert root.MainPageStack.currentIndex() == 1
 
+
 def test_navigation_to_about_and_back_to_nav_page_by_button(qtbot):
     root = RootWindow()
     qtbot.addWidget(root)
@@ -35,6 +39,7 @@ def test_navigation_to_about_and_back_to_nav_page_by_button(qtbot):
 
     assert root.MainSideBar.SideBarButtons.AuxButton.text() == 'About'
     assert root.MainPageStack.currentIndex() == 0
+
 
 def test_navigation_to_rivers_page_by_button(qtbot):
     root = RootWindow()
@@ -49,6 +54,7 @@ def test_navigation_to_rivers_page_by_button(qtbot):
     assert root.MainPageStack.children()[-1].children()[-2].text() == 'Rivers modules:'
     assert root.MainSideBar.SideBarButtons.AuxButton.text() == 'Back'
     assert root.MainPageStack.currentIndex() == 2
+
 
 def test_navigation_to_stratigraphy_page_and_back_to_nav_page_by_button(qtbot):
     root = RootWindow()

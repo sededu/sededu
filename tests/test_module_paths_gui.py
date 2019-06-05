@@ -11,5 +11,4 @@ from sededu.root import RootWindow
 
 def test_check_paths_of_all_found_modules(qtbot):
     root = RootWindow()
-    
-    
+    qtbot.addWidget(root)

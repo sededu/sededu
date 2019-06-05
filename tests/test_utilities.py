@@ -10,17 +10,21 @@ from PyQt5 import QtGui, QtCore
 import sededu.utilities as utls
 
 
-def test_ParagraphInfoLabel_defaults():
-    info = utls.ParagraphInfoLabel()
+def test_ParagraphInfoLabel_defaults(qtbot):
+    info1 = utls.ParagraphInfoLabel()
+    qtbot.addWidget(info1)
 
-    assert info.text() == ''
-    assert info.wordWrap() == True
+    assert info1.text() == ''
+    assert info1.wordWrap() == True
 
 
-def test_ParagraphInfoLabel_labelText_strings():
+def test_ParagraphInfoLabel_labelText_strings(qtbot):
     info1 = utls.ParagraphInfoLabel(labelText='SomeOneWordString')
     info2 = utls.ParagraphInfoLabel(labelText='SomeTwo WordString')
     info3 = utls.ParagraphInfoLabel(labelText='10!is a We?rd #')
+    qtbot.addWidget(info1)
+    qtbot.addWidget(info2)
+    qtbot.addWidget(info3)
 
     assert info1.text() == 'SomeOneWordString'
     assert info1.isurl == False
@@ -29,11 +33,13 @@ def test_ParagraphInfoLabel_labelText_strings():
     assert info3.text() == '10!is a We?rd #'
 
 
-def test_ParagraphInfoLabel_labelText_urls():
+def test_ParagraphInfoLabel_labelText_urls(qtbot):
     url1 = 'https://github.com/sededu/sededu/blob/release/CONTRIBUTING.md'
     info1 = utls.ParagraphInfoLabel(labelText=url1)
     url2 = '[Contributing.md](https://github.com/sededu/sededu/blob/release/CONTRIBUTING.md)'
     info2 = utls.ParagraphInfoLabel(labelText=url2)
+    qtbot.addWidget(info1)
+    qtbot.addWidget(info2)
 
     assert info1.text() == url1
     assert info2.text() != url2
@@ -41,7 +47,7 @@ def test_ParagraphInfoLabel_labelText_urls():
     assert info2.isurl == True
 
 
-def test_ParagraphInfoLabel_labelText_files():
+def test_ParagraphInfoLabel_labelText_files(qtbot):
     fileDir = os.path.dirname(__file__)
     thisPath = os.path.join(fileDir,'')
 
@@ -51,6 +57,9 @@ def test_ParagraphInfoLabel_labelText_files():
     info2 = utls.ParagraphInfoLabel(labelText=file2)
     file3 = os.path.join(thisPath, 'not_a_real_file.py')
     info3 = utls.ParagraphInfoLabel(labelText=file3)
+    qtbot.addWidget(info1)
+    qtbot.addWidget(info2)
+    qtbot.addWidget(info3)
     
     assert info1.text() == file1
     assert info1.isfile == False
@@ -63,14 +72,74 @@ def test_ParagraphInfoLabel_labelText_files():
     assert info3.isurl == False
 
 
-def test_VLine():
+def test_ShortInfoLabel(qtbot):
+    labelText = 'Title of my mixtape'
+    info1 = utls.ShortInfoLabel(labelText)
+    qtbot.addWidget(info1)
+
+    assert info1.text() == labelText
+    assert info1.wordWrap() == True
+    assert info1.font().bold() == False
+
+
+def test_OneLineInfoLabel(qtbot):
+    labelText = 'Subtitle of my mixtape'
+    info1 = utls.OneLineInfoLabel(labelText)
+    qtbot.addWidget(info1)
+
+    assert info1.text() == labelText
+    assert info1.wordWrap() == False
+
+
+def test_OneLineInfoLabel_versionFont(qtbot):
+    labelText = '1.0.0'
+    versionFont = utls.versionFont()
+    info1 = utls.OneLineInfoLabel(labelText, theFont=versionFont)
+    qtbot.addWidget(info1)
+
+    assert info1.text() == labelText
+    assert info1.wordWrap() == False
+    assert info1.font().bold() == False
+    assert info1.font().italic() == True
+    assert info1.font().pointSize() == 9
+
+
+def test_OneLineInfoLabel_titleFont(qtbot):
+    labelText = 'A big important title'
+    titleFont = utls.titleFont()
+    info1 = utls.OneLineInfoLabel(labelText, theFont=titleFont)
+    qtbot.addWidget(info1)
+
+    assert info1.text() == labelText
+    assert info1.wordWrap() == False
+    assert info1.font().bold() == True
+    assert info1.font().italic() == False
+    assert info1.font().pointSize() == 14
+
+
+def test_OneLineInfoLabel_subtitleFont(qtbot):
+    labelText = 'A less important subtitle'
+    subtitleFont = utls.subtitleFont()
+    info1 = utls.OneLineInfoLabel(labelText, theFont=subtitleFont)
+    qtbot.addWidget(info1)
+
+    assert info1.text() == labelText
+    assert info1.wordWrap() == False
+    assert info1.font().bold() == False
+    assert info1.font().italic() == False
+    assert info1.font().pointSize() == 12
+
+
+def test_VLine(qtbot):
     vline = utls.VLine()
+    qtbot.addWidget(vline)
 
     assert vline.frameShape() == 5
 
 
-def test_HLine():
+def test_HLine(qtbot):
     hline = utls.HLine()
+    qtbot.addWidget(hline)
 
     assert hline.frameShape() == 4
 
