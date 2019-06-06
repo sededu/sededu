@@ -130,6 +130,52 @@ def test_OneLineInfoLabel_subtitleFont(qtbot):
     assert info1.font().pointSize() == 12
 
 
+def test_GenericLargePushButton_defaults(qtbot):
+    butt1 = utls.GenericLargePushButton()
+    qtbot.addWidget(butt1)
+
+    assert butt1.text() == ''
+    assert butt1.minimumHeight() == 50
+
+
+def test_GenericLargePushButton_labelText(qtbot):
+    text = 'some text for a big button'
+    butt1 = utls.GenericLargePushButton(text)
+    qtbot.addWidget(butt1)
+
+    assert butt1.text() == text
+    assert butt1.minimumHeight() == 50
+
+
+def test_GenericLargePushButton_height(qtbot):
+    height = 30
+    butt1 = utls.GenericLargePushButton(height=height)
+    qtbot.addWidget(butt1)
+
+    assert butt1.text() == ''
+    assert butt1.minimumHeight() == height
+
+
+def test_NoFileMessageBox_defaults(qtbot):
+    box = utls.NoFileMessageBox(givenPath='some/file/path')
+    qtbot.addWidget(box)
+
+    assert box.windowTitle() == 'Error'
+    assert box.informativeText() == ''
+    assert box.icon() == QMessageBox.Critical
+
+
+def test_NoFileMessageBox_informativeText(qtbot):
+    informativeText = 'This is some informative text that will help!'
+    box = utls.NoFileMessageBox(givenPath='some/file/path', 
+                                informText=informativeText)
+    qtbot.addWidget(box)
+
+    assert box.windowTitle() == 'Error'
+    assert box.informativeText() == informativeText
+    assert box.icon() == QMessageBox.Critical
+
+
 def test_VLine(qtbot):
     vline = utls.VLine()
     qtbot.addWidget(vline)
