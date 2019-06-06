@@ -36,12 +36,15 @@ class NavigationPageWidget(QWidget):
 
             # iPath = os.path.join(thisPath, 'sededu', 'private', \
                 # utls.category2path(category) + '.png')
-            self.category_name = category
+            self.categoryName = category
             iPath = os.path.join(privatePath, \
-                utls.category2path(category) + '.png')
-            iIcon = QtGui.QIcon()
-            iIcon.addPixmap(QtGui.QPixmap(iPath))
-            self.setIcon(iIcon)
+                    utls.category2path(category) + '.png')
+            if os.path.isfile(iPath):
+                iIcon = QtGui.QIcon()
+                iIcon.addPixmap(QtGui.QPixmap(iPath))
+                self.setIcon(iIcon)
+            else:
+                self.setText('**icon not found**')
             self.setIconSize(QtCore.QSize(300, 200))
             self.setSizePolicy(QSizePolicy(
                                QSizePolicy.Maximum,
