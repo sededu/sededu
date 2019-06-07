@@ -198,7 +198,7 @@ def cutTitle(text0):
     spltend_t0 = splt_t0[-2:]
     nospec_t0 = [ [''.join(e for e in x if e.isalnum()).lower()]
                  for x in spltend_t0 ]
-    if nospec_t0[0] == nospec_t0[1]: # if last two words are same (i.e., 'modules')
+    if len(nospec_t0) > 1 and nospec_t0[0] == nospec_t0[1]: # if last two words are same (i.e., 'modules')
         text = ' '.join(splt_t0[:-1]) + ':'
     else:
         text = text0

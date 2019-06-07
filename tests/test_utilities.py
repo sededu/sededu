@@ -204,6 +204,13 @@ def test_cutTitle_with_module():
     assert new_string == 'Behind the Modules:'
 
 
+def test_cutTitle_with_empty_string():
+    initial_string = ''
+    new_string = utls.cutTitle(initial_string)
+
+    assert new_string == initial_string
+
+
 def test_subDirPath():
     docs_directory_list = list(utls.subDirPath('docs'))
     ci_directory_list = list(utls.subDirPath('.ci'))
