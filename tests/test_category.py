@@ -30,8 +30,8 @@ class ItemPlaceholder(object):
     """
     This class fills the place of an item clicked in the module or doc list
     """
-        def __init__(self, idx):
-            self.idx = idx
+    def __init__(self, idx):
+        self.idx = idx
 
 
 def test_CategoryPageWidget_instantiate(qtbot):
@@ -55,7 +55,7 @@ def test_CategoryPageWidget_setModulePage(qtbot):
     qtbot.addWidget(cpw)
 
     p.setVisible(True)
-    item = Item(idx=0)
+    item = ItemPlaceholder(idx=0)
 
     cpw.setModulePage(item)
     
