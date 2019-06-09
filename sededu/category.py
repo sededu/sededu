@@ -281,6 +281,7 @@ class CategoryPageWidget(QWidget):
                 ModuleExecButton = utls.GenericLargePushButton(text='Run module',
                                                                height=40)
                 ModuleExecPath = os.path.join(moduleDirectory, *moduleAbout['exec'])
+                self.execPath = ModuleExecPath
                 ModuleExecButton.clicked.connect(lambda: self.parent().execModule(ModuleExecPath))
                 self.layout().addWidget(ModuleExecButton, 0, 1)
 

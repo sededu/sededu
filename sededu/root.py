@@ -33,17 +33,22 @@ class RootWindow(QMainWindow):
 
         # add the side bar and page stack to the central widget
         MainBackground.layout().addWidget(self.MainSideBar)
-        MainBackground.layout().addWidget(utls.VLine(self))
+        MainBackground.layout().addWidget(utls.VLine())
         MainBackground.layout().addWidget(self.MainPageStack)
 
         # add the navigation and about page
         self.MainPageStack.addWidget(NavigationPage)
         self.MainPageStack.addWidget(AboutPage)
 
+        self.MainPageStack.NavigationPage = NavigationPage
+        self.MainPageStack.AboutPage = AboutPage
+
         # construct and add the category pages
-        for i in self.categoryList:
-            iCategoryPage = CategoryPageWidget(i, self)
+        self.MainPageStack.categoryPageList = []
+        for iCategory in self.categoryList:
+            iCategoryPage = CategoryPageWidget(iCategory, self)
             self.MainPageStack.addWidget(iCategoryPage)
+            self.MainPageStack.categoryPageList.append(iCategoryPage)
 
         # configure the main window header and size
         self.setWindowTitle('SedEdu')
@@ -59,7 +64,7 @@ class RootWindow(QMainWindow):
         self.rootPath = os.path.join(fileDir, os.pardir,'')
         self.privatePath = os.path.join(self.thisPath, 'private')
         self.categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
-            'Stratigraphy', 'Behind the \nModules'] # read these from file?
+                             'Stratigraphy', 'Behind the \nModules'] # read these from file?
 
 
     def _setMainPageStackIndex(self, idx):
