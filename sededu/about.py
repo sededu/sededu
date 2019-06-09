@@ -15,38 +15,41 @@ class AboutPageWidget(QWidget):
         self.setLayout(QVBoxLayout())
         
         # construct readme data to parse out into fields
-        readmeJSONPath = os.path.join(self.parent().thisPath, '_readme.json')
-        readmeText = self._readmeJSON(readmeJSONPath)
+        self.readmeJSONPath = os.path.join(self.parent().thisPath, '_readme.json')
+        self.readmeText = self._readmeJSON(self.readmeJSONPath)
 
         # construct the header
-        categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
+        self.categoryLabelText = utls.OneLineInfoLabel('About the SedEdu project:', utls.titleFont())
         
         # construct the summary multiline text
-        descLabel = utls.ParagraphInfoLabel(readmeText['summary'])
+        self.descLabel = utls.ParagraphInfoLabel(self.readmeText['summary'])
+
+        # construct the license label text
+        self.licenseLabel = utls.ShortInfoLabel(self.readmeText['license'])
 
         # construct the contributors box
-        contribBox = self._ContributorWidget(readmeText)
+        self.contribBox = self._ContributorWidget(self.readmeText)
 
         # construct the more information text
-        completeInfoLabel = utls.ShortInfoLabel('For complete information visit \
+        self.completeInfoLabel = utls.ShortInfoLabel('For complete information visit \
             the [SedEdu project page](https://github.com/amoodie/sededu).', utls.titleFont())
 
         # construct the supported by box
-        SupportedBy = self._SupportedByWidget(self.parent().privatePath)
+        self.SupportedBy = self._SupportedByWidget(self.parent().privatePath)
 
         # add widgets in specific vertical order
-        self.layout().addWidget(categoryLabelText)
-        self.layout().addWidget(descLabel)
-        self.layout().addWidget(utls.ShortInfoLabel(readmeText['license']))
+        self.layout().addWidget(self.categoryLabelText)
+        self.layout().addWidget(self.descLabel)
+        self.layout().addWidget(self.licenseLabel)
         
         self.layout().addStretch(1)
-        self.layout().addWidget(contribBox)
+        self.layout().addWidget(self.contribBox)
 
         self.layout().addStretch(2)
-        self.layout().addWidget(completeInfoLabel)
+        self.layout().addWidget(self.completeInfoLabel)
 
         self.layout().addStretch(10)
-        self.layout().addWidget(SupportedBy)
+        self.layout().addWidget(self.SupportedBy)
 
     def _readmeJSON(self, readmeJSONPath):
         # read json to dictionary
