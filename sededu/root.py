@@ -63,8 +63,8 @@ class RootWindow(QMainWindow):
         self.thisPath = os.path.join(fileDir,'')
         self.rootPath = os.path.join(fileDir, os.pardir,'')
         self.privatePath = os.path.join(self.thisPath, 'private')
-        self.categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
-                             'Stratigraphy', 'Behind the \nModules'] # read these from file?
+        self.categoryList = ['Rivers and deltas', 'Landscapes', 'Deserts', 'Coasts', 
+                             'Stratigraphy'] # read these from file?
 
 
     def _setMainPageStackIndex(self, idx):
