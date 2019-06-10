@@ -22,3 +22,7 @@
 	path = sededu/modules/riversanddeltas/flooding_in_deltas
 	url = https://github.com/sededu/flooding_in_deltas
 	branch = master
+[submodule "sededu/modules/riversanddeltas/sediment-load-calculator_kensukename2"]
+	path = sededu/modules/riversanddeltas/sediment-load-calculator_kensukename2
+	url = https://github.com/amoodie/sediment-load-calculator_kensukename2
+	branch = master
