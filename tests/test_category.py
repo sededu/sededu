@@ -22,8 +22,8 @@ class RootWindowPlaceholder(QMainWindow):
         self.thisPath = os.path.join(fileDir, os.pardir, 'sededu', '')
         self.rootPath = os.path.join(fileDir, os.pardir, os.pardir, 'sededu', '')
         self.privatePath = os.path.join(self.thisPath, os.pardir, 'sededu', 'private')
-        self.categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
-                             'Stratigraphy', 'Behind the \nModules']
+        self.categoryList = ['Rivers and deltas', 'Landscapes', 'Deserts', 'Coasts', 
+                             'Stratigraphy']
 
 
 class ItemPlaceholder(object):
@@ -36,7 +36,7 @@ class ItemPlaceholder(object):
 
 def test_CategoryPageWidget_instantiate(qtbot):
     p = RootWindowPlaceholder()
-    cpw = category.CategoryPageWidget(category='Rivers', parent=p)
+    cpw = category.CategoryPageWidget(category='Rivers and deltas', parent=p)
     qtbot.addWidget(p)
     qtbot.addWidget(cpw)
 
@@ -50,7 +50,7 @@ def test_CategoryPageWidget_instantiate(qtbot):
 
 def test_CategoryPageWidget_setModulePage(qtbot):
     p = RootWindowPlaceholder()
-    cpw = category.CategoryPageWidget(category='Rivers', parent=p)
+    cpw = category.CategoryPageWidget(category='Rivers and deltas', parent=p)
     qtbot.addWidget(p)
     qtbot.addWidget(cpw)
 

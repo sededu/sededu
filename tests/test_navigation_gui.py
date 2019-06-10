@@ -51,7 +51,7 @@ def test_navigation_to_rivers_page_by_button(qtbot):
     # click the button using qtbot (doesn't work for some reason...)
     # qtbot.mouseClick(root.MainPageStack.NavigationPage.buttonList[0], QtCore.Qt.LeftButton)
 
-    assert root.MainPageStack.children()[-1].children()[-2].text() == 'Rivers modules:'
+    assert root.MainPageStack.children()[-1].children()[-2].text() == 'Rivers and deltas modules:'
     assert root.MainSideBar.SideBarButtons.AuxButton.text() == 'Back'
     assert root.MainPageStack.currentIndex() == 2
 
