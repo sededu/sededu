@@ -14,3 +14,11 @@
 	path = docs/template-module
 	url = https://github.com/sededu/template-module_sededu.git
     branch = master
+[submodule "sededu/modules/landscapes/rain_table"]
+	path = sededu/modules/landscapes/rain_table
+	url = https://github.com/sededu/rain_table
+	branch = master
+[submodule "sededu/modules/riversanddeltas/flooding_in_deltas"]
+	path = sededu/modules/riversanddeltas/flooding_in_deltas
+	url = https://github.com/sededu/flooding_in_deltas
+	branch = master
