@@ -284,6 +284,7 @@ class CategoryPageWidget(QWidget):
                 self.execPath = ModuleExecPath
                 ModuleExecButton.clicked.connect(lambda: self.parent().execModule(ModuleExecPath))
                 self.layout().addWidget(ModuleExecButton, 0, 1)
+                self.setAlignment(QtCore.Qt.AlignCenter)
 
         class ModulePreviewWidget(QGroupBox):
             # preview widget, fills with blank if not given
