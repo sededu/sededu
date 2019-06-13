@@ -30,6 +30,9 @@ class ParagraphInfoLabel(QLabel):
         self.setFont(theFont)
         self.setOpenExternalLinks(True)
 
+        self.setLineWidth(0)
+        self.setFrameStyle(QFrame.Panel | QFrame.Plain)
+
 
     def url_checker(self, labelText):
         # check for markdown formatted urls

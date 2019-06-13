@@ -81,8 +81,8 @@ This is to ensure that SedEdu remains easily deployable.
 It is also crucial that you design your module to be OS agnostic by using Python's `os.path` utilities for file resources.
 
 You are free however to use an array of Python packages within your module. 
-Currently, SedEdu requires `scipy`, `matplotlib`, `pygame`, and `shapely` during installation, so you can safely use those packages.
-All the packages included in the [Python Standard Library]](https://docs.python.org/3/library/) are also available for use in modules (there's a ton!).
+Currently, SedEdu requires `scipy`, `matplotlib`, `pillow`, and `shapely` during installation, so you can safely use those packages.
+All the packages included in the [Python Standard Library](https://docs.python.org/3/library/) are also available for use in modules (there's a ton!).
 
 There is no hard cap on the maximum disk size allowable for your module, but in keeping with an easily deployable SedEdu please keep modules < 1.5 MB.
 If including activity sheets exceeds this limit, that will be fine.
@@ -92,7 +92,7 @@ The biggest resource provided to you here for writing your module would be the e
 The README of this module has a thorough description of the workflow of designing a module.
 Find the complete example module in `docs/example-module/` or [on GitHub here](https://github.com/amoodie/example-module_sededu).
 Furthermore, all of the modules included in SedEdu are open source, so you can view the source code for a given project for a hint on 'how-to', or inspiration for module ideas.
-
+Finally, there are materials available form a clinic at CSDMS 2019 [available here](https://github.com/sededu/CSDMS_clinic).
 
 ### The `about.json` file
 Integrating your module into SedEdu requires a special file describing the module, called `about.json`.
@@ -159,7 +159,7 @@ Follow the (OS agnostic) instructions below to add your module to SedEdu.
 
 For an example of adding a submodule command, the "Rivers to Stratigraphy" module was added to SedEdu by issuing the command:
 ```
-git submodule add -b master https://github.com/amoodie/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
+git submodule add -b master https://github.com/sededu/rivers2stratigraphy sededu/modules/stratigraphy/rivers2stratigraphy
 ```
 
 __IMPORTANT NOTE FOR MODULE DEVELOPERS:__ it is really important that whatever your default GitHub repository branch is when you add the module to SedEdu remain stable. 
