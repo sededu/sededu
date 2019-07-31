@@ -64,34 +64,38 @@ class CategoryPageWidget(QWidget):
             self.ModuleInformationPageStack.addWidget(iModuleInfoPage)
 
             # construct and add the doc page to the stack
-            iModuleDocPath = os.path.join(iModuleDirectory, *iModuleAbout["docloc"])
-            iModuleDocNames = iModuleAbout["doclist"]
-            iModuleDocLaunchList = [os.path.join(iModuleDocPath, f) for 
-                                    f in list(iModuleDocNames.keys())]
             iModuleDocPage = self._ModuleDocumentPage()
             self.ModuleDocStack.addWidget(iModuleDocPage)
 
             # construct and add the document list to the doc page
-            iModuleDocList = self._DocumentListWidget(iModuleDocLaunchList)
-            iModuleDocPage.layout().addWidget(iModuleDocList)
+            self.iModuleDocList = self._DocumentListWidget()
+            iModuleDocPage.layout().addWidget(self.iModuleDocList)
 
-            # loop through the docs and add to the list 
-            docNum = 0
-            for iDoc in iModuleDocNames:
-                iDocInfo = iModuleAbout["doclist"]
-                iDocTitle = list(iDocInfo.values())[docNum]
-                iDocFile = list(iDocInfo.keys())[docNum]
-                iDocListItem = QListWidgetItem(iDocTitle)
-                iDocListItem.setSizeHint(QtCore.QSize(100,30))
-                iModuleDocList.addItem(iDocListItem)
-                docNum += 1
-            iModuleDocList.setCurrentRow(0)
+            # determine whether there are any documents, and add them if there are
+            if "doclist" in iModuleAbout.keys():
+                iModuleDocPath = os.path.join(iModuleDirectory, *iModuleAbout["docloc"])
+                iModuleDocNames = iModuleAbout["doclist"]
+                iModuleDocLaunchList = [os.path.join(iModuleDocPath, f) for 
+                                        f in list(iModuleDocNames.keys())]
+
+                # loop through the docs and add to the list 
+                docNum = 0
+                for iDoc in iModuleDocNames:
+                    iDocInfo = iModuleAbout["doclist"]
+                    iDocTitle = list(iDocInfo.values())[docNum]
+                    iDocFile = list(iDocInfo.keys())[docNum]
+                    iDocListItem = QListWidgetItem(iDocTitle)
+                    iDocListItem.setSizeHint(QtCore.QSize(100,30))
+                    self.iModuleDocList.addItem(iDocListItem)
+                    docNum += 1
+                self.iModuleDocList.setCurrentRow(0)
+
+                # add the launchList to the docList object
+                self.iModuleDocList.addLaunchList(iModuleDocLaunchList)
             
-            # create a document launcher button if docs
-            if len(iModuleDocLaunchList) > 0:
-                iModuleDocLaunchButton = utls.GenericLargePushButton(text='Open activity',
-                                                                     height=40)
-                iModuleDocLaunchButton.clicked.connect(lambda x, lL=iModuleDocLaunchList: iModuleDocList.docLaunch(lL))
+                # create a document launcher button
+                iModuleDocLaunchButton = utls.GenericLargePushButton(text='Open activity', height=40)
+                iModuleDocLaunchButton.clicked.connect(self.iModuleDocList.docLaunch)
                 iModuleInfoPage.launchButtons.layout().addWidget(iModuleDocLaunchButton, 0, 0)
 
             # increment to next module
@@ -166,14 +170,18 @@ class CategoryPageWidget(QWidget):
 
     class _DocumentListWidget(QListWidget):
         # document list
-        def __init__(self, launchList, parent=None):
+        def __init__(self, parent=None):
             QListWidget.__init__(self, parent)
 
+        def addLaunchList(self, launchList):
+            # add the list of launchable paths as an attribute,
+            # must be called *after* initialization of the object
+            self.launchList = launchList
 
         def docLaunch(self, launchList):
             # utility for launching the document selected
             launchIdx = self.currentRow()
-            filename = launchList[launchIdx]
+            filename = self.launchList[launchIdx]
             utls.open_file(filename)
 
 
