@@ -52,7 +52,7 @@ If you do not have something to fill in an optional key field, __remove the fiel
 If you leave a blank pair of double-quotes, the field may be printed in SedEdu, but simply be blank.
 
 ## Where to put the about.json file
-The `about.json` __must__ be located in the root of the module repository. See the [example module](https://github.com/amoodie/example-module_sededu/) and [template module](https://github.com/amoodie/template-module_sededu/).
+The `about.json` __must__ be located in the root of the module repository. See the [example module](https://github.com/sededu/example-module_sededu/) and [template module](https://github.com/sededu/template-module_sededu/).
 
 
 
