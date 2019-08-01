@@ -120,6 +120,8 @@ and SedEdu is then run with:
 python3 sededu/run_sededu.py
 ```
 
+Note that if you have no modules: run `git submodule update --init --recursive`.
+
 ### Running SedEdu
 
 1. Open a Python shell by typing `python` (or `python3`) at the terminal (OSX and Linux users) or at the Anaconda / Command Prompt (Windows users).
