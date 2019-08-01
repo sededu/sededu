@@ -115,3 +115,6 @@ venv.bak/
 /sededu/private/*.svg
 
 .DS_Store
+
+# temp ignore .jose folder while writing
+.jose/

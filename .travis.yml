@@ -11,6 +11,9 @@ os:
   - linux
   - osx
 
+services:
+  - xvfb
+
 before_install:
   - echo TRAVIS_BRANCH = $TRAVIS_BRANCH
   - echo TRAVIS_TAG = $TRAVIS_TAG
@@ -58,7 +61,7 @@ install:
 before_script:
   # configure a headless display to test plot generation
   - "export DISPLAY=:99.0"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
   - sleep 5 # give xvfb some time to start
 
