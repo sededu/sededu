@@ -26,6 +26,9 @@
 	path = sededu/modules/riversanddeltas/sediment-load-calculator_kensukename2
 	url = https://github.com/amoodie/sediment-load-calculator_kensukename2
 	branch = master
+[submodule "sededu/modules/riversanddeltas/Rouse_Model"]
+	path = sededu/modules/riversanddeltas/Rouse_Model
+	url = https://github.com/brandeeeee/Rouse_Model.git
 [submodule "sededu/modules/landscapes/hillslope_creep"]
 	path = sededu/modules/landscapes/hillslope_creep
 	url = https://github.com/sededu/hillslope_creep
