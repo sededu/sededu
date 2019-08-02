@@ -1,19 +1,19 @@
 [submodule "sededu/modules/stratigraphy/rivers2stratigraphy"]
 	path = sededu/modules/stratigraphy/rivers2stratigraphy
 	url = https://github.com/sededu/rivers2stratigraphy
-    branch = master
+    	branch = master
 [submodule "sededu/modules/stratigraphy/stratigraphic_filter"]
 	path = sededu/modules/stratigraphy/stratigraphic_filter
 	url = https://github.com/sededu/stratigraphic_filter_toy
-    branch = master
+    	branch = master
 [submodule "docs/example-module"]
 	path = docs/example-module
 	url = https://github.com/sededu/example-module_sededu.git
-    branch = master
+    	branch = master
 [submodule "docs/template-module"]
 	path = docs/template-module
 	url = https://github.com/sededu/template-module_sededu.git
-    branch = master
+    	branch = master
 [submodule "sededu/modules/landscapes/rain_table"]
 	path = sededu/modules/landscapes/rain_table
 	url = https://github.com/sededu/rain_table
@@ -29,6 +29,7 @@
 [submodule "sededu/modules/riversanddeltas/Rouse_Model"]
 	path = sededu/modules/riversanddeltas/Rouse_Model
 	url = https://github.com/brandeeeee/Rouse_Model.git
+	branch = master
 [submodule "sededu/modules/landscapes/hillslope_creep"]
 	path = sededu/modules/landscapes/hillslope_creep
 	url = https://github.com/sededu/hillslope_creep
