@@ -1,2 +1,3 @@
 v0.0.1, 01.07.18 -- Initial development.
 v1.0.0, 04.16.18 -- Initial release.
+v1.1.6, 08.13.19 -- Release stable for publication in JOSE
