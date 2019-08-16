@@ -11,6 +11,9 @@ os:
   - linux
   - osx
 
+services:
+  - xvfb
+
 before_install:
   - echo TRAVIS_BRANCH = $TRAVIS_BRANCH
   - echo TRAVIS_TAG = $TRAVIS_TAG
@@ -49,7 +52,7 @@ install:
   - conda info -a
 
   # Create new env and install deps
-  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib shapely pillow pytest=3.8.1 pyqt pytest-mpl pytest-qt
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION numpy scipy matplotlib shapely pillow pyqt pytest>=4.3 pytest-mpl pytest-qt pytest-cov coveralls
   - source activate test-environment
   # - conda install -q numpy scipy matplotlib shapely pillow pytest pyqt
   # - conda install -q -c conda-forge pytest-mpl pytest-qt
@@ -58,7 +61,7 @@ install:
 before_script:
   # configure a headless display to test plot generation
   - "export DISPLAY=:99.0"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
+  # - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
   - sleep 5 # give xvfb some time to start
 
@@ -66,6 +69,7 @@ script:
   # we only test sededu here (NOT submodules), but we do test _opening_ submodules from sededu
   # - pytest --ignore=sededu/modules/
   - pytest --ignore=sededu/modules/
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "3.7" ]]; then pytest --ignore=sededu/modules/ --ignore-glob='*gui.py' --cov=sededu/; fi
 
 after_success:
   - echo CIBUILD = $CIBUILD
@@ -76,6 +80,7 @@ after_success:
       conda install -q conda-build anaconda-client
       pip install twine wheel
     fi
+  - coveralls
   - python .ci/conda-recipe/parse_README.py
   - python .ci/travis/anaconda_build_upload.py
   - python .ci/travis/pypi_build_upload.py

@@ -52,12 +52,9 @@ install:
   - cmd: conda info
   - cmd: conda config --set always_yes yes --set anaconda_upload no
   - cmd: conda config --append channels conda-forge
-  - cmd: conda update -q conda
-  - cmd: conda create -q -n test-environment python=%CONDA_PY% numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
-  - cmd: activate test-environment
-  # - cmd: conda install -q numpy scipy matplotlib shapely pytest=3.8.1
-  # - cmd: pip install Pillow
-  # - cmd: conda install -q -c conda-forge pytest-mpl pytest-qt
+  - cmd: conda install -q python=%CONDA_PY%
+  - cmd: conda install -q numpy scipy matplotlib shapely pillow pytest=3.8.1 pytest-mpl pytest-qt
+  - cmd: conda install -q conda-build anaconda-client
   - cmd: conda list
 
 build: false
@@ -70,22 +67,13 @@ after_test:
   # - cmd: conda build .ci\conda-recipe
   # - cmd: python setup.py sdist bdist_wheel
 
-  # Move the conda package into the current directory, to register it
-  # as an "artifact" for Appveyor.
-  # - python .ci\appveyor\move-conda-package.py .ci\conda-recipe
-
 artifacts:
   # Archive the generated conda package in the ci.appveyor.com build report.
-  # - path: '*.tar.bz2'
+  # - path: 'dist\*'
 
 on_success:
   # Upload built binaries to Anaconda Cloud and PyPi. 
   # Python scripts handle check on tags
   - cmd: pip install twine
-  - cmd: conda install conda-build anaconda-client
   - python .ci\conda-recipe\parse_README.py
   - python .ci\appveyor\anaconda_build_upload.py
-  # - python .ci\appveyor\anaconda_upload.py
-  # no need since sdist
-  # - python .ci\appveyor\pypi_build.py 
-  # - python .ci\appveyor\pypi_upload.py

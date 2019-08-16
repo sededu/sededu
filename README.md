@@ -10,7 +10,7 @@
 
 <!-- # SedEdu -->
 SedEdu is a suite of educational activities related to geomorphology and sedimentology. 
-The suite is targeted at grade school educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. 
+The suite is targeted at educators who want to bring engaging, interactive, and scientifically relevant activities into their classroom. 
 SedEdu is built __entirely in Python and is free and open source__ software. 
 Modules included in SedEdu are built by researchers at the cutting edge of their fields and are designed to showcase their research in a digestible manner.
 
@@ -120,6 +120,8 @@ and SedEdu is then run with:
 python3 sededu/run_sededu.py
 ```
 
+Note that if you have no modules: run `git submodule update --init --recursive`.
+
 ### Running SedEdu
 
 1. Open a Python shell by typing `python` (or `python3`) at the terminal (OSX and Linux users) or at the Anaconda / Command Prompt (Windows users).
@@ -180,6 +182,7 @@ Please read [CONTRIBUTING.md](https://github.com/sededu/sededu/blob/release/CONT
 Dev channel stats:
 [![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
 [![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/sededu/sededu/)
+[![Coverage Status](https://coveralls.io/repos/github/sededu/sededu/badge.svg?branch=tests)](https://coveralls.io/github/sededu/sededu?branch=tests)
 
 You should get the entire repository and work off of the `develop` branch:
 

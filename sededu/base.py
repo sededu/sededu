@@ -40,25 +40,29 @@ class MainSideBarWidget(QWidget):
             QGroupBox.__init__(self, parent)
             self.setLayout(QVBoxLayout())
 
-            Logo = self.makeLogo()
-            Desc = self.makeDesc()
-            Vers = self.makeVers()
+            self.Logo = self.makeLogo()
+            self.Desc = self.makeDesc()
+            self.Vers = self.makeVers()
             
-            self.layout().addWidget(Logo)
-            self.layout().addWidget(Desc)
-            self.layout().addWidget(Vers)
+            self.layout().addWidget(self.Logo)
+            self.layout().addWidget(self.Desc)
+            self.layout().addWidget(self.Vers)
             self.setAlignment(QtCore.Qt.AlignLeft)
 
 
         def makeLogo(self):
-            Logo = QLabel() 
-            Logo.setPixmap(QtGui.QPixmap(os.path.join(\
-                self.parent().parent().privatePath, 'sededu.png')))
+            Logo = QLabel()
+            try:
+                LogoPath = os.path.join(self.parent().parent().privatePath, 
+                                        'sededu.png')
+                Logo.setPixmap(QtGui.QPixmap(LogoPath))
+            except:
+                Logo.setText('**logo not found**')
             return Logo
 
 
         def makeDesc(self):
-            Desc = utls.ShortInfoLabel('a sediment-related educational activity suite', 
+            Desc = utls.ShortInfoLabel('a sediment-related\neducational activity suite', 
                                  utls.titleFont())
             return Desc
 
@@ -70,6 +74,7 @@ class MainSideBarWidget(QWidget):
                 __version__ = "unknown"
             Vers = utls.ShortInfoLabel("version " + __version__, utls.versionFont())
             return Vers
+
 
     class _SideBarButtonsWidget(QGroupBox):
         # buttons at the bottom of the sidebar
@@ -90,6 +95,7 @@ class MainSideBarWidget(QWidget):
             # switch the button to direct to about page
             self.AuxButton.setText('About')
             self.AuxButton.clicked.connect(lambda: self.parent().parent().parent().navToAbout(idx=1))
+
 
         def setAuxButtonToMain(self):
             # switch the button to direct to main page
