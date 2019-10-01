@@ -1,5 +1,5 @@
 ---
-title: 'SedEdu: a suite of sediment-related educational modules'
+title: 'SedEdu: software organizing sediment-related educational modules'
 tags:
 - Python
 - geology
@@ -38,10 +38,10 @@ bibliography: paper.bib
 ---
 
 # Summary
-SedEdu is a suite of computer-based interactive educational activities for sedimentology and stratigraphy courses.
-SedEdu comprises modules which are coupled with activities that guide students through a concept, incrementally introducing components of the concept, and testing for understanding and retention throughout the activity.
+SedEdu is a software framework that organizes computer-based interactive educational activities for sedimentology and stratigraphy courses.
+SedEdu comprises modules which are coupled with activities that guide students, incrementally introducing components of a concept, and testing for understanding and retention throughout the activity.
 The modules are computational and quantitative, but the code is abstracted through a graphical user interface (GUI), through which the user interacts with aspects of the computational model.
-This paper describes the high level functionality of the SedEdu software package, includes a statement of need for this software package, and provides a brief example of how a module has been integrated into a classroom.
+This paper focuses on the SedEdu software, and not the underlying modules, an so describes the high level functionality of the SedEdu software package, includes a statement of need for this software package, and provides a brief example of how the SedEdu software has been integrated into a classroom.
 
 ![SedEdu main screen and category page.](figures/sededu_main_and_category.png)
 
@@ -49,11 +49,12 @@ The SedEdu framework organizes modules into five categories (Figure 1, left): "R
 Clicking on a category button brings the user to that category page, where the available modules (and associated metadata and activities) are listed (Figure 1, right).
 Pressing the button "Run module" will launch the module selected, and "Open activity" will open the activity on the users computer (typically a `.pdf` file).
 
-SedEdu itself is a framework that packages and delivers content, with the goal of making it convenient for users to install, access, and interact with the software. 
-To this end, SedEdu is free, platform-agnostic, fully open source, and available from common software repositories (e.g., `pip`, `conda`).
-Modules rely on existing Python libraries, which minimizes the burden of development and maintenance for SedEdu contributors. 
-SedEdu is modular: modules are developed and maintained by individuals, and are only collated into the framework during building for a new release.
-The SedEdu framework is independent of the underlying content material, such that the framework could be adapted (i.e., forked) for use in other fields or communities.
+SedEdu is built on PyQt5, is platform-agnostic, free, fully open source, and available from common software repositories (e.g., `pip`, `conda`).
+SedEdu utilizes `gitsubmodule`s and continuous integration to package and deliver the educational modules, with the goal of making it convenient for users to install, access, and use the software. 
+Modules are developed by individuals, and rely on existing Python libraries, which minimizes the burden of development and maintenance for SedEdu contributors. 
+Robust developer instructions included in the repository describe the workflow to develop and integrate a module into SedEdu.
+<!-- SedEdu is modular: modules are developed and maintained by individuals, and are only collated into the framework during building for a new release. -->
+The SedEdu framework is independent of the underlying content material, such that the framework may be adapted (i.e., forked) for use in other fields or communities.
 The SedEdu software framework was developed by Andrew J. Moodie, and modules and/or activities have been contributed by Brandee Carlson, Brady Foreman, Andrew Moodie, Kensuke Naito, Jeffrey Kwang, and Jeffrey Nittrouer; there are 7 modules and 7 activities/worksheets in the (current) version v1.1.6, and SedEdu is actively seeking developers of modules and activities.
 
 
@@ -65,9 +66,9 @@ Thus, on-line and computer-based learning coupled with in-person lessons, called
 
 Research and education integration is a core strategy in the U.S.A. National Science Foundation program design [@nsf_merit_2002], so grant writers frequently develop active learning strategies as part of their broader research impacts.
 When developed, these active learning materials are often ineffectively disseminated, and so they are underutilized.
-SedEdu offers a framework to organize these activities in one place, thereby increasing availability and utilization of externally-funded active learning materials.
+SedEdu offers a framework and development workflow, which organizes these activities in one place, thereby increasing availability and utilization of externally-funded active learning materials.
 
-SedEdu provides an active learning tool which can be readily integrated into classrooms.
+SedEdu provides active learning tools which can be readily integrated into classrooms.
 SedEdu is great for educators because it provides high-quality active learning materials to the educators to easily bring into their classrooms, and provides an alternative non-traditional method for educators working under universal design for instruction principles [@scott_universal_2003].
 SedEdu is great for researchers because it provides a tractable pathway for broader research impacts, and developing activities for computer-based active learning takes advantage of existing knowledge and skills they are likely to already have.
 
