@@ -49,7 +49,7 @@ The SedEdu framework organizes modules into five categories (Figure 1, left): "R
 Clicking on a category button brings the user to that category page, where the available modules (and associated metadata and activities) are listed (Figure 1, right).
 Pressing the button "Run module" will launch the module selected, and "Open activity" will open the activity on the users computer (typically a `.pdf` file).
 
-SedEdu is built on PyQt5, is platform-agnostic, free, fully open source, and available from common software repositories (e.g., `pip`, `conda`).
+SedEdu is built on PyQt5, and is platform-agnostic, free, fully open source, and available from common software repositories (e.g., `pip`, `conda`).
 SedEdu utilizes `gitsubmodule`s and continuous integration to package and deliver the educational modules, with the goal of making it convenient for users to install, access, and use the software. 
 Modules are developed by individuals, and rely on existing Python libraries, which minimizes the burden of development and maintenance for SedEdu contributors. 
 Robust developer instructions included in the repository describe the workflow to develop and integrate a module into SedEdu.
@@ -65,15 +65,17 @@ Ideal active learning strategies minimize financial thresholds for entry and max
 Thus, on-line and computer-based learning coupled with in-person lessons, called "blended learning", is a promising avenue to integrate active learning into the classroom [@garrison_blended_2004].
 
 Research and education integration is a core strategy in the U.S.A. National Science Foundation program design [@nsf_merit_2002], so grant writers frequently develop active learning strategies as part of their broader research impacts.
-When developed, these active learning materials are often ineffectively disseminated, and so they are underutilized.
-SedEdu offers a framework and development workflow, which organizes these activities in one place, thereby increasing availability and utilization of externally-funded active learning materials.
+When developed, these active learning materials are often ineffectively locatable, and so they are underutilized.
+SedEdu organizes these activities into a single place, thereby increasing availability and utilization of externally-funded active learning materials.
 
-SedEdu provides active learning tools which can be readily integrated into classrooms.
+<!-- SedEdu provides active learning tools which can be readily integrated into classrooms. -->
 SedEdu is great for educators because it provides high-quality active learning materials to the educators to easily bring into their classrooms, and provides an alternative non-traditional method for educators working under universal design for instruction principles [@scott_universal_2003].
 SedEdu is great for researchers because it provides a tractable pathway for broader research impacts, and developing activities for computer-based active learning takes advantage of existing knowledge and skills they are likely to already have.
 
 
 # Using SedEdu in the classroom
+Integrating educational infrastructure into the classroom is challenging, in part, due to logistical considerations for installing software; these concerns are alleviated with simple installation instructions included in the project repository documentation.
+Most SedEdu modules will be used in a similar manner, so this section provides the reader with a sense for how a SedEdu module has been successfully integrated into a classroom.
 *rivers2stratigraphy* (*r2s*, Figure 2) is an example of a SedEdu module that illustrates basin-scale development of fluvial (i.e., river) stratigraphy via a real-time, rules-based model.
 The model simplifies a real-world system so to run efficiently, and yet produces realistic stratigraphic patterns. 
 In the module GUI, the students may change system parameters that represent the types of boundary conditions interpreted by geologists when evaluating the rock record (e.g., channel water discharge, avulsion timescale, and basin subsidence rates). 
