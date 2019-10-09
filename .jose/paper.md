@@ -65,26 +65,26 @@ Thus, on-line and computer-based learning coupled with in-person lessons, called
 
 Research and education integration is a core strategy in the U.S.A. National Science Foundation program design [@nsf_merit_2002], so grant writers frequently develop active learning strategies as part of their broader research impacts.
 When developed, these active learning materials are often ineffectively disseminated, and so they are underutilized.
-The SedEdu software organizes these activities into a single place, thereby increasing availability and utilization of these externally-funded active learning materials.
+The SedEdu software addresses the need for active learning materials in the classroom by organizing these activities into a single place, thereby increasing availability and utilization of these externally-funded active learning materials.
 
 <!-- SedEdu provides active learning tools which can be readily integrated into classrooms. -->
-SedEdu is beneficial for educators because it provides high-quality active learning materials to the educators that can be easily integrated into their classrooms, and it provides infrastructure for educators working under universal design for instruction principles [@scott_universal_2003].
-SedEdu is beneficial for researchers because it provides a tractable pathway for broader research impacts, and because developing activities for computer-based active learning takes advantage of existing knowledge and skills researchers are likely to already possess.
+SedEdu is beneficial for educators because it organizes high-quality active learning materials that can be easily integrated into their classrooms, and it provides educational infrastructure in line with universal design for instruction principles [@scott_universal_2003].
+SedEdu is beneficial for researchers because it provides a tractable pathway for broader research impacts, and because developing activities for computer-based active learning takes advantage of existing knowledge and skills researchers are likely to already possess (research and education integration).
 
 
 # Using SedEdu in the classroom
-Integrating educational infrastructure into the classroom is challenging, in part, due to logistical considerations for installing software; these concerns are alleviated with simple installation instructions included in the project repository documentation.
-Most SedEdu modules will be used in a similar manner, so this section provides the reader with a sense for how a SedEdu module has been successfully integrated into a classroom.
+Integrating educational infrastructure into the classroom is challenging, in part, due to logistical considerations for installing software; these concerns are alleviated with SedEdu's simple installation procedure, which is described in the project repository documentation.
+Most SedEdu modules will be used in a similar manner, so this section provides the reader with a sense for how the SedEdu software and a module have been successfully integrated into a classroom.
 *rivers2stratigraphy* (*r2s*, Figure 2) is an example of a SedEdu module that illustrates basin-scale development of fluvial (i.e., river) stratigraphy via a real-time, rules-based model.
 The model simplifies a real-world system so to run efficiently, and yet produces realistic stratigraphic patterns. 
 In the module GUI, the students may change system parameters that represent the types of boundary conditions interpreted by geologists when evaluating the rock record (e.g., channel water discharge, avulsion timescale, and basin subsidence rates). 
 Thus, hypotheses regarding how certain conditions influence stratigraphic patterns over time and space can be sequentially tested. 
 
-![*rivers2stratigraphy* module after adjusting the subsidence rate of the basin to produce variable channel stacking patterns over the stratigraphic height. Color of channels indicates subsidence rate while that channel-body was deposited (purple$\rightarrow$yellow for slow$\rightarrow$fast).](figures/rivers2stratigraphy_demo.png){width=400px}
+![*rivers2stratigraphy* module after adjusting the subsidence rate of the basin to produce variable channel stacking patterns over the stratigraphic height. Channel color indicates subsidence rate while that channel-body was deposited (purple$\rightarrow$yellow for slow$\rightarrow$fast).](figures/rivers2stratigraphy_demo.png){width=400px}
 
 This interactive approach improves on traditional static instruction methods taught in laboratories, wherein students are provided an outcrop photograph and asked to measure properties including channel stacking, sand-body thickness, and cross-cutting relationships. 
 In these situations, interpretations are subjective and typically vary; moreover, this style requires spatial abstraction and visualization skills, even before students learn about how dynamic boundary conditions and various geological processes impact stratigraphic patterns. 
-However, in the SedEdu *r2s* module, these hurdles are eliminated because the students interact in real-time with the key boundary conditions, evaluating how stratigraphy is influenced, which enables students to more quickly and efficiently learn.
+However, in the SedEdu *r2s* module, these hurdles are eliminated because the students interact in real-time with the key boundary conditions, evaluating how stratigraphy is influenced, which enables students to learn quickly and efficiently.
 
 
 # References
