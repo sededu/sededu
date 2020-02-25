@@ -113,11 +113,22 @@ def open_file(filename):
     platType = platform.system()
     if os.path.isfile(filename):
         if platType in {'Linux'}:
-            subprocess.Popen(['xdg-open', filename])
+            try:
+                sp = subprocess.Popen(['xdg-open', filename])
+                # output, error = sp.communicate()
+            except FileNotFoundError as e:
+                platRelease = platform.release()
+                pyType = platform.python_build()
+                raise RuntimeError('Error raised when trying to open file: \n\t {filename} \n'
+                                   'Identified on platform type: \n\t {platType} \n'
+                                   'Platform release identfied as: \n\t {platRelease} \n'
+                                   'Python type: \n\t {pyType} \n'
+                                   '\n Full error msg was: \n\t {errmsg}'.format(filename=filename, platType=platType,
+                                                                            platRelease=platRelease, pyType=pyType, errmsg=e))
         elif platType in {'Darwin', 'Windows'}:
-            subprocess.Popen(['open', filename])
+            sp = subprocess.Popen(['open', filename])
         else:
-            raise RunTimeError('unknown platform type: %s' % platType)
+            raise RuntimeError('unknown platform type: %s' % platType)   
     else:
         msg = NoFileMessageBox(filename)
         msg.exec_()
