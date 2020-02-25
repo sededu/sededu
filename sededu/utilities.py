@@ -117,7 +117,7 @@ def open_file(filename):
         elif platType in {'Darwin', 'Windows'}:
             subprocess.Popen(['open', filename])
         else:
-            print('unknown platform type')
+            raise RunTimeError('unknown platform type: %s' % platType)
     else:
         msg = NoFileMessageBox(filename)
         msg.exec_()

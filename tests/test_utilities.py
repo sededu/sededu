@@ -1,6 +1,6 @@
 import pytest
 
-import sys, os, shutil
+import sys, os, shutil, platform
 import numpy as np
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/.."))
 
@@ -225,6 +225,18 @@ def test_filesList():
     docs_file_list = list(utls.filesList('docs'))
     
     assert len(docs_file_list) == 8
+
+
+def test_open_file():
+    docs_file_list = list(utls.filesList('docs'))
+
+    utls.open_file('docs/'+docs_file_list[0])
+
+
+def test_platTypeReading():
+    """Not explicityly in the code as a function"""
+    platType = platform.system()
+    assert platType in {'Linux', 'Darwin', 'Windows'}
 
 
 def test_category2path_with_real_names():
