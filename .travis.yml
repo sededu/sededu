@@ -11,6 +11,9 @@ os:
   - linux
   - osx
 
+osx_image: 
+  - xcode11  
+
 services:
   - xvfb
 
