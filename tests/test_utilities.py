@@ -1,6 +1,6 @@
 import pytest
 
-import sys, os, shutil
+import sys, os, shutil, platform
 import numpy as np
 sys.path.append(os.path.realpath(os.path.dirname(__file__)+"/.."))
 
@@ -227,6 +227,22 @@ def test_filesList():
     assert len(docs_file_list) == 8
 
 
+def test_open_file():
+    docs_file_list = list(utls.filesList('docs'))
+
+    # utls.open_file(os.path.join('docs', docs_file_list[0]))
+    pass
+
+
+def test_platTypeReading():
+    """
+    Not explicityly in the code as a function.
+    Used to test the Darwin tree path
+    """
+    platType = platform.system()
+    assert platType in {'Linux', 'Darwin', 'Windows'}
+
+
 def test_category2path_with_real_names():
     categoryList = ['Rivers', 'Deltas', 'Deserts', 'Coasts', 
                     'Stratigraphy', 'Behind the \nModules']
@@ -239,8 +255,10 @@ def test_category2path_with_real_names():
 def test_category2path_with_fake_names():
     assert utls.category2path('Andrew Moodie') == 'andrewmoodie'
     assert utls.category2path('SedEdu!IsFun!') == 'sededu!isfun!'
-    # note that this is expected behavior, but 'sededu!isfun!'
-    #    is not a valid file name. It would be best to replace 
-    #    all special characters, or better validate the names?
+    """
+    note that this is expected behavior, but 'sededu!isfun!'
+        is not a valid file name. It would be best to replace 
+        all special characters, or better validate the names?
+    """
 
 

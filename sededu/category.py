@@ -294,6 +294,7 @@ class CategoryPageWidget(QWidget):
                 self.layout().addWidget(ModuleExecButton, 0, 1)
                 self.setAlignment(QtCore.Qt.AlignCenter)
 
+
         class ModulePreviewWidget(QGroupBox):
             # preview widget, fills with blank if not given
             previewHeight = 250

@@ -1,6 +1,6 @@
 environment:
   CONDA_TOKEN:
-    secure: 2mW1BhmZUy8KenrXZLNJMr+r3Uq7P0aI9I4E3ihwjoEoNVJnSrRwYLgW9gUBVpHp
+    secure: afPY4tyAkAExBtVKDq/VNqh4WsHygcM38oLxD6i6o1rcC+WefNl2tIQHyZ0vsBQW
 
   matrix:
     - TARGET_ARCH: x86
