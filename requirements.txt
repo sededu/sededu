@@ -4,4 +4,4 @@ scipy
 matplotlib
 shapely
 pillow
-pyqt5
+pyqt>=5.11
