@@ -19,8 +19,8 @@ else:
 setup(
     name='sededu',
     version=verstr,
-    author='Andrew J. Moodie other contributors',
-    author_email='amoodie@rice.edu',
+    author='Andrew J. Moodie and other contributors',
+    author_email='amoodie@utexas.edu',
     packages=['sededu'],
     url='https://github.com/sededu/sededu',
     license='LICENSE.txt',
@@ -28,10 +28,10 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     python_requires='>=3',
-	install_requires=[
-		'scipy',
+    install_requires=[
+        'scipy',
         'numpy',
-		'matplotlib',
+        'matplotlib',
         'shapely',
         'pillow'],
     include_package_data=True,
