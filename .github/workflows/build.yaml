@@ -16,18 +16,20 @@ jobs:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
     steps:
+      - uses: actions/checkout@v2
       - uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
       - name: Conda info
         shell: bash -l {0}
-        run: conda info
-      - name: Conda list
-        shell: pwsh
-        run: conda list
+        run: |
+          conda info
+          conda list
       - name: Install dependencies
         run: |
+          pwd
+          ls -la
           conda install --file requirements.txt
           pip install pytest pytest-cov coveralls
       - name: Install SedEdu
