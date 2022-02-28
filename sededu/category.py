@@ -297,7 +297,7 @@ class CategoryPageWidget(QWidget):
 
         class ModulePreviewWidget(QGroupBox):
             # preview widget, fills with blank if not given
-            previewHeight = 250
+            previewHeight = int(250)
 
             def __init__(self, moduleDirectory, moduleAbout, 
                          previewHeight=previewHeight, parent=None):
@@ -317,9 +317,12 @@ class CategoryPageWidget(QWidget):
                 if 'preview' in moduleAbout:
                     previewPath = os.path.join(moduleDirectory, *moduleAbout["preview"])
                     if os.path.isfile(previewPath): # check that pixmap exists
-                        previewLabel.setPixmap(QtGui.QPixmap(previewPath).scaledToHeight(
-                                               previewHeight).copy(QtCore.QRect(
-                                               0,0,previewHeight*(4/3),previewHeight)))
+                        previewLabel.setPixmap(
+                            QtGui.QPixmap(previewPath).scaledToHeight(
+                                previewHeight).copy(
+                                QtCore.QRect(
+                                    0, 0,
+                                    int(previewHeight*(4/3)), previewHeight)))
                     else: # preview path supplied, but no image found
                         previewLabel.setText('** Image not found **')
                 else: # no preview path supplied

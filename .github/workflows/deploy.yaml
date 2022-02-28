@@ -60,4 +60,4 @@ jobs:
           conda install --file requirements.txt
       - name: Build conda package
         run: |
-        conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
+          conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
