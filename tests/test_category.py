@@ -44,7 +44,10 @@ def test_CategoryPageWidget_instantiate(qtbot):
     
     assert cpw.width() >= 0
     assert cpw.isVisible() is True
-    assert len(cpw.ModuleList) == 0  # zero because no submodules cloned
+
+    # should be something here, because checked out submodules
+    #  (if getting error, check that submodules have been checked out!)
+    assert len(cpw.ModuleList) > 0
 
 
 @pytest.mark.xfail()

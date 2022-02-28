@@ -46,18 +46,24 @@ jobs:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Checkout SedEdu
+        uses: actions/checkout@v2
         with:
-          auto-update-conda: true
+          submodules: recursive
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
           python-version: ${{ matrix.python-version }}
-      - name: Conda info
-        shell: bash -l {0}
-        run: conda info
-        run: conda list
-      - name: Install dependencies
+          conda-channels: anaconda, conda-forge
+      - name: Install Python dependencies
         run: |
           conda install --file requirements.txt
+          pip install pytest pytest-mpl pytest-qt pytest-cov coveralls
+      - name: Conda info
+        run: |
+          conda info
+          conda list
       - name: Build conda package
         run: |
           conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload

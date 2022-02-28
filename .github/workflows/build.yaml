@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout SedEdu
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Setup conda
         uses: s-weigand/setup-conda@v1
         with:
