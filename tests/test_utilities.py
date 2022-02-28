@@ -213,12 +213,12 @@ def test_cutTitle_with_empty_string():
 
 def test_subDirPath():
     docs_directory_list = list(utls.subDirPath('docs'))
-    ci_directory_list = list(utls.subDirPath('.ci'))
+    ci_directory_list = list(utls.subDirPath('.github'))
     docs_file_list = list(utls.filesList('docs'))
     
-    assert len(docs_directory_list) == 2
-    assert len(ci_directory_list) == 3
-    assert len(docs_file_list) == 8
+    assert len(docs_directory_list) >= 2
+    assert len(ci_directory_list) >= 2
+    assert len(docs_file_list) >= 8
 
 
 def test_filesList():
