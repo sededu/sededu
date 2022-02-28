@@ -64,6 +64,37 @@ jobs:
         run: |
           conda info
           conda list
-      - name: Build conda package
+
+      - name: Parse readme for builds
+        run: |
+          python .github/conda-recipe/parse_README.py
+
+      - name: Build conda package -- osx
+        if: startsWith(matrix.os, 'macOS')
         run: |
           conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
+      - name: Build conda package -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
+      - name: Build conda package -- windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          conda build .github\conda-recipe --output-folder .github\conda-build --no-test --no-anaconda-upload
+
+      - name: Configure environment for upload
+        run: |
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+      - name: Deploy conda package -- osx
+        if: startsWith(matrix.os, 'macOS')
+        run: |
+          anaconda upload --label main osx-64/*.tar.bz2
+      - name: Deploy conda package -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          anaconda upload --label main linux-64/*.tar.bz2
+      - name: Deploy conda package -- windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          anaconda upload --label main win-64/*.tar.bz2
+     
