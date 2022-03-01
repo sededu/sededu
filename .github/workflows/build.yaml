@@ -1,0 +1,70 @@
+# Workflow to automate installation and unit testing of SedEdu on various python versions and operating systems
+
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  test-conda:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.7, 3.8, 3.9]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: ${{ matrix.python-version }}
+    steps:
+      - name: Checkout SedEdu
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
+          python-version: ${{ matrix.python-version }}
+          conda-channels: anaconda, conda-forge
+      
+      - name: Install Python dependencies
+        run: |
+          conda install --file requirements.txt
+          pip install pytest pytest-mpl pytest-qt pytest-cov coveralls
+      - name: Conda info
+        run: |
+          conda info
+          conda list
+      
+      - name: Install SedEdu
+        run: |
+          pip install -e .
+      - name: Set up display -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          export DISPLAY=:99.0
+          sudo apt install libxcb-xinerama0 pyqt5-dev-tools
+          echo "sleeping..."
+          sleep 5
+      
+      - name: Test with pytest -- osx
+        if: startsWith(matrix.os, 'macOS')
+        run: |
+          pytest --ignore=sededu/modules/ --ignore-glob='*gui.py' --cov=sededu/ --cov-report=xml
+      - name: Test with pytest -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          xvfb-run `which pytest` --ignore=sededu/modules/ --ignore-glob='*gui.py' --cov=sededu/ --cov-report=xml    
+      - name: Test with pytest -- windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          pytest --ignore=sededu/modules/ --ignore-glob='*gui.py' --cov=sededu/ --cov-report=xml
+      
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          env_vars: OS,PYTHON
+          name: codecov-umbrella
+          fail_ci_if_error: true

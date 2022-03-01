@@ -1,0 +1,100 @@
+# This workflows will upload a Python Package on pypi and conda when a release is created
+
+name: deploy
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  deploy-pypi:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.7, 3.8, 3.9]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: ${{ matrix.python-version }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Build and publish
+      env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      run: |
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
+
+  deploy-conda:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: [3.7, 3.8, 3.9]
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON: ${{ matrix.python-version }}
+    
+    steps:
+      - name: Checkout SedEdu
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
+        with:
+          update-conda: true
+          python-version: ${{ matrix.python-version }}
+          conda-channels: anaconda, conda-forge
+      - name: Install Python dependencies
+        run: |
+          conda install --file requirements.txt
+          pip install pytest pytest-mpl pytest-qt pytest-cov coveralls
+      - name: Conda info
+        run: |
+          conda info
+          conda list
+
+      - name: Parse readme for builds
+        run: |
+          python .github/conda-recipe/parse_README.py
+      - name: Build conda package -- osx
+        if: startsWith(matrix.os, 'macOS')
+        run: |
+          conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
+      - name: Build conda package -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          conda build .github/conda-recipe --output-folder .github/conda-build --no-test --no-anaconda-upload
+      - name: Build conda package -- windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          conda build .github\conda-recipe --output-folder .github\conda-build --no-test --no-anaconda-upload
+
+      - name: Configure environment for upload
+        run: |
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+      - name: Deploy conda package -- osx
+        if: startsWith(matrix.os, 'macOS')
+        run: |
+          anaconda upload --user sededu --label main osx-64/*.tar.bz2
+      - name: Deploy conda package -- linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          anaconda upload --user sededu --label main linux-64/*.tar.bz2
+      - name: Deploy conda package -- windows
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          anaconda upload --user sededu --label main win-64/*.tar.bz2
+     

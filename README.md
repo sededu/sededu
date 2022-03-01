@@ -213,7 +213,7 @@ See also the list of [contributors](https://github.com/sededu/sededu/graphs/cont
 
 # License
 
-This project is licensed under the GNU GPL License - see the [full license](https://github.com/sededu/sededu/blob/release/LICENSE.md) file for details.
+This project is licensed under the GNU GPL License - see the [full license](https://github.com/sededu/sededu/blob/release/LICENSE.txt) file for details.
 It is provided without warranty or guaranteed support.
 Each submodule may be licensed under a different license, please see the relevant module's license file, README, or project homepage for more information.
 
