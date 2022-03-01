@@ -60,7 +60,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           conda install --file requirements.txt
-          pip install pytest pytest-mpl pytest-qt pytest-cov coveralls
+          conda install conda-build anaconda-client
       - name: Conda info
         run: |
           conda info
