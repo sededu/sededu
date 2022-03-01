@@ -1,7 +1,6 @@
 <img src="https://raw.githubusercontent.com/sededu/sededu/develop/private/sededuicon_hires.png" width="250">
 
-[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
-[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/amoodie/sededu/)
+[![Build Status](https://github.com/sededu/sededu/actions/workflows/build.yaml/badge.svg?branch=develop)](https://github.com/sededu/sededu/actions/workflows/build.yaml)
 
 [![Anaconda-Server Badge](https://anaconda.org/sededu/sededu/badges/version.svg)](https://anaconda.org/sededu/sededu)
 [![PyPI version](https://badge.fury.io/py/sededu.svg)](https://badge.fury.io/py/sededu)
@@ -180,8 +179,7 @@ Please read [CONTRIBUTING.md](https://github.com/sededu/sededu/blob/release/CONT
 ### Developer installation
 
 Dev channel stats:
-[![Build Status](https://travis-ci.org/sededu/sededu.svg?branch=release)](https://travis-ci.org/sededu/sededu)
-[![Build status](https://ci.appveyor.com/api/projects/status/a0ay66ve5lp47o9k/branch/release?svg=true)](https://ci.appveyor.com/project/sededu/sededu/)
+[![Build Status](https://github.com/sededu/sededu/actions/workflows/build.yaml/badge.svg?branch=develop)](https://github.com/sededu/sededu/actions/workflows/build.yaml)
 [![Coverage Status](https://coveralls.io/repos/github/sededu/sededu/badge.svg?branch=tests)](https://coveralls.io/github/sededu/sededu?branch=tests)
 
 You should get the entire repository and work off of the `develop` branch:

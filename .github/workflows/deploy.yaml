@@ -8,24 +8,17 @@ on:
 
 jobs:
   deploy-pypi:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.7, 3.8, 3.9]
-    env:
-      OS: ${{ matrix.os }}
-      PYTHON: ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+
     steps:
     - name: Checkout SedEdu
       uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: '3.x'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -91,13 +84,16 @@ jobs:
       - name: Deploy conda package -- osx
         if: startsWith(matrix.os, 'macOS')
         run: |
-          anaconda upload -t $ANACONDA_API_TOKEN --user sededu --label main .github/conda-build/osx-64/*.tar.bz2
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+          anaconda upload --user sededu --label main .github/conda-build/osx-64/*.tar.bz2
       - name: Deploy conda package -- linux
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          anaconda upload -t $ANACONDA_API_TOKEN --user sededu --label main .github/conda-build/linux-64/*.tar.bz2
+          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
+          anaconda upload --user sededu --label main .github/conda-build/linux-64/*.tar.bz2
       - name: Deploy conda package -- windows
         if: startsWith(matrix.os, 'windows')
         run: |
-          anaconda upload -t $ANACONDA_API_TOKEN --user sededu --label main .github/conda-build/win-64/*.tar.bz2
+          setx ANACONDA_API_TOKEN "${{ secrets.ANACONDA_TOKEN }}"
+          anaconda upload --user sededu --label main .github/conda-build/win-64/*.tar.bz2
      
