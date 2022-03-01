@@ -50,7 +50,7 @@ def test_CategoryPageWidget_instantiate(qtbot):
     assert len(cpw.ModuleList) > 0
 
 
-@pytest.mark.xfail()
+# @pytest.mark.xfail()
 def test_CategoryPageWidget_setModulePage(qtbot):
     p = RootWindowPlaceholder()
     cpw = category.CategoryPageWidget(category='Rivers and deltas', parent=p)

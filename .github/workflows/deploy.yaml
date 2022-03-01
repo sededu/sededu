@@ -45,6 +45,7 @@ jobs:
     env:
       OS: ${{ matrix.os }}
       PYTHON: ${{ matrix.python-version }}
+    
     steps:
       - name: Checkout SedEdu
         uses: actions/checkout@v2
@@ -68,7 +69,6 @@ jobs:
       - name: Parse readme for builds
         run: |
           python .github/conda-recipe/parse_README.py
-
       - name: Build conda package -- osx
         if: startsWith(matrix.os, 'macOS')
         run: |

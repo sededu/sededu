@@ -234,7 +234,7 @@ class CategoryPageWidget(QWidget):
         def execModule(self, execPath):
             # tool to execute a python script
             if os.path.isfile(execPath):
-                subprocess.Popen(["python3", execPath])
+                subprocess.Popen(["python", execPath])
             else:
                 msg = utls.NoFileMessageBox(execPath)
                 msg.exec_()
