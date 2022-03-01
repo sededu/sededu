@@ -78,21 +78,24 @@ jobs:
         run: |
           conda build .github\conda-recipe --output-folder .github\conda-build --no-test --no-anaconda-upload
 
-      - name: Configure environment for upload
-        run: |
-          export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
       - name: Deploy conda package -- osx
         if: startsWith(matrix.os, 'macOS')
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
           anaconda upload --user sededu --label main .github/conda-build/osx-64/*.tar.bz2
       - name: Deploy conda package -- linux
         if: startsWith(matrix.os, 'ubuntu')
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
           anaconda upload --user sededu --label main .github/conda-build/linux-64/*.tar.bz2
       - name: Deploy conda package -- windows
         if: startsWith(matrix.os, 'windows')
+        env:
+          ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           setx ANACONDA_API_TOKEN "${{ secrets.ANACONDA_TOKEN }}"
           anaconda upload --user sededu --label main .github/conda-build/win-64/*.tar.bz2
