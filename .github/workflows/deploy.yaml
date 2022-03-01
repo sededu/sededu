@@ -88,13 +88,13 @@ jobs:
       - name: Deploy conda package -- osx
         if: startsWith(matrix.os, 'macOS')
         run: |
-          anaconda upload --label main osx-64/*.tar.bz2
+          anaconda upload --user sededu --label main osx-64/*.tar.bz2
       - name: Deploy conda package -- linux
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-          anaconda upload --label main linux-64/*.tar.bz2
+          anaconda upload --user sededu --label main linux-64/*.tar.bz2
       - name: Deploy conda package -- windows
         if: startsWith(matrix.os, 'windows')
         run: |
-          anaconda upload --label main win-64/*.tar.bz2
+          anaconda upload --user sededu --label main win-64/*.tar.bz2
      
