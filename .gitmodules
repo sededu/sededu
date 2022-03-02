@@ -1,7 +1,7 @@
 [submodule "sededu/modules/stratigraphy/rivers2stratigraphy"]
 	path = sededu/modules/stratigraphy/rivers2stratigraphy
 	url = https://github.com/sededu/rivers2stratigraphy
-    	branch = master
+    	branch = main
 [submodule "sededu/modules/stratigraphy/stratigraphic_filter"]
 	path = sededu/modules/stratigraphy/stratigraphic_filter
 	url = https://github.com/sededu/stratigraphic_filter_toy
@@ -17,7 +17,7 @@
 [submodule "sededu/modules/landscapes/rain_table"]
 	path = sededu/modules/landscapes/rain_table
 	url = https://github.com/sededu/rain_table
-	branch = master
+	branch = main
 [submodule "sededu/modules/riversanddeltas/flooding_in_deltas"]
 	path = sededu/modules/riversanddeltas/flooding_in_deltas
 	url = https://github.com/sededu/flooding_in_deltas
