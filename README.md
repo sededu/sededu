@@ -97,11 +97,11 @@ __Note on permissions:__ you may need to use `sudo` on OSX and Linux.
 __Install with pip__
 To install with `pip` from Pypi use (not recommended for entry-level users):
 ```
-pip3 install pyqt sededu
+pip install pyqt5 sededu
 ```
 or in the event of a failed install, try:
 ```
-pip3 install pyqt5 sededu
+pip install pyqt sededu
 ```
 
 See below instructions for downloading the source code if you wish to be able to modify the source code for development or for exploration.
@@ -112,11 +112,11 @@ __Install by cloning the repository__
 _Developers see below:_
 You can clone the git repository to get the latest release version with:
 ```
-git clone --recurse-submodules -b release https://git@github.com/sededu/sededu.git
+git clone --recurse-submodules -b develop https://git@github.com/sededu/sededu.git
 ```
 and SedEdu is then run with:
 ```
-python3 sededu/run_sededu.py
+python sededu/run_sededu.py
 ```
 
 Note that if you have no modules: run `git submodule update --init --recursive`.
@@ -142,7 +142,7 @@ python -c "import sededu; sededu.run()"
 
 Alternatively, run the module with provided script:
 ```
-python3 <path-to-installation>run_sededu.py
+python <path-to-installation>run_sededu.py
 ```
 
 Please [open an issue](https://github.com/sededu/sededu/issues) if you encounter any additional error messages! 
