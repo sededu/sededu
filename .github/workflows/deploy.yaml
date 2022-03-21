@@ -56,7 +56,7 @@ jobs:
           conda-channels: anaconda, conda-forge
       - name: Install Python dependencies
         run: |
-          conda env update --file environment.yml
+          conda env update -n base --file environment.yml
           conda install conda-build anaconda-client
       - name: Conda info
         run: |
