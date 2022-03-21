@@ -1,0 +1,11 @@
+name: sededu
+channels:
+  - conda-forge
+dependencies:
+  - setuptools
+  - numpy
+  - scipy
+  - matplotlib
+  - shapely
+  - pillow
+  - pyqt
