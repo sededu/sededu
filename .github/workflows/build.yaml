@@ -43,7 +43,8 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           export DISPLAY=:99.0
-          sudo apt install libxcb-xinerama0 pyqt5-dev-tools
+          sudo apt update
+          sudo apt install --fix-missing libxcb-xinerama0 pyqt5-dev-tools
           echo "sleeping..."
           sleep 5
       
