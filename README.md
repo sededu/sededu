@@ -67,13 +67,16 @@ Please include 1) operating system, 2) installation method, and 3) copy-paste th
 ### Windows users
 
 1. Open your "start menu" and search for the "Anaconda prompt"; start this application.
-
-2. Install with the module type the following command and hit "enter":
+2. Install `pyqt5` with the following command and hit "enter":
+```
+conda install -c conda-forge pyqt
+```
+3. Install with the module type the following command and hit "enter":
 ```
 conda install -c sededu sededu
 ```
 If asked to proceed at either step, type `Y` and press "enter" to continue installation. 
-3. This process may take a few minutes as the necessary source code is downloaded.
+4. This process may take a few minutes as the necessary source code is downloaded.
 If the installation succeeds, proceed below to the "Run the module" section.
 
 __Note on permissions:__ you may need to run the Anaconda prompy "as administrator" on Windows.
@@ -124,7 +127,8 @@ Note that if you have no modules: run `git submodule update --init --recursive`.
 ### Running SedEdu
 
 1. Open a Python shell by typing `python` (or `python3`) at the terminal (OSX and Linux users) or at the Anaconda / Command Prompt (Windows users).
-2. Run the module from the Python shell with:
+2. Windows users only: run `activate root`
+3. Run the module from the Python shell with:
 ```
 import sededu
 ```

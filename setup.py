@@ -33,7 +33,8 @@ setup(
         'numpy',
         'matplotlib',
         'shapely',
-        'pillow'],
+        'pillow',
+        'pyqt5'],
     include_package_data=True,
     classifiers=[
         'Development Status :: 4 - Beta',
