@@ -54,7 +54,7 @@ SedEdu utilizes `gitsubmodule`s and continuous integration to package the educat
 Modules are developed by individuals, utilizing existing Python libraries, thereby minimizing the development and maintenance burden for SedEdu contributors. 
 Robust developer instructions included in the repository describe the workflow to develop and integrate a module into SedEdu.
 The SedEdu software is independent of the underlying geologic content material, such that the software may be adapted (i.e., forked) for use in other fields or communities.
-The SedEdu software framework was developed by Andrew J. Moodie, and modules and/or activities have been contributed by Brandee Carlson, Brady Foreman, Andrew Moodie, Kensuke Naito, Jeffrey Kwang, and Jeffrey Nittrouer; there are 7 modules and 7 activities/worksheets in the (current) version v1.1.6, and SedEdu is actively seeking developers of modules and activities.
+The SedEdu software framework was developed by Andrew J. Moodie, and modules and/or activities have been contributed by Brandee Carlson, Brady Foreman, Andrew Moodie, Kensuke Naito, Jeffrey Kwang, and Jeffrey Nittrouer; there are 7 modules and 7 activities/worksheets in the (current) version v1.1.10, and SedEdu is actively seeking developers of modules and activities.
 
 
 # Statement of need
@@ -62,12 +62,12 @@ Active learning strategies improve student exam performance, engagement, attitud
 Active learning is broadly considered any strategy that breaks up traditional lecture-format teaching with engaging activities that focus on developing students' higher-order cognitive skills [@haak_increased_2011; @karahoca_computer_2010].
 Ideal active learning strategies minimize financial thresholds for entry and maximize availability [@tekian_review_2004; @haak_increased_2011].
 Thus, on-line and computer-based learning coupled with in-person lessons, called "blended learning", is a promising avenue to integrate active learning into the classroom [@garrison_blended_2004].
+Active learning activities that can be used in undergraduate Sedimentology/Stratigraphy and Geomorphology courses are especially needed.
 
-Research and education integration is a core strategy in the U.S.A. National Science Foundation program design [@nsf_merit_2002], so grant writers frequently develop active learning strategies as part of their broader research impacts.
+Separately, research and education integration is a core strategy in the U.S.A. National Science Foundation program design [@nsf_merit_2002], so grant writers frequently develop active learning strategies as part of their broader research impacts.
 When developed, these active learning materials are often ineffectively disseminated, and so they are underutilized.
-The SedEdu software addresses the need for active learning materials in the classroom by organizing these activities into a single place, thereby increasing availability and utilization of these externally-funded active learning materials.
+There is a need for a framework that distributes active learning modules, so that these materials are better incorporated into course work, and utilization of these externally-funded active learning materials is increased.
 
-<!-- SedEdu provides active learning tools which can be readily integrated into classrooms. -->
 SedEdu is beneficial for educators because it organizes high-quality active learning materials that can be easily integrated into their classrooms, and it provides educational infrastructure in line with universal design for instruction principles [@scott_universal_2003].
 SedEdu is beneficial for researchers because it provides a tractable pathway for broader research impacts, and because developing activities for computer-based active learning takes advantage of existing knowledge and skills researchers are likely to already possess (research and education integration).
 
