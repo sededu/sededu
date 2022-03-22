@@ -22,6 +22,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -r requirements.txt
         pip install setuptools wheel twine
     - name: Build and publish
       env:
@@ -55,7 +56,7 @@ jobs:
           conda-channels: anaconda, conda-forge
       - name: Install Python dependencies
         run: |
-          conda install --file requirements.txt
+          conda env update -n base --file environment.yml
           conda install conda-build anaconda-client
       - name: Conda info
         run: |
@@ -91,7 +92,7 @@ jobs:
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
         run: |
           export ANACONDA_API_TOKEN=${{ secrets.ANACONDA_TOKEN }}
-          anaconda upload --user sededu --label main .github/conda-build/linux-64/*.tar.bz2
+          anaconda upload --user sededu --label main --no-progress .github/conda-build/linux-64/*.tar.bz2
       - name: Deploy conda package -- windows
         if: startsWith(matrix.os, 'windows')
         env:

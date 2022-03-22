@@ -67,13 +67,16 @@ Please include 1) operating system, 2) installation method, and 3) copy-paste th
 ### Windows users
 
 1. Open your "start menu" and search for the "Anaconda prompt"; start this application.
-
-2. Install with the module type the following command and hit "enter":
+2. Install `pyqt5` with the following command and hit "enter":
+```
+conda install -c conda-forge pyqt
+```
+3. Install with the module type the following command and hit "enter":
 ```
 conda install -c sededu sededu
 ```
 If asked to proceed at either step, type `Y` and press "enter" to continue installation. 
-3. This process may take a few minutes as the necessary source code is downloaded.
+4. This process may take a few minutes as the necessary source code is downloaded.
 If the installation succeeds, proceed below to the "Run the module" section.
 
 __Note on permissions:__ you may need to run the Anaconda prompy "as administrator" on Windows.
@@ -97,11 +100,11 @@ __Note on permissions:__ you may need to use `sudo` on OSX and Linux.
 __Install with pip__
 To install with `pip` from Pypi use (not recommended for entry-level users):
 ```
-pip3 install pyqt sededu
+pip install pyqt5 sededu
 ```
 or in the event of a failed install, try:
 ```
-pip3 install pyqt5 sededu
+pip install pyqt sededu
 ```
 
 See below instructions for downloading the source code if you wish to be able to modify the source code for development or for exploration.
@@ -112,11 +115,11 @@ __Install by cloning the repository__
 _Developers see below:_
 You can clone the git repository to get the latest release version with:
 ```
-git clone --recurse-submodules -b release https://git@github.com/sededu/sededu.git
+git clone --recurse-submodules -b develop https://git@github.com/sededu/sededu.git
 ```
 and SedEdu is then run with:
 ```
-python3 sededu/run_sededu.py
+python sededu/run_sededu.py
 ```
 
 Note that if you have no modules: run `git submodule update --init --recursive`.
@@ -124,7 +127,8 @@ Note that if you have no modules: run `git submodule update --init --recursive`.
 ### Running SedEdu
 
 1. Open a Python shell by typing `python` (or `python3`) at the terminal (OSX and Linux users) or at the Anaconda / Command Prompt (Windows users).
-2. Run the module from the Python shell with:
+2. Windows users only: run `activate root`
+3. Run the module from the Python shell with:
 ```
 import sededu
 ```
@@ -142,7 +146,7 @@ python -c "import sededu; sededu.run()"
 
 Alternatively, run the module with provided script:
 ```
-python3 <path-to-installation>run_sededu.py
+python <path-to-installation>run_sededu.py
 ```
 
 Please [open an issue](https://github.com/sededu/sededu/issues) if you encounter any additional error messages! 
