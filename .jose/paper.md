@@ -8,31 +8,37 @@ tags:
 authors:
 - name: Andrew J. Moodie
   orcid: 0000-0002-6745-036X
-  affiliation: 1
+  affiliation: "1, 2"
 - name: Brandee Carlson
-  affiliation: 1
+  affiliation: "1, 3"
 - name: Brady Z. Foreman
   orcid: 0000-0002-4168-0618
-  affiliation: 2
+  affiliation: 4
 - name: Jeffrey Kwang
-  affiliation: "3, 4"
+  affiliation: "5, 6"
 - name: Kensuke Naito
   orcid: 0000-0001-8683-0846
-  affiliation: "3, 5"
+  affiliation: "5, 7"
 - name: Jeffrey A. Nittrouer
   orcid: 0000-0002-4762-0157
-  affiliation: 1
+  affiliation: "1, 8"
 affiliations:
 - name: Rice University (Houston, TX, USA)
   index: 1
-- name: Western Washington University (Bellingham, WA, USA)
+- name: University of Texas (Austin, TX, USA)
   index: 2
-- name: University of Illinois at Urbana-Champaign (Urbana, IL, USA)
+- name: University of Colorado (Boulder, CO, USA)
   index: 3
-- name: now at University of Massachusetts Amherst (Amherst, MA, USA)
+- name: Western Washington University (Bellingham, WA, USA)
   index: 4
-- name: now at Universidad de Ingeniería y Tecnología (Lima, Peru)
+- name: University of Illinois at Urbana-Champaign (Urbana, IL, USA)
   index: 5
+- name: University of Massachusetts Amherst (Amherst, MA, USA)
+  index: 6
+- name: Universidad de Ingeniería y Tecnología (Lima, Peru)
+  index: 7
+- name: Texas Tech University (Lubbock, TX, USA)
+  index: 8
 date: 17 July 2019
 bibliography: paper.bib
 ---
