@@ -52,7 +52,7 @@ Pressing the button "Run module" will launch the module selected, and "Open acti
 SedEdu is built on PyQt5, and is platform-agnostic, free, fully open source, and available from common software repositories (e.g., `pip`, `conda`).
 SedEdu utilizes `gitsubmodule`s and continuous integration to package the educational modules, with the goal of making it convenient for users to install, access, and use the software. 
 Modules are developed by individuals, utilizing existing Python libraries, thereby minimizing the development and maintenance burden for SedEdu contributors. 
-Robust developer instructions included in the repository describe the workflow to develop and integrate a module into SedEdu.
+Robust developer instructions included in the repository describe the workflow to develop and integrate a module into SedEdu [@sededu_example_nodate].
 The SedEdu software is independent of the underlying geologic content material, such that the software may be adapted (i.e., forked) for use in other fields or communities.
 The SedEdu software framework was developed by Andrew J. Moodie, and modules and/or activities have been contributed by Brandee Carlson, Brady Foreman, Andrew Moodie, Kensuke Naito, Jeffrey Kwang, and Jeffrey Nittrouer; there are 7 modules and 7 activities/worksheets in the (current) version v1.1.10, and SedEdu is actively seeking developers of modules and activities.
 
@@ -73,7 +73,9 @@ SedEdu is beneficial for researchers because it provides a tractable pathway for
 
 
 # Using SedEdu in the classroom
-Integrating educational infrastructure into the classroom is challenging, in part, due to logistical considerations for installing software; these concerns are alleviated with SedEdu's simple installation procedure, which is described in the project repository documentation.
+Integrating educational infrastructure into the classroom is challenging, in part, due to logistical demand of installing multiple activities and modules; SedEdu provides a single installation that includes modules themselves and infrastructure to manage learning modules and activities.
+SedEdu is installed via Python package managers `pip` and `conda` (described in the project repository documentation), and follows established conventions that make installation straightforward for Python users.
+
 Most SedEdu modules will be used in a similar manner, so this section provides the reader with a sense for how the SedEdu software and a module have been successfully integrated into a classroom.
 *rivers2stratigraphy* (*r2s*, Figure 2) is an example of a SedEdu module that illustrates basin-scale development of fluvial (i.e., river) stratigraphy via a real-time, rules-based model.
 The model simplifies a real-world system so to run efficiently, and yet produces realistic stratigraphic patterns. 
